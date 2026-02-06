@@ -297,7 +297,7 @@ const Index = () => {
               (partner, index) => (
                 <div
                   key={index}
-                  className="flex h-12 items-center rounded-lg bg-muted px-6 text-sm font-medium text-muted-foreground"
+                  className="flex h-12 items-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground"
                 >
                   {partner}
                 </div>
@@ -324,7 +324,7 @@ const Index = () => {
             <Button
               variant="outline"
               size="xl"
-              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-mint"
+              className="border-primary-foreground text-secondary-foreground hover:bg-primary-foreground hover:text-mint"
               asChild
             >
               <Link to="/contact">Contact Us</Link>
