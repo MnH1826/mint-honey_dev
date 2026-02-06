@@ -1,0 +1,230 @@
+import { Link } from "react-router-dom";
+import { Package, Users, FileText, Phone, ArrowRight, CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { products, formatPrice } from "@/lib/products";
+
+const benefits = [
+  "Competitive pricing for large orders",
+  "Customizable packaging options",
+  "Dedicated account management",
+  "Priority delivery scheduling",
+  "Nutritional documentation provided",
+  "Quality certificates included"
+];
+
+const BulkOrders = () => {
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <section className="bg-gradient-hero py-16 md:py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="mb-4 font-display text-4xl font-bold text-foreground md:text-5xl">
+            Bulk & Institutional Orders
+          </h1>
+          <p className="mx-auto max-w-2xl text-muted-foreground">
+            Partner with us to provide nutritious food solutions for your organization, 
+            school, or feeding program. We offer competitive pricing and reliable supply.
+          </p>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="grid gap-12 lg:grid-cols-2">
+          {/* Info Section */}
+          <div>
+            <h2 className="mb-6 font-display text-2xl font-bold text-foreground md:text-3xl">
+              Why Choose Mint & Honey for Bulk Orders?
+            </h2>
+            
+            <div className="mb-8 space-y-3">
+              {benefits.map((benefit, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <CheckCircle className="h-5 w-5 flex-shrink-0 text-mint" />
+                  <span>{benefit}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Minimum Order Info */}
+            <div className="mb-8 rounded-xl border border-border bg-card p-6">
+              <h3 className="mb-4 font-display text-lg font-semibold">Minimum Order Quantities</h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between border-b border-border pb-2">
+                  <span className="text-muted-foreground">Schools & NGOs</span>
+                  <span className="font-medium">100kg per product</span>
+                </div>
+                <div className="flex justify-between border-b border-border pb-2">
+                  <span className="text-muted-foreground">Feeding Schemes</span>
+                  <span className="font-medium">250kg per product</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Institutional Buyers</span>
+                  <span className="font-medium">500kg per product</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Product Pricing Table */}
+            <div className="rounded-xl border border-border bg-card p-6">
+              <h3 className="mb-4 font-display text-lg font-semibold">Bulk Pricing Guide</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="pb-3 text-left font-medium">Product</th>
+                      <th className="pb-3 text-right font-medium">25kg Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {products.map(product => {
+                      const bulkPrice = product.pricing.find(p => p.size === "25kg");
+                      return (
+                        <tr key={product.id} className="border-b border-border last:border-0">
+                          <td className="py-3">{product.shortName}</td>
+                          <td className="py-3 text-right font-medium text-mint">
+                            {bulkPrice ? formatPrice(bulkPrice.price) : "Contact us"}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-4 text-xs text-muted-foreground">
+                * Prices subject to change. Contact us for custom quotes on large orders.
+              </p>
+            </div>
+
+            {/* Download Specs */}
+            <div className="mt-8 rounded-xl bg-mint-light p-6">
+              <div className="flex items-start gap-4">
+                <FileText className="h-8 w-8 flex-shrink-0 text-mint" />
+                <div>
+                  <h4 className="mb-2 font-display font-semibold">Product Specifications</h4>
+                  <p className="mb-4 text-sm text-muted-foreground">
+                    Download detailed nutritional information, ingredient lists, 
+                    and packaging specifications for all our products.
+                  </p>
+                  <Button variant="mint">
+                    Download Product Specs (PDF)
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Inquiry Form */}
+          <div className="rounded-2xl border border-border bg-card p-8">
+            <h2 className="mb-2 font-display text-2xl font-bold text-foreground">
+              Request a Bulk Quote
+            </h2>
+            <p className="mb-6 text-muted-foreground">
+              Fill out the form below and our team will get back to you within 24 hours.
+            </p>
+
+            <form className="space-y-6">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Contact Name *</Label>
+                  <Input id="name" placeholder="Your full name" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="organization">Organization *</Label>
+                  <Input id="organization" placeholder="Company or organization" required />
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email *</Label>
+                  <Input id="email" type="email" placeholder="email@example.com" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone *</Label>
+                  <Input id="phone" type="tel" placeholder="+27 11 123 4567" required />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="type">Organization Type *</Label>
+                <select
+                  id="type"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  required
+                >
+                  <option value="">Select type...</option>
+                  <option value="school">School / Educational Institution</option>
+                  <option value="ngo">NGO / Non-profit</option>
+                  <option value="feeding">Feeding Scheme</option>
+                  <option value="healthcare">Healthcare Facility</option>
+                  <option value="government">Government Department</option>
+                  <option value="business">Private Business</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="products">Products of Interest</Label>
+                <select
+                  id="products"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  multiple
+                >
+                  {products.map(product => (
+                    <option key={product.id} value={product.id}>
+                      {product.shortName}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-muted-foreground">Hold Ctrl/Cmd to select multiple</p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="quantity">Estimated Monthly Quantity</Label>
+                <Input id="quantity" placeholder="e.g., 500kg per month" />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="message">Additional Details</Label>
+                <Textarea
+                  id="message"
+                  placeholder="Tell us about your requirements, delivery location, timeline, etc."
+                  rows={4}
+                />
+              </div>
+
+              <Button variant="mint" size="lg" className="w-full">
+                Submit Inquiry
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </form>
+          </div>
+        </div>
+
+        {/* Contact CTA */}
+        <div className="mt-16 rounded-2xl bg-honey-light p-8 text-center md:p-12">
+          <Phone className="mx-auto mb-4 h-12 w-12 text-honey" />
+          <h2 className="mb-2 font-display text-2xl font-bold text-foreground">
+            Prefer to Talk Directly?
+          </h2>
+          <p className="mb-6 text-muted-foreground">
+            Our bulk sales team is available Monday to Friday, 8am - 5pm SAST.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button variant="honey" size="lg">
+              Call +27 11 123 4567
+            </Button>
+            <Button variant="honey-outline" size="lg" asChild>
+              <Link to="/contact">Send Email</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BulkOrders;
