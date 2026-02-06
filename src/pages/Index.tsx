@@ -61,7 +61,7 @@ const Index = () => {
           <img
             src={heroImage}
             alt="Nutritious food products"
-            className="h-full w-full object-cover opacity-20"
+            className="h-full w-full object-cover opacity-100"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />
         </div>
