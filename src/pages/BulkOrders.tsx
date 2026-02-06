@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { products, formatPrice } from "@/lib/products";
+import { useNavigate } from "react-router-dom";
 
 const benefits = [
   "Competitive pricing for large orders",
@@ -16,6 +17,8 @@ const benefits = [
 ];
 
 const BulkOrders = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -108,7 +111,13 @@ const BulkOrders = () => {
                     Download detailed nutritional information, ingredient lists, 
                     and packaging specifications for all our products.
                   </p>
-                  <Button variant="mint">
+                  <Button 
+                    onClick={() => navigate("/coming-soon")}
+                    className="bg-mint hover:bg-mint-dark text-white shadow-sm hover:shadow transition-colors gap-2"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
                     Download Product Specs (PDF)
                   </Button>
                 </div>
@@ -144,7 +153,7 @@ const BulkOrders = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone *</Label>
-                  <Input id="phone" type="tel" placeholder="+27 11 123 4567" required />
+                  <Input id="phone" type="tel" placeholder="+27 21 879 0592" required />
                 </div>
               </div>
 
@@ -196,7 +205,15 @@ const BulkOrders = () => {
                 />
               </div>
 
-              <Button variant="mint" size="lg" className="w-full">
+              <Button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Handle form submission logic here
+                  // Then navigate to coming-soon page
+                  navigate("/coming-soon");
+                }}
+                className="w-full bg-mint hover:bg-mint-dark text-white gap-2"
+              >
                 Submit Inquiry
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -214,11 +231,18 @@ const BulkOrders = () => {
             Our bulk sales team is available Monday to Friday, 8am - 5pm SAST.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button variant="honey" size="lg">
-              Call +27 11 123 4567
+            <Button 
+              onClick={() => window.location.href = "tel:+27218790592"}
+              className="bg-honey hover:bg-honey-dark text-white"
+            >
+              Call +27 21 879 0592
             </Button>
-            <Button variant="honey-outline" size="lg" asChild>
-              <Link to="/contact">Send Email</Link>
+            <Button 
+              onClick={() => navigate("/contact")}
+              variant="outline"
+              className="border-honey text-honey hover:bg-honey-light"
+            >
+              Send Email
             </Button>
           </div>
         </div>

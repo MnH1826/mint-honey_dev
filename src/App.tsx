@@ -14,6 +14,7 @@ import Impact from "./pages/Impact";
 import Contact from "./pages/Contact";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
+import { ComingSoon } from "./components/ComingSoon";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
               <Route path="/impact" element={<Impact />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/coming-soon" element={<ComingSoon />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>

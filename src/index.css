@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,8 +10,6 @@
    Style: Clean, modern, nutrition-focused
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
 @layer base {
   :root {
     /* Core brand colors */
@@ -19,13 +19,13 @@
     --honey: 38 80% 56%;
     --honey-light: 38 70% 92%;
     --honey-dark: 38 80% 45%;
-    
+
     /* Neutrals */
     --beige: 35 30% 96%;
     --beige-dark: 35 20% 88%;
     --charcoal: 220 10% 25%;
     --charcoal-light: 220 8% 40%;
-    
+
     /* Semantic tokens */
     --background: 0 0% 100%;
     --foreground: 220 10% 25%;
@@ -66,13 +66,29 @@
     --sidebar-accent-foreground: 220 10% 25%;
     --sidebar-border: 35 20% 88%;
     --sidebar-ring: 153 58% 47%;
-    
+
     /* Gradients */
-    --gradient-mint: linear-gradient(135deg, hsl(153 58% 47%) 0%, hsl(153 58% 60%) 100%);
-    --gradient-honey: linear-gradient(135deg, hsl(38 80% 56%) 0%, hsl(38 80% 65%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(153 45% 92%) 0%, hsl(38 70% 92%) 100%);
-    --gradient-warm: linear-gradient(180deg, hsl(35 30% 98%) 0%, hsl(0 0% 100%) 100%);
-    
+    --gradient-mint: linear-gradient(
+      135deg,
+      hsl(153 58% 47%) 0%,
+      hsl(153 58% 60%) 100%
+    );
+    --gradient-honey: linear-gradient(
+      135deg,
+      hsl(38 80% 56%) 0%,
+      hsl(38 80% 65%) 100%
+    );
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(153 45% 92%) 0%,
+      hsl(38 70% 92%) 100%
+    );
+    --gradient-warm: linear-gradient(
+      180deg,
+      hsl(35 30% 98%) 0%,
+      hsl(0 0% 100%) 100%
+    );
+
     /* Shadows */
     --shadow-soft: 0 4px 20px -4px hsl(220 10% 25% / 0.08);
     --shadow-card: 0 8px 30px -8px hsl(220 10% 25% / 0.12);
@@ -93,11 +109,14 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
   }
-  
-  h1, h2, h3, h4 {
-    font-family: 'Playfair Display', serif;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Playfair Display", serif;
   }
 }
 
@@ -106,44 +125,44 @@
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-mint);
   }
-  
+
   .text-gradient-honey {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-honey);
   }
-  
+
   .bg-gradient-hero {
     background-image: var(--gradient-hero);
   }
-  
+
   .bg-gradient-warm {
     background-image: var(--gradient-warm);
   }
-  
+
   .shadow-soft {
     box-shadow: var(--shadow-soft);
   }
-  
+
   .shadow-card {
     box-shadow: var(--shadow-card);
   }
-  
+
   .shadow-elevated {
     box-shadow: var(--shadow-elevated);
   }
-  
+
   .shadow-mint {
     box-shadow: var(--shadow-mint);
   }
-  
+
   .shadow-honey {
     box-shadow: var(--shadow-honey);
   }
-  
+
   .hover-lift {
     @apply transition-all duration-300 ease-out;
   }
-  
+
   .hover-lift:hover {
     @apply -translate-y-1;
     box-shadow: var(--shadow-elevated);
