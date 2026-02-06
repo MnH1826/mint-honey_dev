@@ -1,19 +1,37 @@
-import { Link } from "react-router-dom";
-import { Leaf, Mail, Phone, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 export const Footer = () => {
+  const navigate = useNavigate();
+
+  // Function to handle navigation with scroll to top
+  const handleNavClick = (path: string) => {
+    navigate(path);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <footer className="border-t border-border bg-beige">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-mint">
-                <Leaf className="h-5 w-5 text-primary-foreground" />
+            <button 
+              onClick={() => handleNavClick("/")}
+              className="flex items-center gap-2 hover:opacity-80"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white overflow-hidden">
+                <img 
+                  src="/logo_icon.png" 
+                  alt="Mint & Honey Logo" 
+                  className="h-8 w-8 object-contain"
+                />
               </div>
               <span className="font-display text-xl font-semibold">Mint & Honey</span>
-            </Link>
+            </button>
             <p className="text-sm text-muted-foreground">
               Nutritious, fortified food products supporting food security and community health across South Africa.
             </p>
@@ -23,26 +41,19 @@ export const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-display text-lg font-semibold">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/shop" className="text-muted-foreground transition-colors hover:text-mint">
-                  Shop Products
-                </Link>
-              </li>
-              <li>
-                <Link to="/bulk-orders" className="text-muted-foreground transition-colors hover:text-mint">
-                  Bulk Orders
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-muted-foreground transition-colors hover:text-mint">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/impact" className="text-muted-foreground transition-colors hover:text-mint">
-                  Our Impact
-                </Link>
-              </li>
+              {["/shop", "/bulk-orders", "/about", "/impact"].map((path, index) => {
+                const labels = ["Shop Products", "Bulk Orders", "About Us", "Our Impact"];
+                return (
+                  <li key={path}>
+                    <button
+                      onClick={() => handleNavClick(path)}
+                      className="text-muted-foreground transition-colors hover:text-mint"
+                    >
+                      {labels[index]}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -50,26 +61,29 @@ export const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-display text-lg font-semibold">Products</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/shop/super-cereal-plus" className="text-muted-foreground transition-colors hover:text-mint">
-                  Super Cereal Plus
-                </Link>
-              </li>
-              <li>
-                <Link to="/shop/vuma-instant-porridge" className="text-muted-foreground transition-colors hover:text-mint">
-                  Vuma Instant Porridge
-                </Link>
-              </li>
-              <li>
-                <Link to="/shop/fortified-maize-meal" className="text-muted-foreground transition-colors hover:text-mint">
-                  Fortified Maize Meal
-                </Link>
-              </li>
-              <li>
-                <Link to="/shop/soy-flour" className="text-muted-foreground transition-colors hover:text-mint">
-                  Soy Flour
-                </Link>
-              </li>
+              {[
+                "/shop/super-cereal-plus",
+                "/shop/vuma-instant-porridge", 
+                "/shop/fortified-maize-meal",
+                "/shop/soy-flour"
+              ].map((path, index) => {
+                const labels = [
+                  "Super Cereal Plus", 
+                  "Vuma Instant Porridge",
+                  "Fortified Maize Meal", 
+                  "Soy Flour"
+                ];
+                return (
+                  <li key={path}>
+                    <button
+                      onClick={() => handleNavClick(path)}
+                      className="text-muted-foreground transition-colors hover:text-mint"
+                    >
+                      {labels[index]}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -79,11 +93,11 @@ export const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2 text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-mint" />
-                <span>123 Industrial Road, Johannesburg, South Africa</span>
+                <span>30 Charles Matthews Street, Atlantis Industrial, Western Cape, South Africa</span>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Phone className="h-4 w-4 text-mint" />
-                <span>+27 11 123 4567</span>
+                <span>+27 21 879 0592</span>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Mail className="h-4 w-4 text-mint" />

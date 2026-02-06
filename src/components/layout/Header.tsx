@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Menu, X, Leaf } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
@@ -18,16 +18,40 @@ export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { getCartCount, setIsCartOpen } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
   const cartCount = getCartCount();
+
+  // Function to handle navigation with scroll to top
+  const handleNavClick = (path: string) => {
+    // Only scroll if we're already on the same route
+    if (location.pathname === path) {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    } else {
+      // Navigate to the new page
+      navigate(path);
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-mint">
-              <Leaf className="h-5 w-5 text-primary-foreground" />
+          <Link 
+            to="/" 
+            className="flex items-center gap-2 transition-opacity hover:opacity-80"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white overflow-hidden">
+              <img 
+                src="/logo_icon.png" 
+                alt="Mint & Honey Logo" 
+                className="h-8 w-8 object-contain"
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-display text-xl font-semibold text-foreground">
@@ -42,9 +66,9 @@ export const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden items-center gap-1 lg:flex">
             {navLinks.map(link => (
-              <Link
+              <button
                 key={link.path}
-                to={link.path}
+                onClick={() => handleNavClick(link.path)}
                 className={cn(
                   "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
                   location.pathname === link.path
@@ -53,7 +77,7 @@ export const Header = () => {
                 )}
               >
                 {link.label}
-              </Link>
+              </button>
             ))}
           </nav>
 
@@ -89,19 +113,18 @@ export const Header = () => {
           <nav className="border-t border-border py-4 lg:hidden">
             <div className="flex flex-col gap-1">
               {navLinks.map(link => (
-                <Link
+                <button
                   key={link.path}
-                  to={link.path}
+                  onClick={() => handleNavClick(link.path)}
                   className={cn(
                     "rounded-lg px-4 py-3 text-sm font-medium transition-colors",
                     location.pathname === link.path
                       ? "bg-mint-light text-mint-dark"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
-                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
-                </Link>
+                </button>
               ))}
             </div>
           </nav>
