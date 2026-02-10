@@ -8,22 +8,22 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    details: ["+27 11 123 4567", "+27 11 123 4568"]
+    details: ["+27 21 879 0592",]
   },
   {
     icon: Mail,
     title: "Email",
-    details: ["info@mintandhoney.co.za", "sales@mintandhoney.co.za"]
+    details: ["info@mintandhoney.co.za", "reception@mintandhoney.co.za"]
   },
   {
     icon: MapPin,
     title: "Address",
-    details: ["123 Industrial Road", "Johannesburg, 2001", "South Africa"]
+    details: ["Mint And Honey (Pty) Ltd", "30 Charles Matthews Street, Atlantis Industrial, WC, SA, 7394", "South Africa"]
   },
   {
     icon: Clock,
     title: "Business Hours",
-    details: ["Monday - Friday: 8am - 5pm", "Saturday: 9am - 1pm", "Sunday: Closed"]
+    details: ["Monday - Friday: 8am - 4pm", "Saturday: Closed", "Sunday: Closed"]
   }
 ];
 
@@ -73,7 +73,7 @@ const Contact = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone</Label>
-                <Input id="phone" type="tel" placeholder="+27 11 123 4567" />
+                <Input id="phone" type="tel" placeholder="+27 21 123 4567" />
               </div>
 
               <div className="space-y-2">
@@ -137,14 +137,14 @@ const Contact = () => {
             {/* Map */}
             <div className="overflow-hidden rounded-xl border border-border">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114669.25354979087!2d27.91640565!3d-26.1715046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e950c68f0406a51%3A0x238ac9d9b1d34041!2sJohannesburg%2C%20South%20Africa!5e0!3m2!1sen!2sus!4v1696000000000!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d392.5395960415705!2d18.487124200989577!3d-33.58860002446017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dccedde87f869bd%3A0xa6fc582a3a52c2c6!2z4oCL4oCL4oCLUmVzb2x1eCBBZnJpY2EgKFB0eSkgTHRk!5e1!3m2!1sen!2sza!4v1770725780273!5m2!1sen!2sza"
                 width="100%"
                 height="300"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Mint & Honey Location"
+                title="Mint & Honey Location - Resolux Africa, Cape Town"
               />
             </div>
 
@@ -158,7 +158,7 @@ const Contact = () => {
               </p>
               <Button variant="honey">
                 <Phone className="mr-2 h-4 w-4" />
-                Call Now: +27 11 123 4567
+                Call Now: +27 21 879 0592
               </Button>
             </div>
           </div>

@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
 
+// Import the logo
+import logo from "@/assets/logo.png";
+
 const navLinks = [
   { path: "/", label: "Home" },
   { path: "/shop", label: "Shop" },
@@ -40,26 +43,18 @@ export const Header = () => {
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between md:h-20">
-          {/* Logo */}
+          {/* Logo - Increased size */}
           <Link 
             to="/" 
-            className="flex items-center gap-2 transition-opacity hover:opacity-80"
+            className="flex items-center transition-opacity hover:opacity-80"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white overflow-hidden">
+            <div className="flex items-center justify-center">
               <img 
-                src="/logo_icon.png" 
+                src={logo} 
                 alt="Mint & Honey Logo" 
-                className="h-8 w-8 object-contain"
+                className="h-14 w-auto object-contain md:h-16"
               />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display text-xl font-semibold text-foreground">
-                Mint & Honey
-              </span>
-              <span className="hidden text-xs text-muted-foreground sm:block">
-                Nutritious Food Solutions
-              </span>
             </div>
           </Link>
 

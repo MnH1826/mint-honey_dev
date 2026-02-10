@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 
+// Import the logo
+import logo from "@/assets/logo.png";
+
 export const Footer = () => {
   const navigate = useNavigate();
 
@@ -21,16 +24,15 @@ export const Footer = () => {
           <div className="space-y-4">
             <button 
               onClick={() => handleNavClick("/")}
-              className="flex items-center gap-2 hover:opacity-80"
+              className="flex items-center hover:opacity-80"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white overflow-hidden">
+              <div className="flex items-center justify-center">
                 <img 
-                  src="/logo_icon.png" 
+                  src={logo} 
                   alt="Mint & Honey Logo" 
-                  className="h-8 w-8 object-contain"
+                  className="h-14 w-auto object-contain md:h-16"
                 />
               </div>
-              <span className="font-display text-xl font-semibold">Mint & Honey</span>
             </button>
             <p className="text-sm text-muted-foreground">
               Nutritious, fortified food products supporting food security and community health across South Africa.
