@@ -118,7 +118,7 @@ export const Footer = () => {
               href="https://dynamicgenholdings.co.za/"
               target="_blank"
               rel="noopener noreferrer"
-              className="relative font-medium text-foreground transition-all duration-300 hover:text-mint after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-honey after:transition-all after:duration-300 hover:after:w-full"
+              className="relative font-medium  text-foreground transition-all duration-300 hover:text-mint after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-honey after:transition-all after:duration-300 hover:after:w-full"
             >
               DynamicGen Holdings
             </a>
