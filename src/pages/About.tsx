@@ -13,7 +13,7 @@ const values = [
   {
     icon: Users,
     title: "Community Focus",
-    description: "We work closely with communities, schools, and organizations to understand and meet their specific nutritional needs."
+    description: "We work closely with communities, schools , and organizations to understand and meet their specific nutritional needs."
   },
   {
     icon: Shield,
