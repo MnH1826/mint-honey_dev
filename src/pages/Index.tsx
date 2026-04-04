@@ -177,8 +177,8 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="mb-6 font-display text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl"
             >
-              Nutritious Food Solutions for{" "}
-              <span className="text-gradient-mint">Healthier Communities</span>
+              Non-GMO Fortified Cereals &{" "}
+              <span className="text-gradient-mint">Grain Products for Africa</span>
             </motion.h1>
             
             <motion.p 
@@ -187,8 +187,9 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="mb-8 text-lg text-muted-foreground md:text-xl"
             >
-              Fortified, affordable food products supporting food security across South Africa. 
-              From schools to feeding schemes, we're committed to combating malnutrition.
+              We manufacture non-GMO fortified cereals, corn & soya products as ingredients 
+              for food manufacturers, NGOs, school feeding schemes, and government nutrition 
+              programs across Africa. Enriching lives from our Atlantis facility.
             </motion.p>
             
             <motion.div 
@@ -488,19 +489,37 @@ const Index = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-60"
+            className="flex flex-wrap items-center justify-center gap-8 md:gap-16"
           >
-            {["Partner NGO 1", "School District", "Health Ministry", "Food Bank SA", "Community Foundation"].map(
+            {[
+              { name: "Mary's Meals", url: "https://www.marysmeals.org/" },
+              { name: "Gift of the Givers", url: "https://giftofthegivers.org/" },
+              { name: "Government Feeding Schemes", url: null },
+              { name: "Food Manufacturers", url: null },
+              { name: "ECD Centres", url: null }
+            ].map(
               (partner, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 0.6, scale: 1 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex h-12 items-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground"
                 >
-                  {partner}
+                  {partner.url ? (
+                    <a
+                      href={partner.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-12 items-center rounded-lg border border-border bg-card px-6 text-sm font-medium text-foreground transition-all hover:border-mint hover:shadow-soft"
+                    >
+                      {partner.name}
+                    </a>
+                  ) : (
+                    <div className="flex h-12 items-center rounded-lg border border-border bg-card px-6 text-sm font-medium text-foreground">
+                      {partner.name}
+                    </div>
+                  )}
                 </motion.div>
               )
             )}
