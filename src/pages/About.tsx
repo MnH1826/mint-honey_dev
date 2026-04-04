@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import communityImage from "@/assets/community-kitchen.jpg";
 import impactImage from "@/assets/impact-children.jpg";
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
+import companyBanner from "@/assets/company-banner.jpeg";
+import productDisplay from "@/assets/product-display.jpeg";
 
 const values = [
   {
