@@ -82,8 +82,8 @@ const About = () => {
             </div>
             <div className="relative">
               <img
-                src={communityImage}
-                alt="Mint & Honey team and community"
+                src={companyBanner}
+                alt="Mint & Honey company banner - Manufacturer of High-Quality Cereals & Processed Grains"
                 className="rounded-2xl shadow-elevated"
               />
             </div>
