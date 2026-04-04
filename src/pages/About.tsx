@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import communityImage from "@/assets/community-kitchen.jpg";
 import impactImage from "@/assets/impact-children.jpg";
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
+import companyBanner from "@/assets/company-banner.jpeg";
+import productDisplay from "@/assets/product-display.jpeg";
 
 const values = [
   {
@@ -80,8 +82,8 @@ const About = () => {
             </div>
             <div className="relative">
               <img
-                src={communityImage}
-                alt="Mint & Honey team and community"
+                src={companyBanner}
+                alt="Mint & Honey company banner - Manufacturer of High-Quality Cereals & Processed Grains"
                 className="rounded-2xl shadow-elevated"
               />
             </div>
@@ -292,8 +294,8 @@ const About = () => {
             </div>
             <div className="relative">
               <img
-                src={impactImage}
-                alt="Quality food production at Mint & Honey"
+                src={productDisplay}
+                alt="Mint & Honey product range - Vuma, Bamba, Gogo's Maize Meal, Nyama Choma Soya Mince"
                 className="rounded-2xl shadow-elevated"
               />
             </div>
