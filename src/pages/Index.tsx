@@ -177,8 +177,8 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="mb-6 font-display text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl"
             >
-              Nutritious Food Solutions for{" "}
-              <span className="text-gradient-mint">Healthier Communities</span>
+              Non-GMO Fortified Cereals &{" "}
+              <span className="text-gradient-mint">Grain Products for Africa</span>
             </motion.h1>
             
             <motion.p 
@@ -187,8 +187,9 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="mb-8 text-lg text-muted-foreground md:text-xl"
             >
-              Fortified, affordable food products supporting food security across South Africa. 
-              From schools to feeding schemes, we're committed to combating malnutrition.
+              We manufacture non-GMO fortified cereals, corn & soya products as ingredients 
+              for food manufacturers, NGOs, school feeding schemes, and government nutrition 
+              programs across Africa. Enriching lives from our Atlantis facility.
             </motion.p>
             
             <motion.div 
