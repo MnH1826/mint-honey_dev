@@ -294,8 +294,8 @@ const About = () => {
             </div>
             <div className="relative">
               <img
-                src={impactImage}
-                alt="Quality food production at Mint & Honey"
+                src={productDisplay}
+                alt="Mint & Honey product range - Vuma, Bamba, Gogo's Maize Meal, Nyama Choma Soya Mince"
                 className="rounded-2xl shadow-elevated"
               />
             </div>
