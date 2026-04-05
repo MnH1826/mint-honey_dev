@@ -3,7 +3,7 @@ import { Award, Users, Heart, Shield, Globe, ArrowRight, Factory, Wheat, FlaskCo
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
-import companyBanner from "@/assets/company-banner.jpeg";
+import companyBanner from "@/assets/company-banner.webp";
 import productDisplay from "@/assets/product-display.jpeg";
 import teamPhoto from "@/assets/team-photo.jpg";
 import boardroomMeeting from "@/assets/boardroom-meeting.jpg";
@@ -12,6 +12,10 @@ import facilityAerial from "@/assets/facility-aerial.jpg";
 import officeReception from "@/assets/office-reception.jpg";
 import teamBanner from "@/assets/team-banner.jpg";
 import productLineup from "@/assets/product-lineup.jpg";
+import MnH_products from "@/assets/MnH_products.webp";
+import reception from "@/assets/reception.webp";
+import facility_outdoor from "@/assets/facility_outdoor.webp";
+import facility_outside_location from "@/assets/facility_outside_location.webp";
 
 const values = [
   {
@@ -97,7 +101,7 @@ const About = () => {
               className="wp-image aspect-video"
             >
               <img
-                src={companyBanner}
+                src={MnH_products}
                 alt="Mint & Honey company banner - Manufacturer of High-Quality Cereals & Processed Grains"
               />
             </motion.div>
@@ -111,8 +115,9 @@ const About = () => {
           {[
             { src: officeReception, alt: "Office reception" },
             { src: boardroomMeeting, alt: "Boardroom meeting" },
-            { src: qualityLab, alt: "Quality control lab" },
-            { src: teamBanner, alt: "Team with company branding" },
+            { src: reception, alt: "The Reception Area" },
+            { src: facility_outdoor, alt: "Mint & Honey logo" },
+
           ].map((img, i) => (
             <motion.div
               key={i}
@@ -142,7 +147,7 @@ const About = () => {
               viewport={{ once: true }}
             >
               <span className="wp-badge mb-6 bg-primary-foreground/20 text-primary-foreground">
-                🚀 Major Milestone
+                 Major Milestone
               </span>
               <h2 className="mb-6 font-display text-primary-foreground">
                 Our Atlantis Facility is Taking Shape
@@ -487,8 +492,8 @@ const About = () => {
             >
               <div className="wp-image aspect-video">
                 <img
-                  src={qualityLab}
-                  alt="Mint & Honey quality control laboratory"
+                  src={facility_outside_location}
+                  alt="Mint & Honey facility outside location"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">

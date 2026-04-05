@@ -183,7 +183,7 @@ const Impact = () => {
                 remarkable improvements in the children's energy levels and focus. The 
                 fortified cereals have made a real difference."
               </blockquote>
-              <p className="font-medium">— Community Kitchen Coordinator, Soweto</p>
+              <p className="font-medium">— Community Kitchen Coordinator, Atlantis</p>
             </div>
           </div>
         </div>

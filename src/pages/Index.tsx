@@ -1,16 +1,21 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Heart, Shield, Leaf, Users, Award, TrendingUp, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Heart, Shield, Leaf, Users, Award, TrendingUp, CheckCircle2, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
 import { getFeaturedProducts } from "@/lib/products";
 import productLineup from "@/assets/product-lineup.jpg";
-import teamPhoto from "@/assets/team-photo.jpg";
-import facilityAerial from "@/assets/facility-aerial.jpg";
-import officeReception from "@/assets/office-reception.jpg";
+import teamPhoto from "@/assets/ceo_co_hr_coo.webp";
+import facilityInside from "@/assets/facility-aerial.jpg";
+import delivering_offloading from "@/assets/delivering_offloading.webp";
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
+import ceoImage from "@/assets/ceo_co_hr_coo.webp";
+import mnHImage from "@/assets/MnH_1.webp";
+import facilityImage from "@/assets/facility_outdoor_2.webp";
+import hrImage from "@/assets/Hr_ceo_coo.webp";
+import storedImage from "@/assets/stored.webp";
 import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-
+import facility_outside_location from "@/assets/facility_outside_location.webp";
 const stats = [
   { value: "500K+", label: "Meals Provided", icon: Heart },
   { value: "120+", label: "Partner Schools", icon: Users },
@@ -33,6 +38,45 @@ const testimonials = [
     quote: "Affordable, nutritious, and consistently high quality. Mint & Honey products have become a staple in our community kitchens.",
     author: "Thembi Zulu",
     role: "Volunteer Coordinator, Hope Kitchen"
+  }
+];
+
+const heroSlides = [
+  {
+    image: ceoImage,
+    title: "Leadership in Nutrition",
+    subtitle: "Meet the team behind Mint & Honey",
+    alt: "Mint & Honey CEO and leadership team"
+  },
+  {
+    image: mnHImage,
+    title: "Quality Fortified Products",
+    subtitle: "Non-GMO fortified grain products for Africa",
+    alt: "Mint & Honey nutritious products display"
+  },
+  {
+    image: facilityImage,
+    title: "State-of-the-Art Facility",
+    subtitle: "Modern manufacturing in Atlantis Industrial",
+    alt: "Mint & Honey outdoor facility"
+  },
+  {
+    image: hrImage,
+    title: "Dedicated Team",
+    subtitle: "Committed to fighting malnutrition across Africa",
+    alt: "Mint & Honey HR, CEO, and COO team"
+  },
+  {
+    image: storedImage,
+    title: "Bulk Storage & Distribution",
+    subtitle: "Ready to serve communities across South Africa",
+    alt: "Mint & Honey stored products warehouse"
+  },
+  {
+    image: facility_outside_location,
+    title: "Outside Location",
+    subtitle: "Mint & Honey facility outside location",
+    alt: "Mint & Honey facility outside location"
   }
 ];
 
@@ -72,109 +116,185 @@ const AnimatedCounter = ({ target }: { target: string }) => {
   );
 };
 
+// Hero Slideshow Component
+const HeroSlideshow = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  return (
+    <section className="relative min-h-[100vh] overflow-hidden">
+      {/* Slides */}
+      {heroSlides.map((slide, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+            index === currentSlide
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-110"
+          }`}
+        >
+          <div className="relative h-full w-full">
+            <img
+              src={slide.image}
+              alt={slide.alt}
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+          </div>
+        </div>
+      ))}
+
+      {/* Content Overlay */}
+      <div className="container relative mx-auto flex min-h-[100vh] flex-col items-center justify-center px-4 py-32 text-center">
+        <div className="max-w-4xl">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="wp-badge mb-6 border border-white/20 bg-white/10 text-white/90">
+              <Leaf className="h-4 w-4" />
+              Proudly South African · Enriching Lives Since 2009
+            </span>
+            
+            <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-white md:text-6xl lg:text-7xl">
+              {heroSlides[currentSlide].title}
+            </h1>
+            
+            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/80 md:text-xl">
+              {heroSlides[currentSlide].subtitle}
+            </p>
+          </motion.div>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex flex-wrap justify-center gap-4"
+          >
+            <Button variant="mint" size="xl" asChild>
+              <Link to="/shop">
+                Explore Products
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              size="xl"
+              className="border-white/30 text-black hover:bg-white/10 hover:text-white"
+              asChild
+            >
+              <Link to="/bulk-orders">Bulk &amp; Institutional Orders</Link>
+            </Button>
+          </motion.div>
+
+          {/* Trust badges */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-white/50"
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-mint" />
+              Non-GMO Certified
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-mint" />
+              HACCP Certified
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-mint" />
+              Chemical Free
+            </div>
+            <img src={proudlySALogo} alt="Proudly South African" className="h-10 w-auto opacity-60" />
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:left-8 md:p-3"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+      </button>
+      
+      <button
+        onClick={nextSlide}
+        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:right-8 md:p-3"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+      </button>
+
+      {/* Play/Pause Button */}
+      <button
+        onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+        className="absolute bottom-24 right-4 z-20 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 md:bottom-32 md:right-8 md:p-2.5"
+        aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}
+      >
+        {isAutoPlaying ? (
+          <Pause className="h-4 w-4 md:h-5 md:w-5" />
+        ) : (
+          <Play className="h-4 w-4 md:h-5 md:w-5" />
+        )}
+      </button>
+
+      {/* Dots Indicator */}
+      <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+        {heroSlides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide
+                ? "w-8 bg-mint"
+                : "w-2 bg-white/50 hover:bg-white/75"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
+
 const Index = () => {
   const featuredProducts = getFeaturedProducts();
   
   return (
     <div className="flex flex-col">
-      {/* Hero Section - Full-width WordPress-style */}
-      <section className="relative min-h-[100vh] bg-foreground">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img
-            src={productLineup}
-            alt="Mint & Honey product range - Vuma, Bamba, Gogo's Maize Meal, Nyama Choma"
-            className="h-full w-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/70 to-foreground/40" />
-        </div>
-        
-        <div className="container relative mx-auto flex min-h-[100vh] flex-col items-center justify-center px-4 py-32 text-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="max-w-4xl"
-          >
-            <motion.span 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="wp-badge mb-6 border border-primary-foreground/20 bg-primary-foreground/10 text-primary-foreground/90"
-            >
-              <Leaf className="h-4 w-4" />
-              Proudly South African · Enriching Lives Since 2009
-            </motion.span>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="mb-6 font-display text-4xl font-bold leading-tight text-primary-foreground md:text-6xl lg:text-7xl"
-            >
-              Non-GMO Fortified{" "}
-              <span className="text-gradient-honey">Grain Products</span>
-              <br />
-              <span className="text-primary-foreground/80">for Africa</span>
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="mx-auto mb-10 max-w-2xl text-lg text-primary-foreground/70 md:text-xl"
-            >
-              We manufacture high-quality fortified cereals, corn &amp; soya products as 
-              ingredients for food manufacturers, NGOs, and government feeding programs 
-              across the African continent.
-            </motion.p>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="flex flex-wrap justify-center gap-4"
-            >
-              <Button variant="mint" size="xl" asChild>
-                <Link to="/shop">
-                  Explore Products
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                variant="outline"
-                size="xl"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-                asChild
-              >
-                <Link to="/bulk-orders">Bulk &amp; Institutional Orders</Link>
-              </Button>
-            </motion.div>
-
-            {/* Trust badges */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-primary-foreground/50"
-            >
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-mint" />
-                Non-GMO Certified
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-mint" />
-                HACCP Certified
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-mint" />
-                Chemical Free
-              </div>
-              <img src={proudlySALogo} alt="Proudly South African" className="h-10 w-auto opacity-60" />
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Hero Slideshow Section */}
+      <HeroSlideshow />
 
       {/* Stats Banner */}
       <section className="bg-mint py-12 md:py-16">
@@ -258,7 +378,7 @@ const Index = () => {
             >
               <div className="wp-image aspect-[4/3]">
                 <img
-                  src={officeReception}
+                  src={delivering_offloading}
                   alt="Mint & Honey office reception with company branding"
                 />
               </div>
@@ -335,7 +455,7 @@ const Index = () => {
       <section className="relative bg-foreground py-20 md:py-32">
         <div className="absolute inset-0">
           <img
-            src={facilityAerial}
+            src={facilityInside}
             alt="Aerial view of Mint & Honey Atlantis agro-processing facility"
             className="h-full w-full object-cover opacity-20"
           />
@@ -390,7 +510,7 @@ const Index = () => {
               className="wp-image aspect-video"
             >
               <img
-                src={facilityAerial}
+                src={facilityInside}
                 alt="Mint & Honey Atlantis facility aerial view"
               />
             </motion.div>
@@ -571,7 +691,7 @@ const Index = () => {
             <Button
               variant="outline"
               size="xl"
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+              className="border-primary-foreground/30 text-black-foreground hover:bg-primary-foreground/10 hover:text-white"
               asChild
             >
               <Link to="/bulk-orders">Bulk Orders</Link>
