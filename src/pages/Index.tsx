@@ -1,37 +1,21 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Heart, Shield, Leaf, Users, Award, TrendingUp } from "lucide-react";
+import { ArrowRight, Heart, Shield, Leaf, Users, Award, TrendingUp, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
 import { getFeaturedProducts } from "@/lib/products";
-import heroImage from "@/assets/hero-image.jpg";
-import impactImage from "@/assets/impact-children.jpg";
-import communityImage from "@/assets/community-kitchen.jpg";
+import productLineup from "@/assets/product-lineup.jpg";
+import teamPhoto from "@/assets/team-photo.jpg";
+import facilityAerial from "@/assets/facility-aerial.jpg";
+import officeReception from "@/assets/office-reception.jpg";
+import proudlySALogo from "@/assets/proudly-sa-logo.png";
 import { useEffect, useState, useRef } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 const stats = [
   { value: "500K+", label: "Meals Provided", icon: Heart },
   { value: "120+", label: "Partner Schools", icon: Users },
   { value: "15+", label: "Years Experience", icon: Award },
   { value: "6", label: "SDGs Supported", icon: TrendingUp }
-];
-
-const values = [
-  {
-    icon: Shield,
-    title: "Quality Assured",
-    description: "All products meet strict food safety and quality standards with proper certifications."
-  },
-  {
-    icon: Leaf,
-    title: "Nutrition First",
-    description: "Fortified with essential vitamins and minerals to combat malnutrition and hidden hunger."
-  },
-  {
-    icon: Heart,
-    title: "Community Impact",
-    description: "Supporting food security initiatives and feeding programs across South Africa."
-  }
 ];
 
 const testimonials = [
@@ -52,7 +36,7 @@ const testimonials = [
   }
 ];
 
-// Animated Counter Component with Framer Motion
+// Animated Counter Component
 const AnimatedCounter = ({ target }: { target: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
@@ -60,81 +44,31 @@ const AnimatedCounter = ({ target }: { target: string }) => {
   
   useEffect(() => {
     if (!isInView) return;
-    
     const numericValue = parseInt(target.replace(/[^0-9]/g, '')) || 0;
     const duration = 3000;
     const startTime = Date.now();
     
     const updateCounter = () => {
-      const currentTime = Date.now();
-      const elapsed = currentTime - startTime;
+      const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
-      // Cubic ease-out
       const easeOut = 1 - Math.pow(1 - progress, 3);
-      const currentValue = Math.floor(easeOut * numericValue);
-      
-      setCount(currentValue);
-      
-      if (progress < 1) {
-        requestAnimationFrame(updateCounter);
-      } else {
-        setCount(numericValue);
-      }
+      setCount(Math.floor(easeOut * numericValue));
+      if (progress < 1) requestAnimationFrame(updateCounter);
+      else setCount(numericValue);
     };
-    
     requestAnimationFrame(updateCounter);
   }, [isInView, target]);
   
   const formatNumber = (num: number, original: string) => {
-    if (original.includes('K')) {
-      return `${num}K+`;
-    } else if (original.includes('+')) {
-      return `${num}+`;
-    }
+    if (original.includes('K')) return `${num}K+`;
+    if (original.includes('+')) return `${num}+`;
     return num.toString();
   };
   
   return (
-    <div ref={ref} className="font-display text-2xl font-bold text-foreground">
+    <div ref={ref} className="font-display text-3xl font-bold text-foreground md:text-4xl">
       {formatNumber(count, target)}
     </div>
-  );
-};
-
-// Animated Stat Item Component - SIMPLIFIED
-const AnimatedStatItem = ({ stat, index }: { stat: typeof stats[0], index: number }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-  
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30, scale: 0.8 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.8 }}
-      transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
-      className="flex items-center gap-3"
-    >
-      <motion.div 
-        initial={{ rotate: -90, scale: 0 }}
-        animate={isInView ? { rotate: 0, scale: 1 } : { rotate: -90, scale: 0 }}
-        transition={{ duration: 0.6, delay: index * 0.2 + 0.2, ease: "easeOut" }}
-        className="flex h-12 w-12 items-center justify-center rounded-lg bg-mint-light"
-      >
-        <stat.icon className="h-6 w-6 text-mint" />
-      </motion.div>
-      <div>
-        <AnimatedCounter target={stat.value} />
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-          transition={{ duration: 0.5, delay: index * 0.2 + 0.4 }}
-          className="text-sm text-muted-foreground"
-        >
-          {stat.label}
-        </motion.div>
-      </div>
-    </motion.div>
   );
 };
 
@@ -143,103 +77,224 @@ const Index = () => {
   
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] overflow-hidden bg-gradient-hero">
+      {/* Hero Section - Full-width WordPress-style */}
+      <section className="relative min-h-[100vh] bg-foreground">
+        {/* Background Image */}
         <div className="absolute inset-0">
           <img
-            src={heroImage}
-            alt="Nutritious food products"
-            className="h-full w-full object-cover opacity-100"
+            src={productLineup}
+            alt="Mint & Honey product range - Vuma, Bamba, Gogo's Maize Meal, Nyama Choma"
+            className="h-full w-full object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/70 to-foreground/40" />
         </div>
         
-        <div className="container relative mx-auto flex min-h-[90vh] items-center px-4 py-20">
+        <div className="container relative mx-auto flex min-h-[100vh] flex-col items-center justify-center px-4 py-32 text-center">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-2xl"
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="max-w-4xl"
           >
             <motion.span 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-4 inline-flex items-center gap-2 rounded-full bg-mint-light px-4 py-1.5 text-sm font-medium text-mint-dark"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="wp-badge mb-6 border border-primary-foreground/20 bg-primary-foreground/10 text-primary-foreground/90"
             >
               <Leaf className="h-4 w-4" />
-              Nourishing Communities Since 2009
+              Proudly South African · Enriching Lives Since 2009
             </motion.span>
             
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mb-6 font-display text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl"
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="mb-6 font-display text-4xl font-bold leading-tight text-primary-foreground md:text-6xl lg:text-7xl"
             >
-              Non-GMO Fortified Cereals &{" "}
-              <span className="text-gradient-mint">Grain Products for Africa</span>
+              Non-GMO Fortified{" "}
+              <span className="text-gradient-honey">Grain Products</span>
+              <br />
+              <span className="text-primary-foreground/80">for Africa</span>
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="mb-8 text-lg text-muted-foreground md:text-xl"
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="mx-auto mb-10 max-w-2xl text-lg text-primary-foreground/70 md:text-xl"
             >
-              We manufacture non-GMO fortified cereals, corn & soya products as ingredients 
-              for food manufacturers, NGOs, school feeding schemes, and government nutrition 
-              programs across Africa. Enriching lives from our Atlantis facility.
+              We manufacture high-quality fortified cereals, corn &amp; soya products as 
+              ingredients for food manufacturers, NGOs, and government feeding programs 
+              across the African continent.
             </motion.p>
             
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-wrap gap-4"
+              transition={{ duration: 0.8, delay: 0.9 }}
+              className="flex flex-wrap justify-center gap-4"
             >
               <Button variant="mint" size="xl" asChild>
                 <Link to="/shop">
-                  Shop Products
+                  Explore Products
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="mint-outline" size="xl" asChild>
-                <Link to="/bulk-orders">Bulk & Institutional Orders</Link>
+              <Button
+                variant="outline"
+                size="xl"
+                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                asChild
+              >
+                <Link to="/bulk-orders">Bulk &amp; Institutional Orders</Link>
               </Button>
+            </motion.div>
+
+            {/* Trust badges */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-primary-foreground/50"
+            >
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-mint" />
+                Non-GMO Certified
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-mint" />
+                HACCP Certified
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-mint" />
+                Chemical Free
+              </div>
+              <img src={proudlySALogo} alt="Proudly South African" className="h-10 w-auto opacity-60" />
             </motion.div>
           </motion.div>
         </div>
+      </section>
 
-        {/* Floating Stats */}
-        <div className="absolute bottom-0 left-0 right-0 bg-background/80 backdrop-blur">
-          <div className="container mx-auto px-4 py-6">
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-              {stats.map((stat, index) => (
-                <AnimatedStatItem key={index} stat={stat} index={index} />
-              ))}
-            </div>
+      {/* Stats Banner */}
+      <section className="bg-mint py-12 md:py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <stat.icon className="mx-auto mb-3 h-8 w-8 text-primary-foreground/70" />
+                <AnimatedCounter target={stat.value} />
+                <div className="mt-1 text-sm font-medium text-primary-foreground/80">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About / Who We Are - WordPress-style content block */}
+      <section className="bg-background py-20 md:py-32">
+        <div className="container mx-auto px-4">
+          <div className="grid items-center gap-16 lg:grid-cols-2">
+            <motion.div 
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <span className="wp-badge mb-6 bg-mint-light text-mint-dark">
+                Who We Are
+              </span>
+              <h2 className="mb-6 font-display text-foreground">
+                Manufacturer of High-Quality Cereals &amp; Processed Grains
+              </h2>
+              <p className="mb-6 text-lg text-muted-foreground">
+                Mint &amp; Honey is a Proudly South African food manufacturing company 
+                specialising in non-GMO fortified cereals, corn &amp; soya products as 
+                ingredients for food manufacturers, NGOs, and government feeding programs.
+              </p>
+              <p className="mb-8 text-muted-foreground">
+                What makes us unique is our focus on manufacturing non-GMO cereals 
+                and corn &amp; soya products as ingredients, serving clients from humanitarian 
+                organisations to local food manufacturers across Africa.
+              </p>
+
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { icon: Shield, label: "HACCP Certified" },
+                  { icon: Leaf, label: "Non-GMO Products" },
+                  { icon: Award, label: "Quality Assured" },
+                  { icon: Heart, label: "Community Impact" }
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 rounded-lg bg-muted p-3">
+                    <item.icon className="h-5 w-5 flex-shrink-0 text-mint" />
+                    <span className="text-sm font-medium text-foreground">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Button variant="mint" className="mt-8" size="lg" asChild>
+                <Link to="/about">
+                  Learn Our Story
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="wp-image aspect-[4/3]">
+                <img
+                  src={officeReception}
+                  alt="Mint & Honey office reception with company branding"
+                />
+              </div>
+              {/* Floating card */}
+              <motion.div 
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4, type: "spring" }}
+                viewport={{ once: true }}
+                className="absolute -bottom-6 -left-6 rounded-xl bg-honey p-5 shadow-card"
+              >
+                <div className="font-display text-3xl font-bold text-secondary-foreground">15+</div>
+                <div className="text-sm font-medium text-secondary-foreground/80">Years of<br />Excellence</div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Featured Products */}
-      <section className="bg-background py-20 md:py-28">
+      <section className="bg-muted py-20 md:py-32">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="mb-12 text-center"
+            className="mb-16 text-center"
           >
-            <span className="mb-2 inline-block text-sm font-medium uppercase tracking-wider text-honey">
+            <span className="wp-badge mb-4 bg-honey-light text-honey-dark">
               Our Products
             </span>
-            <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
+            <h2 className="mb-4 font-display text-foreground section-divider">
               Featured Nutritious Products
             </h2>
-            <p className="mx-auto max-w-2xl text-muted-foreground">
+            <p className="mx-auto mt-8 max-w-2xl text-lg text-muted-foreground">
               Discover our range of fortified cereals, porridges, and grain-based products 
               designed to combat malnutrition and support community health.
             </p>
@@ -266,7 +321,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="mt-12 text-center"
           >
-            <Button variant="mint-outline" size="lg" asChild>
+            <Button variant="mint" size="lg" asChild>
               <Link to="/shop">
                 View All Products
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -276,179 +331,92 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Why Nutrition Matters */}
-      <section className="bg-beige py-20 md:py-28">
-        <div className="container mx-auto px-4">
+      {/* Atlantis Facility - Full-width WordPress block */}
+      <section className="relative bg-foreground py-20 md:py-32">
+        <div className="absolute inset-0">
+          <img
+            src={facilityAerial}
+            alt="Aerial view of Mint & Honey Atlantis agro-processing facility"
+            className="h-full w-full object-cover opacity-20"
+          />
+        </div>
+        <div className="container relative mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <span className="mb-2 inline-block text-sm font-medium uppercase tracking-wider text-honey">
-                Why Nutrition Matters
+              <span className="wp-badge mb-6 bg-mint/20 text-mint">
+                🚀 Major Milestone
               </span>
-              <h2 className="mb-6 font-display text-3xl font-bold text-foreground md:text-4xl">
-                Combating Hidden Hunger in South Africa
+              <h2 className="mb-6 font-display text-primary-foreground">
+                Our Atlantis Facility is Taking Shape
               </h2>
-              <p className="mb-6 text-muted-foreground">
-                Hidden hunger—micronutrient deficiency—affects millions of South Africans, 
-                particularly children. Our fortified products are specifically designed to 
-                address this critical health challenge.
+              <p className="mb-8 text-lg text-primary-foreground/70">
+                The Mint &amp; Honey Agro-Processing Facility in Atlantis Industrial, Western Cape 
+                represents our commitment to strengthening food security, supporting local 
+                agriculture, and creating sustainable employment.
               </p>
-              
-              <div className="space-y-4">
-                {values.map((value, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.2 }}
-                    viewport={{ once: true }}
-                    className="flex gap-4 rounded-lg bg-background p-4 shadow-soft"
-                  >
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-mint-light">
-                      <value.icon className="h-6 w-6 text-mint" />
-                    </div>
-                    <div>
-                      <h3 className="mb-1 font-display font-semibold text-foreground">
-                        {value.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">{value.description}</p>
-                    </div>
-                  </motion.div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {[
+                  "Grain to nutrition processing",
+                  "Maize & soya storage silos",
+                  "Milling, extrusion & blending",
+                  "Quality control laboratory",
+                  "Export-ready infrastructure",
+                  "Dedicated dispatch logistics"
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2 text-primary-foreground/80">
+                    <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-mint" />
+                    <span className="text-sm">{item}</span>
+                  </div>
                 ))}
               </div>
+              <Button variant="mint" className="mt-8" size="lg" asChild>
+                <Link to="/about">
+                  Learn More
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
             </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <motion.img
-                initial={{ scale: 0.9 }}
-                whileInView={{ scale: 1 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                src={impactImage}
-                alt="Children enjoying nutritious meals"
-                className="rounded-2xl shadow-elevated"
-              />
-              <motion.div 
-                initial={{ scale: 0, rotate: -10 }}
-                whileInView={{ scale: 1, rotate: 0 }}
-                transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
-                viewport={{ once: true }}
-                className="absolute -bottom-6 -left-6 rounded-xl bg-honey p-6 shadow-card"
-              >
-                <div className="font-display text-3xl font-bold text-secondary-foreground">27%</div>
-                <div className="text-sm text-secondary-foreground/80">
-                  of SA children<br />experience stunting
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* Mission & SDG Alignment */}
-      <section className="bg-background py-20 md:py-28">
-        <div className="container mx-auto px-4">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="order-2 lg:order-1"
+              className="wp-image aspect-video"
             >
               <img
-                src={communityImage}
-                alt="Community kitchen volunteers"
-                className="rounded-2xl shadow-elevated"
+                src={facilityAerial}
+                alt="Mint & Honey Atlantis facility aerial view"
               />
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="order-1 lg:order-2"
-            >
-              <span className="mb-2 inline-block text-sm font-medium uppercase tracking-wider text-honey">
-                Our Mission
-              </span>
-              <h2 className="mb-6 font-display text-3xl font-bold text-foreground md:text-4xl">
-                Aligned with UN Sustainable Development Goals
-              </h2>
-              <p className="mb-6 text-muted-foreground">
-                We're committed to contributing to global food security through our work 
-                in South Africa. Our operations directly support multiple UN SDGs.
-              </p>
-              
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[
-                  { number: "SDG 2", title: "Zero Hunger", color: "mint" },
-                  { number: "SDG 3", title: "Good Health & Well-being", color: "mint" },
-                  { number: "SDG 4", title: "Quality Education", color: "mint" },
-                  { number: "SDG 12", title: "Responsible Consumption", color: "mint" }
-                ].map((sdg, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: index * 0.15 }}
-                    viewport={{ once: true }}
-                    className="rounded-lg border border-border bg-card p-4"
-                  >
-                    <div className="mb-2 font-display text-lg font-semibold text-mint">{sdg.number}</div>
-                    <div className="text-sm text-muted-foreground">{sdg.title}</div>
-                  </motion.div>
-                ))}
-              </div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <Button variant="mint" className="mt-8" asChild>
-                  <Link to="/impact">
-                    Learn About Our Impact
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="bg-gradient-hero py-20 md:py-28">
+      <section className="bg-background py-20 md:py-32">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="mb-12 text-center"
+            className="mb-16 text-center"
           >
-            <span className="mb-2 inline-block text-sm font-medium uppercase tracking-wider text-honey">
+            <span className="wp-badge mb-4 bg-mint-light text-mint-dark">
               Testimonials
             </span>
-            <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
-              Trusted by Communities & Organizations
+            <h2 className="mb-4 font-display text-foreground">
+              Trusted by Communities &amp; Organizations
             </h2>
           </motion.div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
@@ -456,15 +424,20 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className="rounded-xl bg-background p-6 shadow-card"
+                className="rounded-2xl border border-border bg-card p-8 shadow-soft transition-all hover:shadow-card"
               >
-                <div className="mb-4 text-4xl text-mint">"</div>
-                <p className="mb-6 italic text-muted-foreground">
+                <div className="mb-4 font-display text-5xl leading-none text-mint/30">"</div>
+                <p className="mb-6 text-muted-foreground leading-relaxed">
                   {testimonial.quote}
                 </p>
-                <div>
-                  <div className="font-medium text-foreground">{testimonial.author}</div>
-                  <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                <div className="flex items-center gap-3 border-t border-border pt-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-mint-light font-display text-sm font-bold text-mint-dark">
+                    {testimonial.author.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="font-medium text-foreground">{testimonial.author}</div>
+                    <div className="text-xs text-muted-foreground">{testimonial.role}</div>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -472,24 +445,24 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Partners */}
-      <section className="bg-background py-16">
+      {/* Partners - WordPress-style logo bar */}
+      <section className="border-y border-border bg-muted py-16">
         <div className="container mx-auto px-4">
           <motion.p 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="mb-8 text-center text-sm uppercase tracking-wider text-muted-foreground"
+            className="mb-10 text-center text-sm font-medium uppercase tracking-widest text-muted-foreground"
           >
-            Trusted by leading organizations across South Africa
+            Trusted by leading organizations across Africa
           </motion.p>
           <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="flex flex-wrap items-center justify-center gap-8 md:gap-16"
+            className="flex flex-wrap items-center justify-center gap-6 md:gap-10"
           >
             {[
               { name: "Mary's Meals", url: "https://www.marysmeals.org/" },
@@ -497,37 +470,84 @@ const Index = () => {
               { name: "Government Feeding Schemes", url: null },
               { name: "Food Manufacturers", url: null },
               { name: "ECD Centres", url: null }
-            ].map(
-              (partner, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  {partner.url ? (
-                    <a
-                      href={partner.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-12 items-center rounded-lg border border-border bg-card px-6 text-sm font-medium text-foreground transition-all hover:border-mint hover:shadow-soft"
-                    >
-                      {partner.name}
-                    </a>
-                  ) : (
-                    <div className="flex h-12 items-center rounded-lg border border-border bg-card px-6 text-sm font-medium text-foreground">
-                      {partner.name}
-                    </div>
-                  )}
-                </motion.div>
-              )
-            )}
+            ].map((partner, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                {partner.url ? (
+                  <a
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-14 items-center rounded-xl border border-border bg-background px-8 text-sm font-semibold text-foreground transition-all hover:border-mint hover:shadow-soft"
+                  >
+                    {partner.name}
+                  </a>
+                ) : (
+                  <div className="flex h-14 items-center rounded-xl border border-border bg-background px-8 text-sm font-semibold text-foreground">
+                    {partner.name}
+                  </div>
+                )}
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Team Section */}
+      <section className="bg-background py-20 md:py-32">
+        <div className="container mx-auto px-4">
+          <div className="grid items-center gap-16 lg:grid-cols-2">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="wp-image aspect-[4/3]"
+            >
+              <img
+                src={teamPhoto}
+                alt="The Mint & Honey team at company headquarters"
+              />
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <span className="wp-badge mb-6 bg-honey-light text-honey-dark">
+                Our Team
+              </span>
+              <h2 className="mb-6 font-display text-foreground">
+                A Team Dedicated to Enriching Lives
+              </h2>
+              <p className="mb-6 text-lg text-muted-foreground">
+                Our diverse and passionate team brings together expertise in food science, 
+                manufacturing, nutrition, and community development to deliver products 
+                that make a real difference.
+              </p>
+              <p className="mb-8 text-muted-foreground">
+                From our Atlantis facility to communities across Africa, we're committed to 
+                sustainable quality for the wellbeing of future generations.
+              </p>
+              <Button variant="mint-outline" size="lg" asChild>
+                <Link to="/about">
+                  Meet the Team
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Full-width WordPress block */}
       <section className="bg-mint py-20 md:py-28">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -536,24 +556,25 @@ const Index = () => {
           viewport={{ once: true }}
           className="container mx-auto px-4 text-center"
         >
-          <h2 className="mb-4 font-display text-3xl font-bold text-primary-foreground md:text-4xl">
-            Ready to Make a Difference?
+          <h2 className="mb-4 font-display text-primary-foreground">
+            Ready to Partner With Us?
           </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-primary-foreground/90">
-            Whether you're purchasing for your household, school, or large-scale feeding program, 
-            we're here to support your nutrition needs.
+          <p className="mx-auto mb-10 max-w-2xl text-lg text-primary-foreground/80">
+            Whether you're a food manufacturer, NGO, government department, or running 
+            feeding programs — we'd love to discuss how our non-GMO fortified products 
+            can support your nutritional needs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button variant="honey" size="xl" asChild>
-              <Link to="/shop">Shop Now</Link>
+              <Link to="/contact">Get In Touch</Link>
             </Button>
             <Button
               variant="outline"
               size="xl"
-              className="border-primary-foreground text-secondary-foreground hover:bg-primary-foreground hover:text-mint"
+              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
               asChild
             >
-              <Link to="/contact">Contact Us</Link>
+              <Link to="/bulk-orders">Bulk Orders</Link>
             </Button>
           </div>
         </motion.div>

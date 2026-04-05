@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,7 +7,7 @@
 /* Mint & Honey Design System
    Primary: Mint Green, Honey Gold
    Secondary: Soft Beige, Charcoal, White
-   Style: Clean, modern, nutrition-focused
+   Style: Clean, modern, nutrition-focused, WordPress-like
 */
 
 @layer base {
@@ -28,31 +28,31 @@
 
     /* Semantic tokens */
     --background: 0 0% 100%;
-    --foreground: 220 10% 25%;
+    --foreground: 220 10% 20%;
 
-    --card: 35 30% 98%;
-    --card-foreground: 220 10% 25%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 10% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 10% 25%;
+    --popover-foreground: 220 10% 20%;
 
     --primary: 153 58% 47%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 38 80% 56%;
-    --secondary-foreground: 220 10% 20%;
+    --secondary-foreground: 220 10% 15%;
 
     --muted: 35 30% 96%;
-    --muted-foreground: 220 8% 50%;
+    --muted-foreground: 220 8% 46%;
 
     --accent: 38 70% 92%;
-    --accent-foreground: 220 10% 25%;
+    --accent-foreground: 220 10% 20%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 35 20% 88%;
-    --input: 35 20% 88%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
     --ring: 153 58% 47%;
 
     --radius: 0.75rem;
@@ -105,18 +105,43 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: "Inter", system-ui, sans-serif;
+    @apply bg-background text-foreground;
+    font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    font-family: "Playfair Display", serif;
+  h1, h2, h3, h4 {
+    font-family: "Playfair Display", Georgia, serif;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  h1 {
+    @apply text-4xl font-bold md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl font-bold md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-xl font-semibold md:text-2xl;
+  }
+
+  p {
+    line-height: 1.75;
+  }
+
+  /* WordPress-like section spacing */
+  section {
+    @apply relative overflow-hidden;
   }
 }
 
@@ -166,5 +191,45 @@
   .hover-lift:hover {
     @apply -translate-y-1;
     box-shadow: var(--shadow-elevated);
+  }
+
+  /* WordPress-like content widths */
+  .wp-content-narrow {
+    @apply mx-auto max-w-3xl;
+  }
+
+  .wp-content-wide {
+    @apply mx-auto max-w-6xl;
+  }
+
+  /* Section divider */
+  .section-divider {
+    @apply relative;
+  }
+
+  .section-divider::after {
+    content: "";
+    @apply mx-auto block h-1 w-16 rounded-full;
+    background: var(--gradient-mint);
+    margin-top: 1.5rem;
+  }
+
+  /* Image treatment */
+  .wp-image {
+    @apply overflow-hidden rounded-2xl;
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .wp-image img {
+    @apply h-full w-full object-cover transition-transform duration-700;
+  }
+
+  .wp-image:hover img {
+    @apply scale-105;
+  }
+
+  /* Badge style */
+  .wp-badge {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium uppercase tracking-widest;
   }
 }
