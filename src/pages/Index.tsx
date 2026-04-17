@@ -701,6 +701,12 @@ const Index = () => {
           </div>
         </motion.div>
       </section>
+
+      {/* As Featured On - ASEZ Green Energy */}
+      <AsFeaturedOn />
+
+      {/* Newsletter Signup */}
+      <Newsletter />
     </div>
   );
 };
