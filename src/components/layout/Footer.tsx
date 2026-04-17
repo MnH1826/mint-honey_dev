@@ -76,19 +76,23 @@ export const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-display text-lg font-semibold">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              {["/shop", "/bulk-orders", "/about", "/impact"].map((path, index) => {
-                const labels = ["Shop Products", "Bulk Orders", "About Us", "Our Impact"];
-                return (
-                  <li key={path}>
-                    <button
-                      onClick={() => handleNavClick(path)}
-                      className="text-muted-foreground transition-colors hover:text-mint"
-                    >
-                      {labels[index]}
-                    </button>
-                  </li>
-                );
-              })}
+              {[
+                { path: "/shop", label: "Shop Products" },
+                { path: "/bulk-orders", label: "Bulk Orders" },
+                { path: "/about", label: "About Us" },
+                { path: "/impact", label: "Our Impact" },
+                { path: "/privacy-policy", label: "Privacy Policy" },
+                { path: "/terms-conditions", label: "Terms & Conditions" },
+              ].map(({ path, label }) => (
+                <li key={path}>
+                  <button
+                    onClick={() => handleNavClick(path)}
+                    className="text-left text-muted-foreground transition-colors hover:text-mint"
+                  >
+                    {label}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 

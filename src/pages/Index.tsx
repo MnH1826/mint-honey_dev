@@ -16,6 +16,8 @@ import storedImage from "@/assets/stored.webp";
 import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import facility_outside_location from "@/assets/facility_outside_location.webp";
+import { Newsletter } from "@/components/Newsletter";
+import { AsFeaturedOn } from "@/components/AsFeaturedOn";
 const stats = [
   { value: "500K+", label: "Meals Provided", icon: Heart },
   { value: "120+", label: "Partner Schools", icon: Users },
@@ -699,6 +701,12 @@ const Index = () => {
           </div>
         </motion.div>
       </section>
+
+      {/* As Featured On - ASEZ Green Energy */}
+      <AsFeaturedOn />
+
+      {/* Newsletter Signup */}
+      <Newsletter />
     </div>
   );
 };
