@@ -393,7 +393,7 @@ const Index = () => {
                 viewport={{ once: true }}
                 className="absolute -bottom-6 -left-6 rounded-xl bg-honey p-5 shadow-card"
               >
-                <div className="font-display text-3xl font-bold text-secondary-foreground">15+</div>
+                <div className="font-display text-3xl font-bold text-secondary-foreground">30+</div>
                 <div className="text-sm font-medium text-secondary-foreground/80">Years of<br />Excellence</div>
               </motion.div>
             </motion.div>
