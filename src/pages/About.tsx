@@ -9,7 +9,7 @@ import teamPhoto from "@/assets/team-photo.jpg";
 import boardroomMeeting from "@/assets/boardroom-meeting.jpg";
 import qualityLab from "@/assets/quality-lab.jpg";
 import facilityAerial from "@/assets/facility-aerial.jpg";
-import officeReception from "@/assets/office-reception.jpg";
+import facility from "@/assets/facility_outside_location.webp";
 import teamBanner from "@/assets/team-banner.jpg";
 import productLineup from "@/assets/product-lineup.jpg";
 import MnH_products from "@/assets/MnH_products.webp";
@@ -113,7 +113,7 @@ const About = () => {
       <section className="bg-background py-4">
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
           {[
-            { src: officeReception, alt: "Office reception" },
+            { src: facility, alt: "Facility exterior" },
             { src: boardroomMeeting, alt: "Boardroom meeting" },
             { src: reception, alt: "The Reception Area" },
             { src: facility_outdoor, alt: "Mint & Honey logo" },

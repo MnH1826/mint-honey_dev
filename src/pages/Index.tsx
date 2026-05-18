@@ -6,7 +6,7 @@ import { getFeaturedProducts } from "@/lib/products";
 import productLineup from "@/assets/product-lineup.jpg";
 import teamPhoto from "@/assets/ceo_co_hr_coo.webp";
 import facilityInside from "@/assets/facility-aerial.jpg";
-import delivering_offloading from "@/assets/delivering_offloading.webp";
+import Reception from "@/assets/reception.webp";
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
 import ceoImage from "@/assets/ceo_co_hr_coo.webp";
 import mnHImage from "@/assets/MnH_1.webp";
@@ -20,9 +20,9 @@ import { Newsletter } from "@/components/Newsletter";
 import { AsFeaturedOn } from "@/components/AsFeaturedOn";
 import { LinkedInFeed } from "@/components/LinkedInFeed";
 const stats = [
-  { value: "500K+", label: "Meals Provided", icon: Heart },
+  { value: "98K+", label: "Kids Per week", icon: Heart },
   { value: "120+", label: "Partner Schools", icon: Users },
-  { value: "15+", label: "Years Experience", icon: Award },
+  { value: "30+", label: "Years Experience", icon: Award },
   { value: "6", label: "SDGs Supported", icon: TrendingUp }
 ];
 
@@ -381,7 +381,7 @@ const Index = () => {
             >
               <div className="wp-image aspect-[4/3]">
                 <img
-                  src={delivering_offloading}
+                  src={Reception}
                   alt="Mint & Honey office reception with company branding"
                 />
               </div>
