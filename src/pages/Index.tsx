@@ -13,12 +13,32 @@ import mnHImage from "@/assets/MnH_1.webp";
 import facilityImage from "@/assets/facility_outdoor_2.webp";
 import hrImage from "@/assets/Hr_ceo_coo.webp";
 import storedImage from "@/assets/stored.webp";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback, memo } from "react";
 import { motion, useInView } from "framer-motion";
 import facility_outside_location from "@/assets/facility_outside_location.webp";
 import { Newsletter } from "@/components/Newsletter";
 import { AsFeaturedOn } from "@/components/AsFeaturedOn";
 import { LinkedInFeed } from "@/components/LinkedInFeed";
+
+// Trusted partners logos
+import atlantisLogo from "@/assets/atlantis.webp";
+import buhlerLogo from "@/assets/buhler-logo.webp";
+import dtiLogo from "@/assets/DTI-LOGO-1.webp";
+import sadccLogo from "@/assets/sadcc_logo_800_450shar-50brig-20_c1.webp";
+import sedaLogo from "@/assets/seda-logo.webp";
+import sedfaLogo from "@/assets/SEDFA-LOGO.webp";
+import superCerealPlusLogo from "@/assets/Super-Cereal-Plus.webp";
+
+const trustedPartners = [
+  { name: "Atlantis", logo: atlantisLogo },
+  { name: "Buhler", logo: buhlerLogo },
+  { name: "DTI", logo: dtiLogo },
+  { name: "SADCC", logo: sadccLogo },
+  { name: "SEDA", logo: sedaLogo },
+  { name: "SEDFA", logo: sedfaLogo },
+  { name: "Super Cereal Plus", logo: superCerealPlusLogo },
+];
+
 const stats = [
   { value: "98K+", label: "Kids Per week", icon: Heart },
   { value: "120+", label: "Partner Schools", icon: Users },
@@ -84,45 +104,52 @@ const heroSlides = [
 ];
 
 // Animated Counter Component
-const AnimatedCounter = ({ target }: { target: string }) => {
-  const ref = useRef(null);
+const AnimatedCounter = memo(({ target }: { target: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [count, setCount] = useState(0);
-  
+  const numericValue = parseInt(target.replace(/[^0-9]/g, "")) || 0;
+
   useEffect(() => {
     if (!isInView) return;
-    const numericValue = parseInt(target.replace(/[^0-9]/g, '')) || 0;
-    const duration = 3000;
-    const startTime = Date.now();
-    
-    const updateCounter = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(easeOut * numericValue));
-      if (progress < 1) requestAnimationFrame(updateCounter);
-      else setCount(numericValue);
+    const duration = 2000;
+    const startTime = performance.now();
+    let rafId: number;
+    const tick = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * numericValue));
+      if (progress < 1) rafId = requestAnimationFrame(tick);
     };
-    requestAnimationFrame(updateCounter);
-  }, [isInView, target]);
-  
-  const formatNumber = (num: number, original: string) => {
-    if (original.includes('K')) return `${num}K+`;
-    if (original.includes('+')) return `${num}+`;
-    return num.toString();
-  };
-  
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [isInView, numericValue]);
+
+  const display = target.includes("K") ? `${count}K+` : target.includes("+") ? `${count}+` : count.toString();
+
   return (
     <div ref={ref} className="font-display text-3xl font-bold text-foreground md:text-4xl">
-      {formatNumber(count, target)}
+      {display}
     </div>
   );
-};
+});
+AnimatedCounter.displayName = "AnimatedCounter";
 
 // Hero Slideshow Component
-const HeroSlideshow = () => {
+const HeroSlideshow = memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const resumeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const pauseAndResume = useCallback(() => {
+    setIsAutoPlaying(false);
+    if (resumeRef.current) clearTimeout(resumeRef.current);
+    resumeRef.current = setTimeout(() => setIsAutoPlaying(true), 10000);
+  }, []);
+
+  useEffect(() => {
+    return () => { if (resumeRef.current) clearTimeout(resumeRef.current); };
+  }, []);
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -132,164 +159,100 @@ const HeroSlideshow = () => {
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
+    pauseAndResume();
+  }, [pauseAndResume]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
+    pauseAndResume();
+  }, [pauseAndResume]);
 
-  const goToSlide = (index: number) => {
+  const goToSlide = useCallback((index: number) => {
     setCurrentSlide(index);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
+    pauseAndResume();
+  }, [pauseAndResume]);
 
   return (
     <section className="relative min-h-[100vh] overflow-hidden">
-      {/* Slides */}
       {heroSlides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-            index === currentSlide
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-110"
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
+          aria-hidden={index !== currentSlide}
         >
-          <div className="relative h-full w-full">
-            <img
-              src={slide.image}
-              alt={slide.alt}
-              className="h-full w-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-          </div>
+          <img
+            src={slide.image}
+            alt={slide.alt}
+            className="h-full w-full object-cover"
+            loading={index === 0 ? "eager" : "lazy"}
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
         </div>
       ))}
 
-      {/* Content Overlay */}
-      <div className="container relative mx-auto flex min-h-[100vh] flex-col items-center justify-center px-4 py-32 text-center">
+      <div className="container relative z-20 mx-auto flex min-h-[100vh] flex-col items-center justify-center px-4 py-32 text-center">
         <div className="max-w-4xl">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <motion.div key={currentSlide} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <span className="wp-badge mb-6 border border-white/20 bg-white/10 text-white/90">
               <Leaf className="h-4 w-4" />
               Proudly South African · Enriching Lives Since 2009
             </span>
-            
             <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-white md:text-6xl lg:text-7xl">
               {heroSlides[currentSlide].title}
             </h1>
-            
             <p className="mx-auto mb-10 max-w-2xl text-lg text-white/80 md:text-xl">
               {heroSlides[currentSlide].subtitle}
             </p>
           </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-4"
-          >
+
+          <div className="flex flex-wrap justify-center gap-4">
             <Button variant="mint" size="xl" asChild>
               <Link to="/shop">
                 Explore Products
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button
-              variant="outline"
-              size="xl"
-              className="border-white/30 text-black hover:bg-white/10 hover:text-white"
-              asChild
-            >
+            <Button variant="outline" size="xl" className="border-white/30 text-black hover:bg-white/10 hover:text-white" asChild>
               <Link to="/bulk-orders">Bulk &amp; Institutional Orders</Link>
             </Button>
-          </motion.div>
+          </div>
 
-          {/* Trust badges */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-white/50"
-          >
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-mint" />
-              Non-GMO Certified
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-mint" />
-              HACCP Certified
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-mint" />
-              Chemical Free
-            </div>
-            <img src={proudlySALogo} alt="Proudly South African" className="h-10 w-auto opacity-60" />
-          </motion.div>
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-white/50">
+            {["Non-GMO Certified", "HACCP Certified", "Chemical Free"].map((label) => (
+              <div key={label} className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-mint" />
+                {label}
+              </div>
+            ))}
+            <img src={proudlySALogo} alt="Proudly South African" className="h-10 w-auto opacity-60" loading="lazy" />
+          </div>
         </div>
       </div>
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:left-8 md:p-3"
-        aria-label="Previous slide"
-      >
+      <button onClick={prevSlide} className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:left-8 md:p-3" aria-label="Previous slide">
         <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
       </button>
-      
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:right-8 md:p-3"
-        aria-label="Next slide"
-      >
+      <button onClick={nextSlide} className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:right-8 md:p-3" aria-label="Next slide">
         <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
       </button>
-
-      {/* Play/Pause Button */}
-      <button
-        onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-        className="absolute bottom-24 right-4 z-20 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 md:bottom-32 md:right-8 md:p-2.5"
-        aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}
-      >
-        {isAutoPlaying ? (
-          <Pause className="h-4 w-4 md:h-5 md:w-5" />
-        ) : (
-          <Play className="h-4 w-4 md:h-5 md:w-5" />
-        )}
+      <button onClick={() => setIsAutoPlaying((p) => !p)} className="absolute bottom-24 right-4 z-20 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 md:bottom-32 md:right-8 md:p-2.5" aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}>
+        {isAutoPlaying ? <Pause className="h-4 w-4 md:h-5 md:w-5" /> : <Play className="h-4 w-4 md:h-5 md:w-5" />}
       </button>
 
-      {/* Dots Indicator */}
       <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2">
         {heroSlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? "w-8 bg-mint"
-                : "w-2 bg-white/50 hover:bg-white/75"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
+          <button key={index} onClick={() => goToSlide(index)} className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? "w-8 bg-mint" : "w-2 bg-white/50 hover:bg-white/75"}`} aria-label={`Go to slide ${index + 1}`} />
         ))}
       </div>
     </section>
   );
-};
+});
+HeroSlideshow.displayName = "HeroSlideshow";
 
 const Index = () => {
   const featuredProducts = getFeaturedProducts();
@@ -385,7 +348,6 @@ const Index = () => {
                   alt="Mint & Honey office reception with company branding"
                 />
               </div>
-              {/* Floating card */}
               <motion.div 
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
@@ -472,7 +434,7 @@ const Index = () => {
               viewport={{ once: true }}
             >
               <span className="wp-badge mb-6 bg-mint/20 text-mint">
-                🚀 Major Milestone
+                Major Milestone
               </span>
               <h2 className="mb-6 font-display text-primary-foreground">
                 Our Atlantis Facility is Taking Shape
@@ -618,6 +580,56 @@ const Index = () => {
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      {/* Trusted by leading companies - Infinite Scrolling Marquee */}
+      <section className="bg-background py-16 md:py-24 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mb-10 text-center"
+          >
+            <span className="wp-badge mb-4 bg-mint-light text-mint-dark">
+              Trusted Partners
+            </span>
+            <h2 className="mb-3 font-display text-2xl font-bold text-foreground md:text-3xl">
+              Trusted by Leading Companies
+            </h2>
+            <p className="mx-auto max-w-2xl text-sm text-muted-foreground md:text-base">
+              We are proud to work with these respected organizations and partners
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Infinite Scrolling Marquee */}
+        <div className="relative w-full overflow-hidden">
+          <div className="absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-background to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+          
+          <div className="flex animate-scroll-right gap-8 py-4">
+            {[...trustedPartners, ...trustedPartners].map((partner, index) => (
+              <div
+                key={`${partner.name}-${index}`}
+                className="group flex-shrink-0 w-32 md:w-40"
+              >
+                <div className="flex items-center justify-center rounded-xl bg-white p-4 shadow-soft transition-all duration-300 hover:shadow-elevated hover:-translate-y-1">
+                  <img
+                    src={partner.logo}
+                    alt={`${partner.name} logo`}
+                    className="max-h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105 md:max-h-14"
+                    loading="lazy"
+                  />
+                </div>
+                <p className="mt-2 text-center text-xs text-muted-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  {partner.name}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

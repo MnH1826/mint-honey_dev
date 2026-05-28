@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback, memo } from "react";
 import { Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
-import { products, Product } from "@/lib/products";
+import { products } from "@/lib/products";
 import { cn } from "@/lib/utils";
 
 const categories = [
@@ -10,13 +10,13 @@ const categories = [
   { id: "cereal", label: "Cereals" },
   { id: "porridge", label: "Porridge" },
   { id: "flour", label: "Flour" },
-  { id: "protein", label: "Protein" }
+  { id: "protein", label: "Protein" },
 ];
 
 const types = [
   { id: "all", label: "All" },
   { id: "retail", label: "Retail" },
-  { id: "bulk", label: "Bulk" }
+  { id: "bulk", label: "Bulk" },
 ];
 
 const Shop = () => {
@@ -24,11 +24,21 @@ const Shop = () => {
   const [selectedType, setSelectedType] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
 
-  const filteredProducts = products.filter(product => {
-    const categoryMatch = selectedCategory === "all" || product.category === selectedCategory;
-    const typeMatch = selectedType === "all" || product.type === selectedType || product.type === "both";
-    return categoryMatch && typeMatch;
-  });
+  // useMemo — only recomputes when filters change, not on every render
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      const categoryMatch = selectedCategory === "all" || product.category === selectedCategory;
+      const typeMatch = selectedType === "all" || product.type === selectedType || product.type === "both";
+      return categoryMatch && typeMatch;
+    });
+  }, [selectedCategory, selectedType]);
+
+  const hasActiveFilters = selectedCategory !== "all" || selectedType !== "all";
+
+  const clearFilters = useCallback(() => {
+    setSelectedCategory("all");
+    setSelectedType("all");
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -39,7 +49,7 @@ const Shop = () => {
             Shop Our Products
           </h1>
           <p className="mx-auto max-w-2xl text-muted-foreground">
-            Browse our range of fortified, nutritious food products designed for 
+            Browse our range of fortified, nutritious food products designed for
             households, feeding programs, and institutional use.
           </p>
         </div>
@@ -51,16 +61,16 @@ const Shop = () => {
           <div className="mb-6 lg:hidden">
             <Button
               variant="outline"
-              onClick={() => setShowFilters(!showFilters)}
+              onClick={() => setShowFilters((p) => !p)}
               className="w-full justify-between"
             >
               <span className="flex items-center gap-2">
                 <Filter className="h-4 w-4" />
                 Filters
               </span>
-              <span className="text-muted-foreground">
-                {selectedCategory !== "all" || selectedType !== "all" ? "Active" : ""}
-              </span>
+              {hasActiveFilters && (
+                <span className="rounded-full bg-mint px-2 py-0.5 text-xs text-white">Active</span>
+              )}
             </Button>
           </div>
 
@@ -76,10 +86,11 @@ const Shop = () => {
               <div>
                 <h3 className="mb-3 font-display font-semibold text-foreground">Category</h3>
                 <div className="space-y-2">
-                  {categories.map(category => (
+                  {categories.map((category) => (
                     <button
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id)}
+                      aria-pressed={selectedCategory === category.id}
                       className={cn(
                         "block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors",
                         selectedCategory === category.id
@@ -97,10 +108,11 @@ const Shop = () => {
               <div>
                 <h3 className="mb-3 font-display font-semibold text-foreground">Purchase Type</h3>
                 <div className="space-y-2">
-                  {types.map(type => (
+                  {types.map((type) => (
                     <button
                       key={type.id}
                       onClick={() => setSelectedType(type.id)}
+                      aria-pressed={selectedType === type.id}
                       className={cn(
                         "block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors",
                         selectedType === type.id
@@ -114,16 +126,8 @@ const Shop = () => {
                 </div>
               </div>
 
-              {/* Clear Filters */}
-              {(selectedCategory !== "all" || selectedType !== "all") && (
-                <Button
-                  variant="ghost"
-                  className="w-full"
-                  onClick={() => {
-                    setSelectedCategory("all");
-                    setSelectedType("all");
-                  }}
-                >
+              {hasActiveFilters && (
+                <Button variant="ghost" className="w-full" onClick={clearFilters}>
                   Clear Filters
                 </Button>
               )}
@@ -140,7 +144,7 @@ const Shop = () => {
 
             {filteredProducts.length > 0 ? (
               <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                {filteredProducts.map(product => (
+                {filteredProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
@@ -149,14 +153,7 @@ const Shop = () => {
                 <p className="text-muted-foreground">
                   No products match your filters. Try adjusting your selection.
                 </p>
-                <Button
-                  variant="mint"
-                  className="mt-4"
-                  onClick={() => {
-                    setSelectedCategory("all");
-                    setSelectedType("all");
-                  }}
-                >
+                <Button variant="mint" className="mt-4" onClick={clearFilters}>
                   Clear Filters
                 </Button>
               </div>
