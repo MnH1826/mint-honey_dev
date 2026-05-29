@@ -6,7 +6,7 @@ import communityImage from "@/assets/community-kitchen.jpg";
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "98K+", label: "Kids Per Week", description: "Children receiving nutritious meals weekly" },
+  { value: "98K+", label: "Kids Fed Every Week Day", description: "Children receiving nutritious meals every day" },
   { value: "120+", label: "Partner Schools", description: "Educational institutions supported" },
   { value: "30+", label: "Years Experience", description: "Decades of community impact" },
 ];
