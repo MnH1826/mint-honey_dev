@@ -22,26 +22,26 @@ import { LinkedInFeed } from "@/components/LinkedInFeed";
 
 // Trusted partners logos
 import atlantisLogo from "@/assets/atlantis.webp";
-import buhlerLogo from "@/assets/buhler-logo.webp";
 import dtiLogo from "@/assets/DTI-LOGO-1.webp";
 import sadccLogo from "@/assets/sadcc_logo_800_450shar-50brig-20_c1.webp";
 import sedaLogo from "@/assets/seda-logo.webp";
 import sedfaLogo from "@/assets/SEDFA-LOGO.webp";
-import superCerealPlusLogo from "@/assets/Super-Cereal-Plus.webp";
+import WCdeptlogo from "@/assets/WC_dept_logo.webp";
+import sizani_food from "@/assets/sizani_food.webp";
 
 const trustedPartners = [
-  { name: "Atlantis", logo: atlantisLogo },
-  { name: "Buhler", logo: buhlerLogo },
+  { name: "ASEZ", logo: atlantisLogo },
   { name: "DTI", logo: dtiLogo },
   { name: "SADCC", logo: sadccLogo },
   { name: "SEDA", logo: sedaLogo },
   { name: "SEDFA", logo: sedfaLogo },
-  { name: "Super Cereal Plus", logo: superCerealPlusLogo },
+  { name: "WC Dept", logo: WCdeptlogo },
+  { name: "Sizani Food South Africa", logo: sizani_food }
 ];
 
 const stats = [
-  { value: "98K+", label: "Kids Per week", icon: Heart },
-  { value: "120+", label: "Partner Schools", icon: Users },
+  { value: "98K+", label: "Kids Fed Every Week Day", icon: Heart },
+  { value: "217+", label: "Partner Schools", icon: Users },
   { value: "30+", label: "Years Experience", icon: Award },
   { value: "6", label: "SDGs Supported", icon: TrendingUp }
 ];
@@ -597,7 +597,7 @@ const Index = () => {
               Trusted Partners
             </span>
             <h2 className="mb-3 font-display text-2xl font-bold text-foreground md:text-3xl">
-              Trusted by Leading Companies
+              Trusted by Leading Companies & Organizations
             </h2>
             <p className="mx-auto max-w-2xl text-sm text-muted-foreground md:text-base">
               We are proud to work with these respected organizations and partners
