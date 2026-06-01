@@ -20,6 +20,12 @@ import { Newsletter } from "@/components/Newsletter";
 import { AsFeaturedOn } from "@/components/AsFeaturedOn";
 import { LinkedInFeed } from "@/components/LinkedInFeed";
 
+// Additional hero images
+import prod3 from "@/assets/prod_3.webp";
+import outside1 from "@/assets/outside_1.webp";
+import djiLatest from "@/assets/DJI_20260506155948_0139_D.webp";
+import facility_outdoor_3 from "@/assets/facility_outdoor_3.webp";
+
 // Trusted partners logos
 import atlantisLogo from "@/assets/atlantis.webp";
 import dtiLogo from "@/assets/DTI-LOGO-1.webp";
@@ -64,6 +70,7 @@ const testimonials = [
   }
 ];
 
+// Expanded hero slides with 10 images
 const heroSlides = [
   {
     image: ceoImage,
@@ -97,9 +104,33 @@ const heroSlides = [
   },
   {
     image: facility_outside_location,
-    title: "Outside Location",
-    subtitle: "Mint & Honey facility outside location",
+    title: "Strategic Location",
+    subtitle: "Mint & Honey facility in Atlantis Industrial",
     alt: "Mint & Honey facility outside location"
+  },
+  {
+    image: prod3,
+    title: "Full-Scale Production",
+    subtitle: "State-of-the-art manufacturing floor",
+    alt: "Mint & Honey full-scale production floor"
+  },
+  {
+    image: outside1,
+    title: "Aerial Excellence",
+    subtitle: "Bird's eye view of our Atlantis campus",
+    alt: "Aerial view of Mint & Honey Atlantis facility"
+  },
+  {
+    image: djiLatest,
+    title: "Growing Footprint",
+    subtitle: "Expanding our impact across Africa",
+    alt: "Mint & Honey facility expansion aerial view"
+  },
+  {
+    image: facility_outdoor_3,
+    title: "Industrial Strength",
+    subtitle: "Purpose-built for African nutrition needs",
+    alt: "Mint & Honey industrial facility exterior"
   }
 ];
 
@@ -191,14 +222,14 @@ const HeroSlideshow = memo(() => {
             loading={index === 0 ? "eager" : "lazy"}
             decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/20" />
         </div>
       ))}
 
       <div className="container relative z-20 mx-auto flex min-h-[100vh] flex-col items-center justify-center px-4 py-32 text-center">
         <div className="max-w-4xl">
           <motion.div key={currentSlide} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <span className="wp-badge mb-6 border border-white/20 bg-white/10 text-white/90">
+            <span className="wp-badge mb-6 border border-white/20 bg-white/10 text-white/90 backdrop-blur-sm">
               <Leaf className="h-4 w-4" />
               Proudly South African · Enriching Lives Since 2009
             </span>
@@ -211,42 +242,52 @@ const HeroSlideshow = memo(() => {
           </motion.div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <Button variant="mint" size="xl" asChild>
+            <Button variant="mint" size="xl" className="shadow-lg hover:shadow-xl transition-all duration-300" asChild>
               <Link to="/shop">
                 Explore Products
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="xl" className="border-white/30 text-black hover:bg-white/10 hover:text-white" asChild>
+            <Button variant="outline" size="xl" className="border-white/30 text-black hover:bg-white/10 hover:text-white backdrop-blur-sm" asChild>
               <Link to="/bulk-orders">Bulk &amp; Institutional Orders</Link>
             </Button>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-white/50">
-            {["Non-GMO Certified", "HACCP Certified", "Chemical Free"].map((label) => (
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-white/60">
+            {["Non-GMO Certified", "HACCP Certified", "Chemical Free", "Proudly South African"].map((label) => (
               <div key={label} className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-mint" />
                 {label}
               </div>
             ))}
-            <img src={proudlySALogo} alt="Proudly South African" className="h-10 w-auto opacity-60" loading="lazy" />
           </div>
         </div>
       </div>
 
-      <button onClick={prevSlide} className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:left-8 md:p-3" aria-label="Previous slide">
+      {/* Navigation Arrows */}
+      <button onClick={prevSlide} className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-3 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:left-8 md:p-4" aria-label="Previous slide">
         <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
       </button>
-      <button onClick={nextSlide} className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:right-8 md:p-3" aria-label="Next slide">
+      <button onClick={nextSlide} className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-3 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:right-8 md:p-4" aria-label="Next slide">
         <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
       </button>
+
+      {/* Play/Pause Button */}
       <button onClick={() => setIsAutoPlaying((p) => !p)} className="absolute bottom-24 right-4 z-20 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 md:bottom-32 md:right-8 md:p-2.5" aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}>
         {isAutoPlaying ? <Pause className="h-4 w-4 md:h-5 md:w-5" /> : <Play className="h-4 w-4 md:h-5 md:w-5" />}
       </button>
 
+      {/* Dots Indicator */}
       <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2">
         {heroSlides.map((_, index) => (
-          <button key={index} onClick={() => goToSlide(index)} className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? "w-8 bg-mint" : "w-2 bg-white/50 hover:bg-white/75"}`} aria-label={`Go to slide ${index + 1}`} />
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide ? "w-8 bg-mint" : "w-2 bg-white/50 hover:bg-white/75"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
         ))}
       </div>
     </section>
@@ -259,7 +300,7 @@ const Index = () => {
   
   return (
     <div className="flex flex-col">
-      {/* Hero Slideshow Section */}
+      {/* Hero Slideshow Section - Now with 10 slides */}
       <HeroSlideshow />
 
       {/* Stats Banner */}

@@ -1,15 +1,14 @@
-import { memo } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Award, Users, Heart, Shield, Globe, ArrowRight, Factory, Wheat, FlaskConical, Truck, CheckCircle2, TrendingUp, Briefcase, GraduationCap } from "lucide-react";
+import { Award, Users, Heart, Shield, Globe, ArrowRight, Factory, Wheat, FlaskConical, Truck, CheckCircle2, TrendingUp, Briefcase, GraduationCap, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Image imports
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
 import companyBanner from "@/assets/company-banner.webp";
 import productDisplay from "@/assets/facility_outdoor_3.webp";
 import teamBanner from "@/assets/team-banner.jpg";
-import facilityAerial from "@/assets/facility-aerial.jpg";
 import facility from "@/assets/facility_outside_location.webp";
 import boardroomMeeting from "@/assets/boardroom-meeting.jpg";
 import reception from "@/assets/reception.webp";
@@ -20,6 +19,24 @@ import MnH_products from "@/assets/MnH_products.webp";
 import reganPaulusCeo from "@/assets/regan_paulus_ceo.webp";
 import leadershipTeamImage from "@/assets/ceo_co_hr_coo.webp";
 
+// ── Facility slideshow images ────────────────────────────────
+import prod1 from "@/assets/prod_1.webp";
+import prod2 from "@/assets/prod_2.webp";
+import prod3 from "@/assets/prod_3.webp";
+import prod4 from "@/assets/prod_4.webp";
+import prod5 from "@/assets/prod_5.webp";
+import prod6 from "@/assets/prod_6.webp";
+import prod7 from "@/assets/prod_7.webp";
+import outside1 from "@/assets/outside_1.webp";
+import outside2 from "@/assets/outside_2.webp";
+import outside3 from "@/assets/outside_3.webp";
+import outside4 from "@/assets/outside_4.webp";
+import outside5 from "@/assets/outside_5.webp";
+import outside6 from "@/assets/outside_6.webp";
+import outside7 from "@/assets/outside_7.webp";
+import outside8 from "@/assets/outside_8.webp";
+import djiLatest from "@/assets/DJI_20260506155948_0139_D.webp";
+
 // Leadership team data
 const leadershipTeam = [
   { name: "Regan Paulus", role: "Founder & CEO", description: "Born in Swartland and raised in Atlantis. Resilient, ambitious, community-focused, and committed to impact beyond profit.", icon: Briefcase, quote: "We are not just building a business, we are building a solution to hunger." },
@@ -28,7 +45,6 @@ const leadershipTeam = [
   { name: "Fulufhelo Nedouvhada", role: "Shareholder/Director & COO", description: "Oversees operations and ensures manufacturing excellence.", icon: Factory },
 ];
 
-// Static data outside component
 const values = [
   { icon: Heart, title: "Nutrition First", description: "Every product we create is designed with nutritional impact as the primary goal, helping combat malnutrition and hidden hunger." },
   { icon: Users, title: "Community Focus", description: "We work closely with communities, schools, and organizations to understand and meet their specific nutritional needs." },
@@ -44,13 +60,15 @@ const facilityHighlights = [
 ];
 
 const timeline = [
-  { year: "2009", event: "Mint & Honey founded with a mission to combat malnutrition" },
-  { year: "2012", event: "First partnership with school feeding programs" },
-  { year: "2015", event: "Expanded to serve NGOs and community kitchens" },
-  { year: "2018", event: "Launched Super Cereal Plus (CSB+) product line" },
-  { year: "2021", event: "Reached 500,000 meals served milestone" },
-  { year: "2024", event: "Expanded nationwide distribution network" },
-  { year: "2025", event: "Atlantis agro-processing facility taking shape — turning grey landscapes into green opportunities" },
+  { year: "2018", event: "Mint & Honey founded with a mission to combat malnutrition" },
+  { year: "2019", event: "First partnership with school feeding programs" },
+  { year: "2020", event: "Expanded to serve NGOs and community kitchens" },
+  { year: "2021", event: "Launched Super Cereal Plus (CSB+) product line" },
+  { year: "2022", event: "Reached 500,000 meals served milestone" },
+  { year: "2022", event: "Expanded nationwide distribution network" },
+  { year: "2024", event: "Atlantis agro-processing facility construction begins" },
+  { year: "2025", event: "Facility taking shape — turning grey landscapes into green opportunities" },
+  { year: "2026", event: "Expanding infrastructure & machinery — installing silos, extrusion lines, and preparing for full-scale production of fortified nutrition products" }
 ];
 
 const galleryImages = [
@@ -90,9 +108,8 @@ const productFeatures = [
 
 const impactStats = [
   { value: "500K+", label: "Children Fed", icon: Heart },
-  { value: "120+", label: "Partner Schools", icon: GraduationCap },
-  { value: "30+", label: "Community Partners", icon: Users },
-  { value: "6", label: "Countries Served", icon: Globe },
+  { value: "217+", label: "Partner Schools", icon: GraduationCap },
+  { value: "30+", label: "Years of Experience", icon: Users },
 ];
 
 // Shared animation variants
@@ -100,10 +117,204 @@ const fadeUp = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transi
 const fadeLeft = { hidden: { opacity: 0, x: -30 }, show: { opacity: 1, x: 0, transition: { duration: 0.7 } } };
 const fadeRight = { hidden: { opacity: 0, x: 30 }, show: { opacity: 1, x: 0, transition: { duration: 0.7 } } };
 
-const About = () => {
+// ── Facility Slideshow data ───────────────────────────────────
+const facilitySlides = [
+  { src: outside1, tag: "The Facility", headline: "Atlantis Agro-Processing Facility", body: "Strategically located in Atlantis Industrial, Western Cape — purpose-built for large-scale grain processing and fortified nutrition manufacturing." },
+  { src: outside2, tag: "Infrastructure", headline: "Built for Community, Designed for Scale", body: "A multi-bay complex housing milling, extrusion, blending, packing lines, and a dedicated quality control laboratory, all under one roof." },
+  { src: outside3, tag: "Infrastructure", headline: "Export-Ready Loading & Dispatch Zones", body: "Dedicated logistics zones and covered dispatch canopies enable efficient domestic and export shipments across Africa." },
+  { src: outside4, tag: "The Facility", headline: "Proudly South African, Built in Atlantis", body: "Rooted in the Atlantis community — creating sustainable employment, supporting local farmers, and strengthening the Western Cape's agro-processing sector." },
+  { src: outside5, tag: "The Facility", headline: "A Growing Industrial Presence", body: "The Mint & Honey campus sits within Atlantis Industrial, Western Cape — strategically positioned for local sourcing and distribution across southern Africa." },
+  { src: outside6, tag: "The Facility", headline: "Street-Level View — Atlantis Industrial", body: "Our facility borders a key industrial route, enabling seamless access for supplier deliveries and outbound distribution of finished nutrition products." },
+  { src: prod3, tag: "Inside the Factory", headline: "Full-Scale Production Floor", body: "Our expansive factory floor houses integrated milling, blending, and extrusion lines — all purpose-designed for high-volume fortified nutrition production." },
+  { src: prod1, tag: "Inside the Factory", headline: "Advanced Grain Processing Machinery", body: "State-of-the-art extrusion and processing equipment converts non-GMO maize and soya into fortified nutrition products for feeding programmes across Africa." },
+  { src: prod2, tag: "Inside the Factory", headline: "Operational & Forklift-Ready", body: "With forklift access, wide aisles, and organised storage, our facility is designed for safe, efficient movement of raw materials and finished goods." },
+  { src: prod4, tag: "Inside the Factory", headline: "Milling & Separation Equipment", body: "Industrial-grade milling and separation machinery ensures every batch of maize and soya is cleaned, graded, and prepared to the highest food safety standards." },
+  { src: prod5, tag: "Inside the Factory", headline: "Conveyor & Blending Systems", body: "Automated conveyor systems connect each processing stage — reducing handling, minimising contamination risk, and maintaining HACCP compliance throughout." },
+  { src: prod6, tag: "Inside the Factory", headline: "Fortification & Packaging Preparation", body: "The fortification stage is where vitamins and minerals are precisely added to every batch, ensuring each product meets international nutritional standards." },
+  { src: prod7, tag: "Inside the Factory", headline: "Multi-Hopper Extrusion Line", body: "Our parallel extrusion line enables simultaneous processing of multiple grain blends, delivering consistent output and precise vitamin & mineral fortification." },
+  { src: outside7, tag: "Expansion", headline: "Silo Foundations — Breaking Ground", body: "Earthworks underway for our dedicated maize and soya storage silos, unlocking consistent raw material supply and significantly greater production capacity." },
+  { src: outside8, tag: "Expansion", headline: "From Grey to Green — Phase by Phase", body: "Active construction next to our existing facility as we expand infrastructure to serve food manufacturers, NGOs, and government programmes at continental scale." },
+  { src: djiLatest, tag: "Expansion", headline: "Growing Footprint, Bigger Impact", body: "Our most recent aerial view shows the expanding Atlantis campus — more space, more capacity, more nutritious meals reaching communities across Africa." },
+  { src: MnH_products, tag: "Our Products", headline: "Nutritious Products. Real Impact.", body: "Vuma Instant Porridge · Bamba Maize Meal · Gogo's Maize Meal · Nyama Choma Soya Mince · Super Cereal Plus — fortified, non-GMO, and ready for Africa." },
+];
+
+const AUTO_INTERVAL = 5500;
+
+// CSS classes extracted for better performance
+const tagClassName = "inline-block mb-4 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-widest";
+const controlButtonClassName = "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/25 text-white/60 transition-all hover:border-white hover:text-white";
+const dotClassName = "rounded-full transition-all duration-400";
+
+// ── FacilitySlideshow component (optimized) ───────────────────
+const FacilitySlideshow = memo(() => {
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const total = facilitySlides.length;
+
+  const go = useCallback((next: number, dir: number) => {
+    setDirection(dir);
+    setCurrent(((next % total) + total) % total);
+  }, [total]);
+
+  const stepNext = useCallback(() => go(current + 1, 1), [current, go]);
+  const stepPrev = useCallback(() => go(current - 1, -1), [current, go]);
+
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(stepNext, AUTO_INTERVAL);
+  }, [stepNext]);
+
+  useEffect(() => {
+    startTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [startTimer]);
+
+  const handlePrev = useCallback(() => { stepPrev(); startTimer(); }, [stepPrev, startTimer]);
+  const handleNext = useCallback(() => { stepNext(); startTimer(); }, [stepNext, startTimer]);
+  const handleDot = useCallback((i: number) => { go(i, i > current ? 1 : -1); startTimer(); }, [current, go, startTimer]);
+
+  const slide = facilitySlides[current];
+
+  const variants = {
+    enter: (d: number) => ({ x: d > 0 ? "100%" : "-100%", opacity: 0 }),
+    center: { x: 0, opacity: 1, transition: { duration: 0.65, ease: [0.32, 0.72, 0, 1] as const } },
+    exit: (d: number) => ({ x: d > 0 ? "-60%" : "60%", opacity: 0, transition: { duration: 0.45, ease: [0.32, 0.72, 0, 1] as const } }),
+  };
+
+  return (
+    <section className="relative bg-foreground overflow-hidden" style={{ minHeight: "75vh" }} aria-label="Atlantis Facility slideshow">
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={current}
+          custom={direction}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          className="absolute inset-0"
+        >
+          <img
+            src={slide.src}
+            alt={slide.headline}
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/15" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="relative z-10 flex flex-col justify-end" style={{ minHeight: "75vh" }}>
+        <div className="container mx-auto px-4 pb-14 pt-28 md:pb-20">
+          {/* Tag */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`tag-${current}`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <span
+                className={tagClassName}
+                style={{
+                  background: "rgba(var(--mint-rgb, 72 199 142) / 0.2)",
+                  color: "hsl(var(--mint, 148 72% 53%))",
+                  border: "1px solid rgba(var(--mint-rgb, 72 199 142) / 0.4)",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                {slide.tag}
+              </span>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Headline */}
+          <AnimatePresence mode="wait">
+            <motion.h2
+              key={`h-${current}`}
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.45, delay: 0.06 }}
+              className="font-display text-white mb-4 leading-tight max-w-3xl"
+              style={{ fontSize: "clamp(1.5rem, 4vw, 3rem)" }}
+            >
+              {slide.headline}
+            </motion.h2>
+          </AnimatePresence>
+
+          {/* Body */}
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={`b-${current}`}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, delay: 0.12 }}
+              className="mb-8 max-w-2xl text-base leading-relaxed md:text-lg"
+              style={{ color: "rgba(255,255,255,0.72)" }}
+            >
+              {slide.body}
+            </motion.p>
+          </AnimatePresence>
+
+          {/* Controls */}
+          <div className="flex items-center gap-3 flex-wrap">
+            <button onClick={handlePrev} aria-label="Previous slide" className={controlButtonClassName}>
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            <div className="flex items-center gap-[6px]">
+              {facilitySlides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleDot(i)}
+                  aria-label={`Slide ${i + 1}`}
+                  className={dotClassName}
+                  style={{
+                    height: "6px",
+                    width: i === current ? "28px" : "6px",
+                    background: i === current ? "hsl(var(--mint, 148 72% 53%))" : "rgba(255,255,255,0.30)",
+                  }}
+                />
+              ))}
+            </div>
+
+            <button onClick={handleNext} aria-label="Next slide" className={controlButtonClassName}>
+              <ChevronRight className="h-5 w-5" />
+            </button>
+
+            <span className="ml-auto hidden text-xs tabular-nums sm:block" style={{ color: "rgba(255,255,255,0.35)" }}>
+              {String(current + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Progress bar */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 h-[3px]" style={{ background: "rgba(255,255,255,0.08)" }}>
+        <motion.div
+          key={current}
+          className="h-full"
+          style={{ background: "hsl(var(--mint, 148 72% 53%))" }}
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: AUTO_INTERVAL / 1000, ease: "linear" }}
+        />
+      </div>
+    </section>
+  );
+});
+
+FacilitySlideshow.displayName = "FacilitySlideshow";
+
+// ── Main About Component ─────────────────────────────────────
+const About = memo(() => {
   return (
     <div className="min-h-screen bg-background">
-
       {/* Hero */}
       <section className="relative bg-foreground py-16 md:py-24">
         <div className="absolute inset-0">
@@ -138,17 +349,12 @@ const About = () => {
         </div>
       </section>
 
-      {/* CEO Section - Saving Lives */}
+      {/* CEO Section */}
       <section className="bg-background py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <motion.div variants={fadeRight} initial="hidden" whileInView="show" viewport={{ once: true }} className="wp-image max-w-sm mx-auto lg:mx-0">
-              <img 
-                src={reganPaulusCeo} 
-                alt="Regan Paulus - Founder & CEO of Mint & Honey" 
-                className="rounded-2xl shadow-elevated w-full h-auto object-cover"
-                loading="lazy"
-              />
+              <img src={reganPaulusCeo} alt="Regan Paulus - Founder & CEO of Mint & Honey" className="rounded-2xl shadow-elevated w-full h-auto object-cover" loading="lazy" />
             </motion.div>
             <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
               <span className="wp-badge mb-6 bg-mint-light text-mint-dark">CEO Message</span>
@@ -158,9 +364,7 @@ const About = () => {
                 of stunting and wasting so that children globally will have the best chance of growing 
                 up to lead productive lives and achieve their God-given purpose."
               </blockquote>
-              <p className="text-muted-foreground">
-                — <strong>Regan Paulus</strong>, Founder & CEO, Mint & Honey
-              </p>
+              <p className="text-muted-foreground">— <strong>Regan Paulus</strong>, Founder & CEO, Mint & Honey</p>
               <div className="mt-6 grid grid-cols-2 gap-4">
                 {impactStats.map((stat, i) => (
                   <div key={i} className="rounded-lg bg-mint-light p-4 text-center">
@@ -175,34 +379,17 @@ const About = () => {
         </div>
       </section>
 
-      {/* Leadership Team Section with Image */}
+      {/* Leadership Team */}
       <section className="bg-muted py-12 md:py-20">
         <div className="container mx-auto px-4">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-10 text-center">
             <span className="wp-badge mb-6 bg-honey-light text-honey-dark">Leadership</span>
             <h2 className="mb-4 font-display text-foreground">Meet Our Leadership Team</h2>
-            <p className="mx-auto max-w-2xl text-muted-foreground">
-              A team of resilient, ambitious, and community-focused leaders committed to impact beyond profit.
-            </p>
+            <p className="mx-auto max-w-2xl text-muted-foreground">A team of resilient, ambitious, and community-focused leaders committed to impact beyond profit.</p>
           </motion.div>
-
-          {/* Leadership Team Photo - Constrained size */}
-          <motion.div 
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="mb-10 overflow-hidden rounded-2xl shadow-elevated max-w-4xl mx-auto"
-          >
-            <img 
-              src={leadershipTeamImage} 
-              alt="Mint & Honey Leadership Team - CEO, COO, and HR executives" 
-              className="w-full h-auto max-h-[400px] object-cover object-top"
-              loading="lazy"
-            />
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-10 overflow-hidden rounded-2xl shadow-elevated max-w-4xl mx-auto">
+            <img src={leadershipTeamImage} alt="Mint & Honey Leadership Team" className="w-full h-auto max-h-[400px] object-cover object-top" loading="lazy" />
           </motion.div>
-
-          {/* Leadership Team Cards */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {leadershipTeam.map((member, i) => (
               <motion.div
@@ -220,9 +407,7 @@ const About = () => {
                 <h3 className="mb-1 font-display text-lg font-semibold text-foreground">{member.name}</h3>
                 <p className="mb-3 text-sm font-medium text-mint">{member.role}</p>
                 <p className="text-sm text-muted-foreground">{member.description}</p>
-                {member.quote && (
-                  <p className="mt-4 text-xs italic text-muted-foreground border-l-2 border-mint pl-3">"{member.quote}"</p>
-                )}
+                {member.quote && <p className="mt-4 text-xs italic text-muted-foreground border-l-2 border-mint pl-3">"{member.quote}"</p>}
               </motion.div>
             ))}
           </div>
@@ -248,23 +433,12 @@ const About = () => {
         </div>
       </section>
 
-      {/* Atlantis Facility */}
-      <section className="relative bg-foreground py-12 md:py-20">
-        <div className="absolute inset-0">
-          <img src={facilityAerial} alt="" aria-hidden="true" className="h-full w-full object-cover opacity-20" loading="lazy" decoding="async" />
-        </div>
-        <div className="container relative mx-auto px-4">
-          <div className="mx-auto max-w-4xl text-center">
-            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-              <span className="wp-badge mb-6 bg-mint/20 text-mint">Major Milestone</span>
-              <h2 className="mb-6 font-display text-primary-foreground">Our Atlantis Facility — From Grey to Green</h2>
-              <p className="mb-10 text-lg text-primary-foreground/80">
-                The Mint &amp; Honey Agro-Processing Facility in Atlantis Industrial, Western Cape
-                represents our commitment to strengthening food security, supporting local
-                agriculture, creating sustainable employment, and turning grey landscapes into green opportunities.
-              </p>
-            </motion.div>
-          </div>
+      {/* Atlantis Facility Slideshow */}
+      <FacilitySlideshow />
+
+      {/* Facility Highlights */}
+      <section className="bg-foreground py-10 md:py-14">
+        <div className="container mx-auto px-4">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {facilityHighlights.map((item, i) => (
               <motion.div
@@ -311,18 +485,11 @@ const About = () => {
             <div className="grid gap-8 md:grid-cols-2">
               <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }} className="rounded-2xl border border-border bg-card p-6">
                 <h3 className="mb-3 font-display text-mint">Our Vision</h3>
-                <p className="leading-relaxed text-sm text-muted-foreground">
-                  To become a leading global producer of fortified nutrition while supporting communities, 
-                  strengthening local economies, and expanding across Africa.
-                </p>
+                <p className="leading-relaxed text-sm text-muted-foreground">To become a leading global producer of fortified nutrition while supporting communities, strengthening local economies, and expanding across Africa.</p>
               </motion.div>
               <motion.div variants={fadeRight} initial="hidden" whileInView="show" viewport={{ once: true }} className="rounded-2xl border border-border bg-card p-6">
                 <h3 className="mb-3 font-display text-honey">Our Promise</h3>
-                <p className="leading-relaxed text-sm text-muted-foreground">
-                  We deliver quality, non-GMO fortified products that make a real difference — from
-                  our Atlantis facility to communities across Africa. Sustainable quality for
-                  the wellbeing of future generations.
-                </p>
+                <p className="leading-relaxed text-sm text-muted-foreground">We deliver quality, non-GMO fortified products that make a real difference — from our Atlantis facility to communities across Africa. Sustainable quality for the wellbeing of future generations.</p>
               </motion.div>
             </div>
           </div>
@@ -335,9 +502,7 @@ const About = () => {
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-12 text-center">
             <span className="wp-badge mb-4 bg-honey-light text-honey-dark">Our Values</span>
             <h2 className="mb-4 font-display text-foreground section-divider">What Drives Us</h2>
-            <p className="mx-auto mt-6 max-w-2xl text-muted-foreground">
-              These core values guide everything we do, from product development to community partnerships.
-            </p>
+            <p className="mx-auto mt-6 max-w-2xl text-muted-foreground">These core values guide everything we do, from product development to community partnerships.</p>
           </motion.div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {values.map((value, i) => (
@@ -398,20 +563,11 @@ const About = () => {
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-12 text-center">
             <span className="wp-badge mb-4 bg-mint-light text-mint-dark">Partners</span>
             <h2 className="mb-4 font-display text-foreground">Our Clients &amp; Partners</h2>
-            <p className="mx-auto max-w-2xl text-muted-foreground">
-              We serve a diverse range of organisations committed to nutrition and food security.
-            </p>
+            <p className="mx-auto max-w-2xl text-muted-foreground">We serve a diverse range of organisations committed to nutrition and food security.</p>
           </motion.div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {clients.map((client, i) => (
-              <motion.div
-                key={client.name}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-              >
+              <motion.div key={client.name} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
                 {client.url ? (
                   <a href={client.url} target="_blank" rel="noopener noreferrer" className="block h-full rounded-2xl border border-border bg-card p-6 transition-all hover:border-mint hover:shadow-card">
                     <h3 className="mb-2 font-display text-base font-semibold text-foreground">{client.name}</h3>
@@ -430,14 +586,14 @@ const About = () => {
       </section>
 
       {/* Timeline */}
-      <section className="bg-background py-12 md:py-20">
+      <section className="bg-background py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-12 text-center">
-            <span className="wp-badge mb-4 bg-mint-light text-mint-dark">Our Story</span>
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-8 text-center">
+            <span className="wp-badge mb-3 bg-mint-light text-mint-dark">Our Story</span>
             <h2 className="font-display text-2xl text-foreground">Our Journey</h2>
           </motion.div>
           <div className="mx-auto max-w-3xl">
-            <div className="relative border-l-2 border-mint pl-8">
+            <div className="relative border-l-2 border-mint pl-6">
               {timeline.map((item, i) => (
                 <motion.div
                   key={item.year}
@@ -445,20 +601,20 @@ const About = () => {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className="relative mb-8 last:mb-0"
+                  transition={{ delay: i * 0.05 }}
+                  className="relative mb-5 last:mb-0"
                 >
-                  <div className="absolute -left-[38px] flex h-5 w-5 items-center justify-center rounded-full bg-mint shadow-mint">
-                    <div className="h-2 w-2 rounded-full bg-background" />
+                  <div className="absolute -left-[31px] flex h-4 w-4 items-center justify-center rounded-full bg-mint shadow-mint">
+                    <div className="h-1.5 w-1.5 rounded-full bg-background" />
                   </div>
-                  <div className="font-display text-base font-bold text-honey">{item.year}</div>
-                  <div className="mt-1 text-sm text-foreground">{item.event}</div>
+                  <div className="font-display text-sm font-bold text-honey">{item.year}</div>
+                  <div className="mt-0.5 text-xs text-foreground">{item.event}</div>
                 </motion.div>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </section>        
 
       {/* Quality Standards */}
       <section className="bg-muted py-12 md:py-20">
@@ -466,9 +622,7 @@ const About = () => {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
               <span className="wp-badge mb-4 bg-mint-light text-mint-dark">Quality</span>
-              <h2 className="mb-4 font-display text-xl text-foreground">
-                Manufacturing Excellence &amp; Quality Standards
-              </h2>
+              <h2 className="mb-4 font-display text-xl text-foreground">Manufacturing Excellence &amp; Quality Standards</h2>
               <p className="mb-6 text-sm text-muted-foreground">
                 Our Atlantis agro-processing facility adheres to the highest food safety
                 and quality standards. We produce high-quality, organic, chemical-free
@@ -522,9 +676,10 @@ const About = () => {
           </motion.div>
         </div>
       </section>
-
     </div>
   );
-};
+});
+
+About.displayName = "About";
 
 export default About;
