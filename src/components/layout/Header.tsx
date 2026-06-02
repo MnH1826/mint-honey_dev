@@ -8,10 +8,10 @@ import logo from "@/assets/logo.png";
 
 const navLinks = [
   { path: "/", label: "Home" },
-  { path: "/shop", label: "Shop" },
-  { path: "/bulk-orders", label: "Bulk Orders" },
   { path: "/about", label: "About Us" },
   { path: "/impact", label: "Our Impact" },
+  { path: "/shop", label: "Shop" },
+  { path: "/bulk-orders", label: "Bulk Orders" },
   { path: "/contact", label: "Contact" },
 ];
 

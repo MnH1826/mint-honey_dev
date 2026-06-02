@@ -1,8 +1,11 @@
-import productCereal from "@/assets/product-cereal.jpg";
-import productPorridge from "@/assets/product-porridge.jpg";
-import productMaize from "@/assets/product-maize.jpg";
-import productSoy from "@/assets/product-soy.jpg";
-import productTvp from "@/assets/product-tvp.jpg";
+// ── Product images — copy all into src/assets/ ───────────────
+import mnhMaizeMeal        from "@/assets/mnh_maize_meal.webp";
+import mnhSoyaFlour        from "@/assets/mnh_soya_flour.webp";
+import mnhSoyaMince_beef   from "@/assets/mnh_soya_mince_beef.webp";
+import mnhSoyaMince_chicken from "@/assets/mnh_soya_mince_chicken.webp";
+import mnhSoyaMince_oxtail from "@/assets/mnh_soya_mince_ox_tail.webp";
+import mnhVuma             from "@/assets/mnh_vuma_instant_porrige.webp";
+import mnhCornSoya         from "@/assets/mnh_corn_soya.webp";
 
 export interface PricingOption {
   size: string;
@@ -18,149 +21,234 @@ export interface Product {
   benefits: string[];
   ingredients: string;
   intendedUse: string;
-  category: "cereal" | "porridge" | "flour" | "protein";
+  category: "cereal" | "porridge" | "flour" | "protein" | "soya";
   type: "retail" | "bulk" | "both";
   pricing: PricingOption[];
   image: string;
   featured: boolean;
+  badges?: string[];   // e.g. ["Halaal", "Non-GMO", "Not for Resale"]
+  weight?: string;     // primary / most common pack size label
 }
 
 export const products: Product[] = [
-  {
-    id: "super-cereal-plus",
-    name: "Super Cereal Plus (CSB+)",
-    shortName: "Super Cereal Plus",
-    description: "A fortified maize and soya blend developed to support child nutrition and recovery from malnutrition. Ideal for feeding schemes, NGOs, and institutional use. This nutritionally enhanced cereal provides essential vitamins and minerals needed for healthy growth and development.",
-    shortDescription: "Fortified maize & soya blend for child nutrition support",
-    benefits: [
-      "High protein content",
-      "Fortified with essential vitamins & minerals",
-      "Easy to prepare",
-      "Suitable for children and adults"
-    ],
-    ingredients: "Maize, soy, vitamin & mineral premix",
-    intendedUse: "School feeding schemes, NGOs, community kitchens",
-    category: "cereal",
-    type: "both",
-    pricing: [
-      { size: "5kg", price: 120 },
-      { size: "10kg", price: 230 },
-      { size: "25kg", price: 520 }
-    ],
-    image: productCereal,
-    featured: true
-  },
+  // ── RETAIL ────────────────────────────────────────────────
   {
     id: "vuma-instant-porridge",
-    name: "Vuma Instant Porridge",
-    shortName: "Vuma Porridge",
-    description: "An instant, nutrient-dense porridge designed for fast preparation while delivering essential energy and nutrients. Perfect for busy mornings or institutional meal programs where time efficiency is crucial without compromising on nutrition.",
-    shortDescription: "Instant nutrient-dense porridge for daily nutrition",
+    name: "M&H Vuma Instant Porridge",
+    shortName: "Vuma Instant Porridge",
+    description:
+      "A vanilla-flavoured instant porridge that nourishes growing bodies with 12 essential vitamins and minerals. Energy-rich, high in fibre and protein — a complete balanced meal that's easy to prepare and loved by kids and families alike.",
+    shortDescription: "Vanilla-flavoured instant porridge — complete balanced meal",
     benefits: [
-      "Instant preparation",
-      "Fortified for daily nutrition",
-      "Affordable and filling",
-      "Great taste"
+      "12 essential vitamins & minerals",
+      "Energy-rich & high in fibre",
+      "High in protein",
+      "Easy to prepare — just add hot water",
+      "Non-GMO certified",
+      "Great taste kids love",
     ],
-    ingredients: "Maize, vitamins, minerals",
-    intendedUse: "Daily breakfast, feeding programs, quick meals",
+    ingredients: "Fortified maize, soya, vanilla flavouring, vitamin & mineral premix",
+    intendedUse: "Daily breakfast, school feeding programmes, quick nutritious meals",
     category: "porridge",
-    type: "both",
+    type: "retail",
     pricing: [
-      { size: "1kg", price: 45 },
-      { size: "5kg", price: 210 },
-      { size: "10kg", price: 395 }
+      { size: "75g",  price: 12  },
+      { size: "1kg",  price: 55  },
+      { size: "5kg",  price: 240 },
     ],
-    image: productPorridge,
-    featured: true
+    image: mnhVuma,
+    featured: true,
+    badges: ["Non-GMO"],
+    weight: "75g",
   },
   {
-    id: "fortified-maize-meal",
-    name: "Fortified Maize Meal",
-    shortName: "Fortified Maize",
-    description: "A staple fortified maize meal suitable for households and institutional feeding, supporting balanced nutrition. This versatile product can be used to prepare traditional dishes while ensuring essential nutrient intake.",
-    shortDescription: "Staple fortified maize meal for balanced nutrition",
+    id: "corn-soya-blend",
+    name: "M&H Super Cereal — Corn Soya Blend (CSB++)",
+    shortName: "Super Cereal (CSB++)",
+    description:
+      "A specially formulated Corn Soya Blend (CSB++) designed for infants and young children from 6 months and above. Fortified with essential vitamins and minerals to support healthy growth, development, and recovery from malnutrition. Supplied to NGOs and humanitarian organisations — not for retail resale.",
+    shortDescription: "Fortified corn soya blend for infants & young children 6m+",
     benefits: [
-      "Versatile cooking options",
-      "Fortified with vitamins",
-      "Affordable staple food",
-      "Long shelf life"
+      "Formulated for infants & young children 6m+",
+      "Fortified with essential vitamins & minerals",
+      "High in protein",
+      "Supports growth & development",
+      "WHO/WFP aligned CSB++ formula",
+      "Suitable for humanitarian feeding programmes",
     ],
-    ingredients: "Fortified maize, vitamin premix",
-    intendedUse: "Household cooking, institutional catering",
-    category: "flour",
-    type: "both",
+    ingredients: "Maize, soya, vitamin & mineral premix (CSB++ specification)",
+    intendedUse: "NGO feeding programmes, humanitarian relief, ECD nutrition support",
+    category: "cereal",
+    type: "bulk",
     pricing: [
-      { size: "2.5kg", price: 55 },
-      { size: "5kg", price: 100 },
-      { size: "25kg", price: 460 }
+      { size: "1.5kg", price: 95  },
+      { size: "25kg",  price: 980 },
     ],
-    image: productMaize,
-    featured: true
+    image: mnhCornSoya,
+    featured: true,
+    badges: ["Not for Resale", "NGO Supply"],
+    weight: "1.5kg",
   },
+
+  // ── BULK BAGS ─────────────────────────────────────────────
   {
-    id: "soy-flour",
-    name: "Soy Flour",
-    shortName: "Soy Flour",
-    description: "High-protein soy flour ideal for baking, porridge blends, and nutrition programs. This versatile ingredient boosts the protein content of any meal and is an excellent plant-based protein source.",
-    shortDescription: "High-protein soy flour for baking and nutrition",
+    id: "maize-meal",
+    name: "M&H Fortified Maize Meal",
+    shortName: "Maize Meal",
+    description:
+      "An enriched and fortified maize meal of superior quality — natural, nutritious, and versatile. Boosted with vitamins and minerals, this staple is ideal for households, institutional catering, and large-scale feeding programmes. Halaal certified, non-GMO.",
+    shortDescription: "Enriched & fortified maize meal — superior quality · natural",
     benefits: [
-      "High protein content",
-      "Plant-based nutrition",
-      "Versatile ingredient",
-      "Enhances meal nutrition"
-    ],
-    ingredients: "100% defatted soybeans",
-    intendedUse: "Baking, porridge blends, nutrition programs",
-    category: "flour",
-    type: "both",
-    pricing: [
-      { size: "1kg", price: 60 },
-      { size: "5kg", price: 280 },
-      { size: "25kg", price: 1250 }
-    ],
-    image: productSoy,
-    featured: true
-  },
-  {
-    id: "textured-vegetable-protein",
-    name: "Textured Vegetable Protein (TVP)",
-    shortName: "TVP",
-    description: "Plant-based protein alternative suitable for stews and bulk feeding programs. An economical and nutritious meat substitute that provides high-quality protein while being shelf-stable and easy to prepare.",
-    shortDescription: "Plant-based protein for stews and feeding programs",
-    benefits: [
-      "High protein content",
-      "Meat alternative",
+      "Enriched with vitamins & minerals",
+      "Non-GMO certified",
+      "Zero chemical additives",
+      "Versatile — pap, porridge, baking",
+      "Halaal certified",
       "Long shelf life",
-      "Cost-effective"
     ],
-    ingredients: "Defatted soy flour",
-    intendedUse: "Stews, feeding programs, meat replacement",
-    category: "protein",
-    type: "both",
+    ingredients: "Fortified maize, vitamin & mineral premix",
+    intendedUse: "Household cooking, institutional catering, school feeding, food manufacturers",
+    category: "flour",
+    type: "bulk",
     pricing: [
-      { size: "1kg", price: 75 },
-      { size: "5kg", price: 350 },
-      { size: "25kg", price: 1600 }
+      { size: "5kg",  price: 95  },
+      { size: "10kg", price: 180 },
+      { size: "25kg", price: 420 },
     ],
-    image: productTvp,
-    featured: true
-  }
+    image: mnhMaizeMeal,
+    featured: true,
+    badges: ["Halaal", "Non-GMO"],
+    weight: "25kg",
+  },
+  {
+    id: "soya-flour",
+    name: "M&H Enzyme Active Soya Flour",
+    shortName: "Soya Flour",
+    description:
+      "A high-protein, non-GMO enzyme active soya flour of superior quality. Plant-based and naturally rich in protein, this flour is a versatile ingredient for baking, porridge blending, and nutrition enrichment programmes. An excellent plant-based protein source for food manufacturers and institutional buyers.",
+    shortDescription: "Non-GMO enzyme active soya flour — high protein · plant-based",
+    benefits: [
+      "Enzyme active — improved digestibility",
+      "Non-GMO certified",
+      "Plant-based protein source",
+      "Superior quality & natural",
+      "Halaal certified",
+      "Ideal for food manufacturers",
+    ],
+    ingredients: "100% non-GMO defatted enzyme active soya beans",
+    intendedUse: "Baking, porridge blending, food manufacturing, nutrition enrichment",
+    category: "flour",
+    type: "bulk",
+    pricing: [
+      { size: "5kg",  price: 175  },
+      { size: "10kg", price: 330  },
+      { size: "25kg", price: 760  },
+    ],
+    image: mnhSoyaFlour,
+    featured: true,
+    badges: ["Halaal", "Non-GMO"],
+    weight: "25kg",
+  },
+  {
+    id: "soya-mince-chicken",
+    name: "M&H Soya Mince — Chicken Flavour",
+    shortName: "Soya Mince (Chicken)",
+    description:
+      "A non-GMO chicken-flavoured soya mince of superior quality — plant-based, high in protein, and a great food source of soya. Versatile and economical, this product is ideal for feeding programmes, food manufacturers, and households looking for a nutritious, affordable protein alternative.",
+    shortDescription: "Non-GMO chicken-flavoured soya mince — high protein · plant-based",
+    benefits: [
+      "Non-GMO certified",
+      "High in protein",
+      "Plant-based & meat-free",
+      "Rich chicken flavour",
+      "Halaal certified",
+      "Cost-effective protein source",
+    ],
+    ingredients: "Non-GMO textured soya protein, chicken flavouring, seasoning",
+    intendedUse: "Feeding programmes, food manufacturing, household meals, stews",
+    category: "soya",
+    type: "bulk",
+    pricing: [
+      { size: "1kg",  price: 85  },
+      { size: "5kg",  price: 380 },
+      { size: "10kg", price: 720 },
+    ],
+    image: mnhSoyaMince_chicken,
+    featured: false,
+    badges: ["Halaal", "Non-GMO"],
+    weight: "10kg",
+  },
+  {
+    id: "soya-mince-beef",
+    name: "M&H Soya Mince — Beef Flavour",
+    shortName: "Soya Mince (Beef)",
+    description:
+      "A non-GMO beef-flavoured soya mince of superior quality — plant-based, high in protein, and a great food source of soya. Rich, hearty beef flavour makes this an excellent and affordable substitute for minced meat in stews, bolognaise, and bulk feeding applications.",
+    shortDescription: "Non-GMO beef-flavoured soya mince — high protein · plant-based",
+    benefits: [
+      "Non-GMO certified",
+      "High in protein",
+      "Plant-based & meat-free",
+      "Hearty beef flavour",
+      "Halaal certified",
+      "Excellent meat substitute",
+    ],
+    ingredients: "Non-GMO textured soya protein, beef flavouring, seasoning",
+    intendedUse: "Stews, feeding programmes, food manufacturing, meat substitute",
+    category: "soya",
+    type: "bulk",
+    pricing: [
+      { size: "1kg",  price: 85  },
+      { size: "5kg",  price: 380 },
+      { size: "10kg", price: 720 },
+    ],
+    image: mnhSoyaMince_beef,
+    featured: false,
+    badges: ["Halaal", "Non-GMO"],
+    weight: "10kg",
+  },
+  {
+    id: "soya-mince-oxtail",
+    name: "M&H Soya Mince — Oxtail Flavour",
+    shortName: "Soya Mince (Oxtail)",
+    description:
+      "A non-GMO oxtail-flavoured soya mince of superior quality — plant-based, high in protein, and rich in flavour. The bold oxtail seasoning makes this a satisfying, affordable protein for bulk cooking, institutional feeding, and everyday household meals.",
+    shortDescription: "Non-GMO oxtail-flavoured soya mince — high protein · plant-based",
+    benefits: [
+      "Non-GMO certified",
+      "High in protein",
+      "Plant-based & meat-free",
+      "Bold oxtail flavour",
+      "Halaal certified",
+      "Great for bulk cooking",
+    ],
+    ingredients: "Non-GMO textured soya protein, oxtail flavouring, seasoning",
+    intendedUse: "Bulk cooking, feeding programmes, stews, household meals",
+    category: "soya",
+    type: "bulk",
+    pricing: [
+      { size: "1kg",  price: 85  },
+      { size: "5kg",  price: 380 },
+      { size: "10kg", price: 720 },
+    ],
+    image: mnhSoyaMince_oxtail,
+    featured: false,
+    badges: ["Halaal", "Non-GMO"],
+    weight: "10kg",
+  },
 ];
 
-export const getProductById = (id: string): Product | undefined => {
-  return products.find(p => p.id === id);
-};
+// ── Helpers ───────────────────────────────────────────────────
+export const getProductById = (id: string): Product | undefined =>
+  products.find((p) => p.id === id);
 
-export const getFeaturedProducts = (): Product[] => {
-  return products.filter(p => p.featured);
-};
+export const getFeaturedProducts = (): Product[] =>
+  products.filter((p) => p.featured);
 
 export const getProductsByCategory = (category: string): Product[] => {
   if (category === "all") return products;
-  return products.filter(p => p.category === category);
+  return products.filter((p) => p.category === category);
 };
 
-export const formatPrice = (price: number): string => {
-  return `R${price.toLocaleString()}`;
-};
+export const formatPrice = (price: number): string =>
+  `R${price.toLocaleString()}`;

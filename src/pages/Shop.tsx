@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, memo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
@@ -6,34 +6,38 @@ import { products } from "@/lib/products";
 import { cn } from "@/lib/utils";
 
 const categories = [
-  { id: "all", label: "All Products" },
-  { id: "cereal", label: "Cereals" },
-  { id: "porridge", label: "Porridge" },
-  { id: "flour", label: "Flour" },
-  { id: "protein", label: "Protein" },
+  { id: "all",      label: "All Products" },
+  { id: "porridge", label: "Porridge"     },
+  { id: "cereal",   label: "Cereals"      },
+  { id: "flour",    label: "Flour & Meal" },
+  { id: "soya",     label: "Soya Mince"   },
 ];
 
 const types = [
-  { id: "all", label: "All" },
+  { id: "all",    label: "All"    },
   { id: "retail", label: "Retail" },
-  { id: "bulk", label: "Bulk" },
+  { id: "bulk",   label: "Bulk"   },
 ];
 
 const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedType, setSelectedType] = useState("all");
-  const [showFilters, setShowFilters] = useState(false);
+  const [selectedType, setSelectedType]         = useState("all");
+  const [showFilters, setShowFilters]           = useState(false);
 
-  // useMemo — only recomputes when filters change, not on every render
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
-      const categoryMatch = selectedCategory === "all" || product.category === selectedCategory;
-      const typeMatch = selectedType === "all" || product.type === selectedType || product.type === "both";
+      const categoryMatch =
+        selectedCategory === "all" || product.category === selectedCategory;
+      const typeMatch =
+        selectedType === "all" ||
+        product.type === selectedType ||
+        product.type === "both";
       return categoryMatch && typeMatch;
     });
   }, [selectedCategory, selectedType]);
 
-  const hasActiveFilters = selectedCategory !== "all" || selectedType !== "all";
+  const hasActiveFilters =
+    selectedCategory !== "all" || selectedType !== "all";
 
   const clearFilters = useCallback(() => {
     setSelectedCategory("all");
@@ -49,8 +53,8 @@ const Shop = () => {
             Shop Our Products
           </h1>
           <p className="mx-auto max-w-2xl text-muted-foreground">
-            Browse our range of fortified, nutritious food products designed for
-            households, feeding programs, and institutional use.
+            Browse our range of fortified, non-GMO food products — designed for
+            households, feeding programmes, and institutional use.
           </p>
         </div>
       </section>
@@ -69,7 +73,9 @@ const Shop = () => {
                 Filters
               </span>
               {hasActiveFilters && (
-                <span className="rounded-full bg-mint px-2 py-0.5 text-xs text-white">Active</span>
+                <span className="rounded-full bg-mint px-2 py-0.5 text-xs text-white">
+                  Active
+                </span>
               )}
             </Button>
           </div>
@@ -82,32 +88,36 @@ const Shop = () => {
             )}
           >
             <div className="sticky top-24 space-y-6 rounded-xl border border-border bg-card p-6">
-              {/* Category Filter */}
+              {/* Category */}
               <div>
-                <h3 className="mb-3 font-display font-semibold text-foreground">Category</h3>
-                <div className="space-y-2">
-                  {categories.map((category) => (
+                <h3 className="mb-3 font-display font-semibold text-foreground">
+                  Category
+                </h3>
+                <div className="space-y-1">
+                  {categories.map((cat) => (
                     <button
-                      key={category.id}
-                      onClick={() => setSelectedCategory(category.id)}
-                      aria-pressed={selectedCategory === category.id}
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      aria-pressed={selectedCategory === cat.id}
                       className={cn(
                         "block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors",
-                        selectedCategory === category.id
+                        selectedCategory === cat.id
                           ? "bg-mint-light font-medium text-mint-dark"
                           : "text-muted-foreground hover:bg-muted hover:text-foreground"
                       )}
                     >
-                      {category.label}
+                      {cat.label}
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Type Filter */}
+              {/* Type */}
               <div>
-                <h3 className="mb-3 font-display font-semibold text-foreground">Purchase Type</h3>
-                <div className="space-y-2">
+                <h3 className="mb-3 font-display font-semibold text-foreground">
+                  Purchase Type
+                </h3>
+                <div className="space-y-1">
                   {types.map((type) => (
                     <button
                       key={type.id}
@@ -138,7 +148,8 @@ const Shop = () => {
           <div className="flex-1">
             <div className="mb-6 flex items-center justify-between">
               <p className="text-sm text-muted-foreground">
-                Showing {filteredProducts.length} product{filteredProducts.length !== 1 ? "s" : ""}
+                Showing {filteredProducts.length} product
+                {filteredProducts.length !== 1 ? "s" : ""}
               </p>
             </div>
 
@@ -158,6 +169,11 @@ const Shop = () => {
                 </Button>
               </div>
             )}
+
+            {/* RnD notice */}
+            <p className="mt-10 text-center text-xs text-muted-foreground">
+              * More products currently in R&amp;D phase — check back soon.
+            </p>
           </div>
         </div>
       </div>

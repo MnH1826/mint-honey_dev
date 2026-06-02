@@ -33,8 +33,7 @@ import sadccLogo from "@/assets/sadcc_logo_800_450shar-50brig-20_c1.webp";
 import sedaLogo from "@/assets/seda-logo.webp";
 import sedfaLogo from "@/assets/SEDFA-LOGO.webp";
 import WCdeptlogo from "@/assets/WC_dept_logo.webp";
-import sizani_food from "@/assets/sizani_food.webp";
-
+import NEF_FUNDING_Logo from "@/assets/NEF_FUNDING_Logo.webp";
 const trustedPartners = [
   { name: "ASEZ", logo: atlantisLogo },
   { name: "DTI", logo: dtiLogo },
@@ -42,7 +41,7 @@ const trustedPartners = [
   { name: "SEDA", logo: sedaLogo },
   { name: "SEDFA", logo: sedfaLogo },
   { name: "WC Dept", logo: WCdeptlogo },
-  { name: "Sizani Food South Africa", logo: sizani_food }
+  { name: "NEF Funding", logo: NEF_FUNDING_Logo }
 ];
 
 const stats = [
@@ -231,7 +230,7 @@ const HeroSlideshow = memo(() => {
           <motion.div key={currentSlide} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <span className="wp-badge mb-6 border border-white/20 bg-white/10 text-white/90 backdrop-blur-sm">
               <Leaf className="h-4 w-4" />
-              Proudly South African · Enriching Lives Since 2009
+              Proudly South African · Enriching Lives Since 2018
             </span>
             <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-white md:text-6xl lg:text-7xl">
               {heroSlides[currentSlide].title}
