@@ -9,7 +9,7 @@ const footerProducts = [
   { path: "/shop/vuma-instant-porridge",  label: "Vuma Instant Porridge"      },
   { path: "/shop/corn-soya-blend",        label: "Super Cereal (CSB++)"        },
   { path: "/shop/maize-meal",             label: "Fortified Maize Meal"        },
-  { path: "/shop/soya-flour",             label: "Enzyme Active Soya Flour"    },
+  { path: "/shop/soya-flour",             label: "Soya Flour"    },
   { path: "/shop/soya-mince-chicken",     label: "Soya Mince — Chicken"        },
   { path: "/shop/soya-mince-beef",        label: "Soya Mince — Beef"           },
   { path: "/shop/soya-mince-oxtail",      label: "Soya Mince — Oxtail"         },

@@ -457,8 +457,22 @@ const About = () => {
                 <span className="text-sm text-primary-foreground/60">Proudly South African Member</span>
               </div>
             </motion.div>
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.2 }} className="wp-image aspect-video">
-              <img src={MnH_products} alt="Mint & Honey product range" loading="eager" decoding="async" />
+            {/* Hero product image — portrait 848×1080, float animation */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="flex items-center justify-center"
+            >
+              <motion.img
+                src={MnH_products}
+                alt="Mint & Honey product range"
+                loading="eager"
+                decoding="async"
+                className="h-auto max-h-[480px] w-auto max-w-full object-contain drop-shadow-2xl"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatType: "loop" }}
+              />
             </motion.div>
           </div>
         </div>
@@ -686,30 +700,30 @@ const About = () => {
               className="grid grid-cols-4 gap-2"
             >
               {/* Row 1: 3 bulk bags */}
-              <div className="col-span-1 flex items-end justify-center rounded-xl bg-muted p-2">
-                <img src={pMaizeMeal} alt="Maize Meal" className="h-28 w-auto object-contain drop-shadow-md" loading="lazy" />
+              <div className="col-span-1 group flex items-end justify-center overflow-hidden rounded-xl bg-muted p-2">
+                <img src={pMaizeMeal} alt="Maize Meal" className="h-28 w-auto object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-125" loading="lazy" />
               </div>
-              <div className="col-span-2 flex items-end justify-center rounded-xl bg-muted p-2">
-                <img src={pSoyaFlour} alt="Soya Flour" className="h-32 w-auto object-contain drop-shadow-md" loading="lazy" />
+              <div className="col-span-2 group flex items-end justify-center overflow-hidden rounded-xl bg-muted p-2">
+                <img src={pSoyaFlour} alt="Soya Flour" className="h-32 w-auto object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-125" loading="lazy" />
               </div>
-              <div className="col-span-1 flex items-end justify-center rounded-xl bg-muted p-2">
-                <img src={pCornSoya} alt="Corn Soya CSB++" className="h-28 w-auto object-contain drop-shadow-md" loading="lazy" />
+              <div className="col-span-1 group flex items-end justify-center overflow-hidden rounded-xl bg-muted p-2">
+                <img src={pCornSoya} alt="Corn Soya CSB++" className="h-28 w-auto object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-125" loading="lazy" />
               </div>
 
               {/* Row 2: Vuma (wide) + 3 soya mince */}
-              <div className="col-span-2 flex items-end justify-center rounded-xl bg-muted p-2">
-                <img src={pVuma} alt="Vuma Instant Porridge" className="h-36 w-auto object-contain drop-shadow-md" loading="lazy" />
+              <div className="col-span-2 group flex items-end justify-center overflow-hidden rounded-xl bg-muted p-2">
+                <img src={pVuma} alt="Vuma Instant Porridge" className="h-36 w-auto object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-125" loading="lazy" />
               </div>
-              <div className="col-span-1 flex items-end justify-center rounded-xl bg-muted p-2">
-                <img src={pMinceChicken} alt="Soya Mince Chicken" className="h-28 w-auto object-contain drop-shadow-md" loading="lazy" />
+              <div className="col-span-1 group flex items-end justify-center overflow-hidden rounded-xl bg-muted p-2">
+                <img src={pMinceChicken} alt="Soya Mince Chicken" className="h-28 w-auto object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-125" loading="lazy" />
               </div>
-              <div className="col-span-1 flex items-end justify-center rounded-xl bg-muted p-2">
-                <img src={pMinceBeef} alt="Soya Mince Beef" className="h-28 w-auto object-contain drop-shadow-md" loading="lazy" />
+              <div className="col-span-1 group flex items-end justify-center overflow-hidden rounded-xl bg-muted p-2">
+                <img src={pMinceBeef} alt="Soya Mince Beef" className="h-28 w-auto object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-125" loading="lazy" />
               </div>
 
               {/* Row 3: Oxtail centred */}
-              <div className="col-span-4 flex items-end justify-center rounded-xl bg-muted p-2">
-                <img src={pMinceOxtail} alt="Soya Mince Oxtail" className="h-24 w-auto object-contain drop-shadow-md" loading="lazy" />
+              <div className="col-span-4 group flex items-end justify-center overflow-hidden rounded-xl bg-muted p-2">
+                <img src={pMinceOxtail} alt="Soya Mince Oxtail" className="h-24 w-auto object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-125" loading="lazy" />
               </div>
             </motion.div>
 
