@@ -34,6 +34,9 @@ import sedaLogo from "@/assets/seda-logo.webp";
 import sedfaLogo from "@/assets/SEDFA-LOGO.webp";
 import WCdeptlogo from "@/assets/WC_dept_logo.webp";
 import NEF_FUNDING_Logo from "@/assets/NEF_FUNDING_Logo.webp";
+import AgriFood_logo from "@/assets/AgriFood_logo.webp";
+import cput_logo from "@/assets/cput_logo.webp";
+
 const trustedPartners = [
   { name: "ASEZ", logo: atlantisLogo },
   { name: "DTI", logo: dtiLogo },
@@ -41,7 +44,9 @@ const trustedPartners = [
   { name: "SEDA", logo: sedaLogo },
   { name: "SEDFA", logo: sedfaLogo },
   { name: "WC Dept", logo: WCdeptlogo },
-  { name: "NEF Funding", logo: NEF_FUNDING_Logo }
+  { name: "NEF Funding", logo: NEF_FUNDING_Logo },
+  { name: "AgriFood", logo: AgriFood_logo },
+  { name: "CPUT", logo: cput_logo }
 ];
 
 const stats = [
