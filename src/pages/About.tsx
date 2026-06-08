@@ -51,11 +51,32 @@ import pMinceOxtail from "@/assets/mnh_soya_mince_ox_tail.webp"; // most recent 
 
 // Leadership team data
 const leadershipTeam = [
-  { name: "Regan Paulus", role: "Founder & CEO", description: "Born in Swartland and raised in Atlantis. Resilient, ambitious, community-focused, and committed to impact beyond profit.", icon: Briefcase, quote: "We are not just building a business, we are building a solution to hunger." },
-  { name: "Isabella Nedouvhada", role: "Compliance Officer", description: "Ensures regulatory compliance and quality standards.", icon: Shield },
-  { name: "Storme Paulus", role: "Shareholder/Director & HR Officer", description: "Dedicated to building a people-centric culture and empowering the workforce.", icon: Users },
-  { name: "Fulufhelo Nedouvhada", role: "Shareholder/Director & COO", description: "Oversees operations and ensures manufacturing excellence.", icon: Factory },
-];
+  { 
+    name: "Regan Paulus", 
+    role: "Founder & CEO", 
+    description: "Born in Swartland and raised in Atlantis. Resilient, ambitious, community-focused, and committed to impact beyond profit.", 
+    icon: Briefcase, 
+    quote: "We are not just building a business, we are building a solution to hunger." 
+  },
+  { 
+    name: "Isabella Nedouvhada", 
+    role: "Compliance Officer", 
+    description: "Ensures regulatory compliance and quality standards.", 
+    icon: Shield 
+  },
+  { 
+    name: "Storme Paulus", 
+    role: "Shareholder/Director & HR Officer", 
+    description: "Dedicated to building a people-centric culture and empowering the workforce.", 
+    icon: Users 
+  },
+  { 
+    name: "Fulufhelo Nedouvhada", 
+    role: "Chief Operations Officer", 
+    description: "An accomplished executive with extensive experience spanning heavy-duty steel and FMCG manufacturing, finance, and large-scale supply chain logistics. As Chief Operations Officer at Mint and Honey, she drives strategic operational excellence, spearheading facility expansions while optimizing resource utilization, yield, and waste reduction. Throughout her career, Fulufhelo has excelled at turning complex engineering challenges into streamlined, scalable systems and building high-performing teams. Her leadership is backed by advanced qualifications in metallurgy, business management, and engineering management, bringing a powerful blend of technical expertise and strategic vision to the organization.", 
+    icon: Factory 
+  },
+];;
 
 const values = [
   { icon: Heart, title: "Nutrition First", description: "Every product we create is designed with nutritional impact as the primary goal, helping combat malnutrition and hidden hunger." },
