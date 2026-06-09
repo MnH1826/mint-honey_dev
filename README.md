@@ -1,64 +1,61 @@
+# Mint & Honey (Pty) Ltd - E-commerce Website
 
-## Project info
+![Mint & Honey Logo](https://mintandhoneysite.netlify.app/logo.webp)
 
+## 📌 Project Overview
 
-## How can I edit this code?
+Mint & Honey is a Proudly South African agro-processing and food manufacturing company specialising in non-GMO fortified cereals, maize products, and soya-based nutrition products for food manufacturers, NGOs, and government feeding programs across Africa.
 
-There are several ways of editing your application.
+This repository contains the complete source code for the Mint & Honey corporate website and e-commerce platform.
 
+## 🚀 Live Demo
 
+- **Netlify:** https://mintandhoneysite.netlify.app
+- **Custom Domain:** https://mintandhoney.co.za (coming soon)
 
+## 🛠️ Technology Stack
 
-**Use your preferred IDE**
+| Category | Technology |
+|----------|------------|
+| **Frontend Framework** | React 18.3.1 |
+| **Language** | TypeScript 5.8.3 |
+| **Build Tool** | Vite 5.4.19 |
+| **Styling** | Tailwind CSS 3.4.17 + shadcn/ui |
+| **Animations** | Framer Motion 12.34.0 |
+| **Routing** | React Router DOM 6.30.1 |
+| **Icons** | Lucide React |
+| **Forms** | React Hook Form + Zod |
+| **Hosting** | Netlify |
 
+## 📄 Pages
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Home** - Hero slideshow with 10 images, animated stats, infinite partner marquee
+- **Shop** - Product catalog with 7 fortified products
+- **Bulk Orders** - Inquiry form for institutional buyers
+- **About** - Company story, leadership team, facility slideshow (17 slides)
+- **Impact** - Community initiatives and UN SDG alignment
+- **Contact** - Contact form with Google Maps
 
-Follow these steps:
+## 🏃‍♂️ Local Development
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
+- Node.js 18+ 
+- npm 9+
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Installation
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+# Clone the repository
+git clone https://github.com/ScarySuffer/mint-honey-nourish.git
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Navigate to project folder
+cd mint-honey-nourish
+
+# Switch to version-2 branch
+git checkout version-2
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
