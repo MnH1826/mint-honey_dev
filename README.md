@@ -25,7 +25,7 @@ This repository contains the complete source code for the Mint & Honey corporate
 | **Routing** | React Router DOM 6.30.1 |
 | **Icons** | Lucide React |
 | **Forms** | React Hook Form + Zod |
-| **Hosting** | Netlify |
+| **Hosting** | Netlify → Vercel |
 
 ##  Pages
 
