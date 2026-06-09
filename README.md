@@ -11,6 +11,7 @@ This repository contains the complete source code for the Mint & Honey corporate
 ##  Live Demo
 
 - **Netlify:** https://mintandhoneysite.netlify.app
+- **Vercel:** https://mint-honey.vercel.app
 - **Custom Domain:** https://mintandhoney.co.za (coming soon)
 
 ##  Technology Stack
