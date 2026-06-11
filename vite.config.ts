@@ -12,56 +12,55 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    // only load lovable-tagger in dev mode
-    mode === "development" &&
-      (async () => {
-        const { componentTagger } = await import("lovable-tagger");
-        return componentTagger();
-      })(),
-  ].filter(Boolean),
+    // lovable-tagger removed - not needed for production
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // Force React to be a single instance
+    dedupe: ["react", "react-dom", "react-router-dom"],
   },
   build: {
     target: "esnext",
     minify: "esbuild",
-    sourcemap: false, // disable in prod for smaller output
+    sourcemap: false,
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Core React
-          "vendor-react": ["react", "react-dom", "react-router-dom"],
+        manualChunks: (id) => {
+          // Core React - but ensure they don't duplicate
+          if (id.includes("node_modules/react/") || 
+              id.includes("node_modules/react-dom/") ||
+              id.includes("node_modules/react-router-dom/")) {
+            return "vendor-react";
+          }
           // UI & animations
-          "vendor-ui": ["framer-motion", "lucide-react", "sonner"],
+          if (id.includes("framer-motion") || 
+              id.includes("lucide-react") || 
+              id.includes("sonner")) {
+            return "vendor-ui";
+          }
           // Radix UI components
-          "vendor-radix": [
-            "@radix-ui/react-dialog",
-            "@radix-ui/react-dropdown-menu",
-            "@radix-ui/react-select",
-            "@radix-ui/react-tooltip",
-            "@radix-ui/react-tabs",
-            "@radix-ui/react-accordion",
-            "@radix-ui/react-checkbox",
-            "@radix-ui/react-label",
-            "@radix-ui/react-slot",
-          ],
+          if (id.includes("@radix-ui")) {
+            return "vendor-radix";
+          }
           // Forms & validation
-          "vendor-forms": [
-            "react-hook-form",
-            "@hookform/resolvers",
-            "zod",
-          ],
+          if (id.includes("react-hook-form") || 
+              id.includes("@hookform") || 
+              id.includes("zod")) {
+            return "vendor-forms";
+          }
           // Data & charts
-          "vendor-data": [
-            "@tanstack/react-query",
-            "recharts",
-            "date-fns",
-          ],
+          if (id.includes("@tanstack") || 
+              id.includes("recharts") || 
+              id.includes("date-fns")) {
+            return "vendor-data";
+          }
           // Carousel
-          "vendor-carousel": ["embla-carousel-react"],
+          if (id.includes("embla-carousel-react")) {
+            return "vendor-carousel";
+          }
         },
       },
     },
