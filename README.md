@@ -2,19 +2,19 @@
 
 ![Mint & Honey Logo](https://mintandhoneysite.netlify.app/logo.webp)
 
-##  Project Overview
+## Project Overview
 
 Mint & Honey is a Proudly South African agro-processing and food manufacturing company specialising in non-GMO fortified cereals, maize products, and soya-based nutrition products for food manufacturers, NGOs, and government feeding programs across Africa.
 
 This repository contains the complete source code for the Mint & Honey corporate website and e-commerce platform.
 
-##  Live Demo
+## Live Demo
 
 - **Netlify:** https://mintandhoneysite.netlify.app
-- **Vercel:** https://mint-honey.vercel.app
+- **Vercel:** https://mint-honey.vercel.app (coming soon)
 - **Custom Domain:** https://mintandhoney.co.za (coming soon)
 
-##  Technology Stack
+## Technology Stack
 
 | Category | Technology |
 |----------|------------|
@@ -26,9 +26,9 @@ This repository contains the complete source code for the Mint & Honey corporate
 | **Routing** | React Router DOM 6.30.1 |
 | **Icons** | Lucide React |
 | **Forms** | React Hook Form + Zod |
-| **Hosting** | Netlify → Vercel |
+| **Hosting** | Netlify |
 
-##  Pages
+## Pages
 
 - **Home** - Hero slideshow with 10 images, animated stats, infinite partner marquee
 - **Shop** - Product catalog with 7 fortified products
@@ -37,7 +37,7 @@ This repository contains the complete source code for the Mint & Honey corporate
 - **Impact** - Community initiatives and UN SDG alignment
 - **Contact** - Contact form with Google Maps
 
-##  Local Development
+## Local Development
 
 ### Prerequisites
 - Node.js 18+ 
@@ -51,9 +51,6 @@ git clone https://github.com/ScarySuffer/mint-honey-nourish.git
 
 # Navigate to project folder
 cd mint-honey-nourish
-
-# Switch to version-2 branch
-git checkout version-2
 
 # Install dependencies
 npm install

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { X, Plus, Minus, Trash2, ShoppingBag } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
@@ -5,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/products";
 
-export const CartDrawer = () => {
+export const CartDrawer = memo(() => {
   const { items, removeFromCart, updateQuantity, getCartTotal, isCartOpen, setIsCartOpen } = useCart();
+  const total = getCartTotal();
 
   return (
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
@@ -37,74 +39,66 @@ export const CartDrawer = () => {
           <>
             <div className="flex-1 overflow-y-auto py-4">
               <div className="space-y-4">
-                {items.map(item => (
-                  <div
-                    key={`${item.product.id}-${item.selectedSize.size}`}
-                    className="flex gap-4 rounded-lg border border-border bg-card p-4"
-                  >
-                    <img
-                      src={item.product.image}
-                      alt={item.product.name}
-                      className="h-20 w-20 rounded-lg object-cover"
-                    />
-                    <div className="flex flex-1 flex-col">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h4 className="font-medium leading-tight">
-                            {item.product.shortName}
-                          </h4>
-                          <p className="text-sm text-muted-foreground">
-                            {item.selectedSize.size}
-                          </p>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                          onClick={() => removeFromCart(item.product.id, item.selectedSize.size)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <div className="mt-auto flex items-center justify-between">
-                        <div className="flex items-center gap-2">
+                {items.map((item) => {
+                  const itemKey = `${item.product.id}-${item.selectedSize.size}`;
+                  const itemTotal = formatPrice(item.selectedSize.price * item.quantity);
+                  return (
+                    <div key={itemKey} className="flex gap-4 rounded-lg border border-border bg-card p-4">
+                      <img
+                        src={item.product.image}
+                        alt={item.product.name}
+                        className="h-20 w-20 rounded-lg object-cover flex-shrink-0"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="flex flex-1 flex-col min-w-0">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <h4 className="font-medium leading-tight truncate">
+                              {item.product.shortName}
+                            </h4>
+                            <p className="text-sm text-muted-foreground">{item.selectedSize.size}</p>
+                          </div>
                           <Button
-                            variant="outline"
+                            variant="ghost"
                             size="icon"
-                            className="h-8 w-8"
-                            onClick={() =>
-                              updateQuantity(
-                                item.product.id,
-                                item.selectedSize.size,
-                                item.quantity - 1
-                              )
-                            }
+                            className="h-8 w-8 flex-shrink-0 text-muted-foreground hover:text-destructive"
+                            onClick={() => removeFromCart(item.product.id, item.selectedSize.size)}
+                            aria-label={`Remove ${item.product.shortName} from cart`}
                           >
-                            <Minus className="h-3 w-3" />
-                          </Button>
-                          <span className="w-8 text-center font-medium">{item.quantity}</span>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() =>
-                              updateQuantity(
-                                item.product.id,
-                                item.selectedSize.size,
-                                item.quantity + 1
-                              )
-                            }
-                          >
-                            <Plus className="h-3 w-3" />
+                            <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
-                        <span className="font-semibold text-mint">
-                          {formatPrice(item.selectedSize.price * item.quantity)}
-                        </span>
+                        <div className="mt-auto flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => updateQuantity(item.product.id, item.selectedSize.size, item.quantity - 1)}
+                              aria-label="Decrease quantity"
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="w-8 text-center font-medium" aria-live="polite">
+                              {item.quantity}
+                            </span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => updateQuantity(item.product.id, item.selectedSize.size, item.quantity + 1)}
+                              aria-label="Increase quantity"
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
+                          <span className="font-semibold text-mint">{itemTotal}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -112,23 +106,13 @@ export const CartDrawer = () => {
               <div className="mb-4 flex items-center justify-between text-lg">
                 <span className="font-medium">Total</span>
                 <span className="font-display text-xl font-semibold text-mint">
-                  {formatPrice(getCartTotal())}
+                  {formatPrice(total)}
                 </span>
               </div>
-              <Button
-                variant="mint"
-                size="lg"
-                className="w-full"
-                onClick={() => setIsCartOpen(false)}
-                asChild
-              >
+              <Button variant="mint" size="lg" className="w-full" onClick={() => setIsCartOpen(false)} asChild>
                 <Link to="/checkout">Proceed to Checkout</Link>
               </Button>
-              <Button
-                variant="ghost"
-                className="mt-2 w-full"
-                onClick={() => setIsCartOpen(false)}
-              >
+              <Button variant="ghost" className="mt-2 w-full" onClick={() => setIsCartOpen(false)}>
                 Continue Shopping
               </Button>
             </div>
@@ -137,4 +121,6 @@ export const CartDrawer = () => {
       </SheetContent>
     </Sheet>
   );
-};
+});
+
+CartDrawer.displayName = "CartDrawer";
