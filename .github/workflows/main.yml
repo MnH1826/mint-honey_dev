@@ -1,0 +1,19 @@
+name: Automated Client Sync
+
+on:
+  schedule:
+    - cron: '0 * * * *' # This forces GitHub to check for client updates every single hour
+  workflow_dispatch: # This keeps a manual button available just in case
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync Upstream
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+        with:
+          target_sync_branch: main
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_sync_branch: main
+          upstream_sync_repo: ScarySuffer/mint-honey-nourish # The client's original repo
+          test_mode: false
