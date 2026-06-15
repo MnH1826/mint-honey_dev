@@ -235,7 +235,7 @@ const HeroSlideshow = memo(() => {
           <motion.div key={currentSlide} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <span className="wp-badge mb-6 border border-white/20 bg-white/10 text-white/90 backdrop-blur-sm">
               <Leaf className="h-4 w-4" />
-              Proudly South African · Enriching Lives Since 2018.Vho_Vhulondo_R_4
+              Proudly South African · Enriching Lives Since 2018. Scary
             </span>
             <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-white md:text-6xl lg:text-7xl">
               {heroSlides[currentSlide].title}
