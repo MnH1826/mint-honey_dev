@@ -47,7 +47,7 @@ This repository contains the complete source code for the Mint & Honey corporate
 
 ```bash
 # Clone the repository
-git clone https://github.com/ScarySuffer/mint-honey-nourish.git
+git clone https://github.com/MnH1826/mint-honey_dev.git
 
 # Navigate to project folder
 cd mint-honey-nourish
