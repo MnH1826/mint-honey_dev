@@ -18,7 +18,6 @@ import productLineup from "@/assets/product-lineup.jpg";
 import MnH_products from "@/assets/MnH_products.webp";
 import reganPaulusCeo from "@/assets/regan_paulus_ceo.webp";
 import leadershipTeamImage from "@/assets/ceo_co_hr_coo.webp";
-
 // ── Facility slideshow images ────────────────────────────────
 import prod1 from "@/assets/prod_1.webp";
 import prod2 from "@/assets/prod_2.webp";
