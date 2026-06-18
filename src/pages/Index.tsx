@@ -245,15 +245,16 @@ const HeroSlideshow = memo(() => {
             </p>
           </motion.div>
 
+          {/* UPDATED BUTTONS - Products + Bulk Orders */}
           <div className="flex flex-wrap justify-center gap-4">
-            <Button variant="honey" size="xl" className="shadow-lg hover:shadow-xl transition-all duration-300" asChild>
-              <Link to="/bulk-orders">
-                Bulk & Institutional Orders
+            <Button variant="mint" size="xl" className="shadow-lg hover:shadow-xl transition-all duration-300" asChild>
+              <Link to="/products">
+                Explore Our Products
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="xl" className="border-white/30 text-black hover:bg-white/10 hover:text-white backdrop-blur-sm" asChild>
-              <Link to="/contact">Contact Us</Link>
+            <Button variant="outline" size="xl" className="border-white/30 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm" asChild>
+              <Link to="/bulk-orders">Bulk & Institutional Orders</Link>
             </Button>
           </div>
 
@@ -674,7 +675,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section - Updated */}
+      {/* CTA Section */}
       <section className="bg-mint py-20 md:py-28">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -698,7 +699,7 @@ const Index = () => {
             <Button
               variant="outline"
               size="xl"
-              className="border-primary-foreground/30 text-secondary-foreground hover:bg-primary-foreground/10 hover:text-white"
+              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-white"
               asChild
             >
               <Link to="/bulk-orders">Bulk Orders</Link>

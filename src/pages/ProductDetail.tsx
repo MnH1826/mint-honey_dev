@@ -1,12 +1,7 @@
-import { useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
-import {
-  ArrowLeft, Check, Minus, Plus, ShoppingCart,
-  Truck, Shield, Leaf,
-} from "lucide-react";
+import { ArrowLeft, Check, Truck, Shield, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getProductById, formatPrice, PricingOption } from "@/lib/products";
-import { useCart } from "@/context/CartContext";
+import { getProductById } from "@/lib/products";
 import { cn } from "@/lib/utils";
 
 const featureCards = [
@@ -26,19 +21,6 @@ const badgeColour = (badge: string) => {
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const product = getProductById(id || "");
-  const { addToCart } = useCart();
-
-  const [selectedSize, setSelectedSize] = useState<PricingOption | null>(
-    product?.pricing[0] || null
-  );
-  const [quantity, setQuantity] = useState(1);
-
-  const handleAddToCart = useCallback(() => {
-    if (selectedSize) addToCart(product!, selectedSize, quantity);
-  }, [selectedSize, quantity, product, addToCart]);
-
-  const decrement = useCallback(() => setQuantity((q) => Math.max(1, q - 1)), []);
-  const increment = useCallback(() => setQuantity((q) => q + 1), []);
 
   if (!product) {
     return (
@@ -48,7 +30,7 @@ const ProductDetail = () => {
           The product you're looking for doesn't exist.
         </p>
         <Button variant="mint" asChild>
-          <Link to="/shop">Back to Shop</Link>
+          <Link to="/products">Back to Products</Link>
         </Button>
       </div>
     );
@@ -60,18 +42,18 @@ const ProductDetail = () => {
         {/* Breadcrumb */}
         <nav className="mb-8 flex items-center gap-2 text-sm" aria-label="Breadcrumb">
           <Link
-            to="/shop"
+            to="/products"
             className="flex items-center gap-1 text-muted-foreground transition-colors hover:text-mint"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Shop
+            Back to Products
           </Link>
           <span className="text-muted-foreground">/</span>
           <span className="text-foreground">{product.shortName}</span>
         </nav>
 
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-          {/* Product Image — object-contain so portrait bags display properly */}
+          {/* Product Image */}
           <div className="flex items-center justify-center overflow-hidden rounded-2xl bg-muted p-8 min-h-[360px]">
             <img
               src={product.image}
@@ -127,75 +109,25 @@ const ProductDetail = () => {
               ))}
             </div>
 
-            {/* Size Selection */}
-            <div className="mb-6">
-              <h3 className="mb-3 font-display font-semibold">Select Size</h3>
-              <div className="flex flex-wrap gap-3">
+            {/* ❌ REMOVED: Size Selection and Price - Replaced with Bulk info */}
+            <div className="mb-6 rounded-xl border border-border bg-mint-light p-6">
+              <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
+                Bulk Orders Only
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                This product is available for bulk and institutional orders.
+                Please visit our <Link to="/bulk-orders" className="text-mint hover:underline">Bulk Orders page</Link> to request a quote.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
                 {product.pricing.map((option) => (
-                  <button
+                  <span
                     key={option.size}
-                    onClick={() => setSelectedSize(option)}
-                    aria-pressed={selectedSize?.size === option.size}
-                    className={cn(
-                      "flex flex-col items-center rounded-lg border-2 px-5 py-3 transition-all",
-                      selectedSize?.size === option.size
-                        ? "border-mint bg-mint-light"
-                        : "border-border hover:border-mint/50"
-                    )}
+                    className="rounded-full bg-background px-3 py-1 text-xs font-medium text-foreground border border-border"
                   >
-                    <span className="text-sm font-medium">{option.size}</span>
-                    <span className="text-lg font-semibold text-mint">
-                      {formatPrice(option.price)}
-                    </span>
-                  </button>
+                    {option.size}
+                  </span>
                 ))}
               </div>
-            </div>
-
-            {/* Quantity */}
-            <div className="mb-6">
-              <h3 className="mb-3 font-display font-semibold">Quantity</h3>
-              <div className="flex items-center gap-4">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={decrement}
-                  aria-label="Decrease quantity"
-                >
-                  <Minus className="h-4 w-4" />
-                </Button>
-                <span
-                  className="w-12 text-center text-xl font-medium"
-                  aria-live="polite"
-                >
-                  {quantity}
-                </span>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={increment}
-                  aria-label="Increase quantity"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Price + Add to Cart */}
-            <div className="mb-8 flex items-center gap-4">
-              <div className="text-3xl font-bold text-foreground">
-                {selectedSize && formatPrice(selectedSize.price * quantity)}
-              </div>
-              <Button
-                variant="mint"
-                size="xl"
-                className="flex-1"
-                onClick={handleAddToCart}
-                disabled={!selectedSize}
-              >
-                <ShoppingCart className="mr-2 h-5 w-5" />
-                Add to Cart
-              </Button>
             </div>
 
             {/* Feature Cards */}
@@ -230,6 +162,9 @@ const ProductDetail = () => {
             <p className="text-muted-foreground">
               Available in {product.pricing.map((p) => p.size).join(", ")} packages
             </p>
+            <Button variant="mint" size="sm" className="mt-4" asChild>
+              <Link to="/bulk-orders">Request a Quote</Link>
+            </Button>
           </div>
         </div>
       </div>

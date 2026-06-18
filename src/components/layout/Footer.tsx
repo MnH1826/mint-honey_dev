@@ -7,6 +7,7 @@ import halaalLogo from "@/assets/halaal_ht_2076.webp";
 
 const quickLinks = [
   { path: "/", label: "Home" },
+  { path: "/products", label: "Products" },
   { path: "/bulk-orders", label: "Bulk Orders" },
   { path: "/about", label: "About Us" },
   { path: "/impact", label: "Our Impact" },
@@ -121,9 +122,9 @@ export const Footer = () => {
               variant="mint" 
               size="sm" 
               className="mt-2"
-              onClick={() => handleNavClick("/bulk-orders")}
+              onClick={() => handleNavClick("/products")}
             >
-              View Bulk Orders
+              View All Products
               <ArrowRight className="ml-2 h-3 w-3" />
             </Button>
           </div>
