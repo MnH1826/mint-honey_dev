@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, ArrowRight } from "
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
-import halaalLogo from "@/assets/halaal_ht_2076.webp";
+import halaalLogo from "@/assets/icsa_logo.webp";
 
 const quickLinks = [
   { path: "/", label: "Home" },
