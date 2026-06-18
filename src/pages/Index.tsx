@@ -253,7 +253,7 @@ const HeroSlideshow = memo(() => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="xl" className="border-white/30 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm" asChild>
+            <Button variant="outline" size="xl" className="border-white/30 text-black hover:bg-white/10 hover:text-white backdrop-blur-sm" asChild>
               <Link to="/bulk-orders">Bulk & Institutional Orders</Link>
             </Button>
           </div>
