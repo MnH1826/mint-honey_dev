@@ -1,26 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from "lucide-react";
-
+import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
 import halaalLogo from "@/assets/halaal_ht_2076.webp";
 
-const footerProducts = [
-  { path: "/shop/vuma-instant-porridge",  label: "Vuma Instant Porridge"      },
-  { path: "/shop/corn-soya-blend",        label: "Super Cereal (CSB++)"        },
-  { path: "/shop/maize-meal",             label: "Fortified Maize Meal"        },
-  { path: "/shop/soya-flour",             label: "Soya Flour"    },
-  { path: "/shop/soya-mince-chicken",     label: "Soya Mince — Chicken"        },
-  { path: "/shop/soya-mince-beef",        label: "Soya Mince — Beef"           },
-  { path: "/shop/soya-mince-oxtail",      label: "Soya Mince — Oxtail"         },
-];
-
 const quickLinks = [
-  { path: "/shop",             label: "Shop Products"      },
-  { path: "/bulk-orders",      label: "Bulk Orders"        },
-  { path: "/about",            label: "About Us"           },
-  { path: "/impact",           label: "Our Impact"         },
-  { path: "/privacy-policy",   label: "Privacy Policy"     },
+  { path: "/", label: "Home" },
+  { path: "/bulk-orders", label: "Bulk Orders" },
+  { path: "/about", label: "About Us" },
+  { path: "/impact", label: "Our Impact" },
+  { path: "/privacy-policy", label: "Privacy Policy" },
   { path: "/terms-conditions", label: "Terms & Conditions" },
 ];
 
@@ -117,21 +107,25 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Products */}
+          {/* Our Products */}
           <div className="space-y-4">
             <h4 className="font-display text-lg font-semibold">Our Products</h4>
-            <ul className="space-y-2 text-sm">
-              {footerProducts.map(({ path, label }) => (
-                <li key={path}>
-                  <button
-                    onClick={() => handleNavClick(path)}
-                    className="text-left text-muted-foreground transition-colors hover:text-mint"
-                  >
-                    {label}
-                  </button>
-                </li>
-              ))}
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>Vuma Instant Porridge</li>
+              <li>Super Cereal (CSB++)</li>
+              <li>Fortified Maize Meal</li>
+              <li>Soya Flour</li>
+              <li>Soya Mince — Chicken, Beef, Oxtail</li>
             </ul>
+            <Button 
+              variant="mint" 
+              size="sm" 
+              className="mt-2"
+              onClick={() => handleNavClick("/bulk-orders")}
+            >
+              View Bulk Orders
+              <ArrowRight className="ml-2 h-3 w-3" />
+            </Button>
           </div>
 
           {/* Contact */}

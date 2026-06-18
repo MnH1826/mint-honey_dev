@@ -2,7 +2,6 @@ import { useEffect, memo } from "react";
 import { useLocation } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { CartDrawer } from "@/components/cart/CartDrawer";
 import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
 
 interface LayoutProps {
@@ -12,7 +11,6 @@ interface LayoutProps {
 // Page titles configuration
 const pageTitles: Record<string, string> = {
   '/': 'Mint & Honey | Non-GMO Fortified Food Manufacturer | South Africa',
-  '/shop': 'Shop | Mint & Honey - Fortified Cereals & Nutrition Products',
   '/bulk-orders': 'Bulk Orders | Mint & Honey - Institutional & Wholesale Pricing',
   '/about': 'About Us | Mint & Honey - Our Story & Mission',
   '/impact': 'Our Impact | Mint & Honey - Fighting Malnutrition in Africa',
@@ -55,8 +53,8 @@ export const Layout = memo(({ children }: LayoutProps) => {
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
-      <CartDrawer />
       <ScrollToTopButton />
+      {/* ❌ REMOVED: CartDrawer */}
     </div>
   );
 });

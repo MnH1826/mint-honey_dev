@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { products, formatPrice } from "@/lib/products";
+import { products } from "@/lib/products";
 import { useNavigate } from "react-router-dom";
 
 const benefits = [
@@ -51,7 +51,7 @@ const BulkOrders = () => {
               ))}
             </div>
 
-            {/* Minimum Order Info */}
+            {/* Minimum Order Info - Unchanged */}
             <div className="mb-8 rounded-xl border border-border bg-card p-6">
               <h3 className="mb-4 font-display text-lg font-semibold">Minimum Order Quantities</h3>
               <div className="space-y-3 text-sm">
@@ -70,38 +70,23 @@ const BulkOrders = () => {
               </div>
             </div>
 
-            {/* Product Pricing Table */}
+            {/* ❌ REMOVED: Bulk Pricing Table - Now just a product reference list */}
             <div className="rounded-xl border border-border bg-card p-6">
-              <h3 className="mb-4 font-display text-lg font-semibold">Bulk Pricing Guide</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="pb-3 text-left font-medium">Product</th>
-                      <th className="pb-3 text-right font-medium">25kg Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.map(product => {
-                      const bulkPrice = product.pricing.find(p => p.size === "25kg");
-                      return (
-                        <tr key={product.id} className="border-b border-border last:border-0">
-                          <td className="py-3">{product.shortName}</td>
-                          <td className="py-3 text-right font-medium text-mint">
-                            {bulkPrice ? formatPrice(bulkPrice.price) : "Contact us"}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+              <h3 className="mb-4 font-display text-lg font-semibold">Our Product Range</h3>
+              <div className="space-y-2">
+                {products.map(product => (
+                  <div key={product.id} className="flex justify-between border-b border-border py-2 last:border-0">
+                    <span className="text-sm">{product.shortName}</span>
+                    <span className="text-sm text-muted-foreground">{product.weight || "Various sizes"}</span>
+                  </div>
+                ))}
               </div>
               <p className="mt-4 text-xs text-muted-foreground">
-                * Prices subject to change. Contact us for custom quotes on large orders.
+                Contact us for current pricing and custom quotes on large orders.
               </p>
             </div>
 
-            {/* Download Specs */}
+            {/* Download Specs - Unchanged */}
             <div className="mt-8 rounded-xl bg-mint-light p-6">
               <div className="flex items-start gap-4">
                 <FileText className="h-8 w-8 flex-shrink-0 text-mint" />
@@ -125,7 +110,7 @@ const BulkOrders = () => {
             </div>
           </div>
 
-          {/* Inquiry Form */}
+          {/* Inquiry Form - Unchanged */}
           <div className="rounded-2xl border border-border bg-card p-8">
             <h2 className="mb-2 font-display text-2xl font-bold text-foreground">
               Request a Bulk Quote
@@ -134,7 +119,7 @@ const BulkOrders = () => {
               Fill out the form below and our team will get back to you within 24 hours.
             </p>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); navigate("/coming-soon"); }}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="name">Contact Name *</Label>
@@ -205,15 +190,7 @@ const BulkOrders = () => {
                 />
               </div>
 
-              <Button 
-                onClick={(e) => {
-                  e.preventDefault();
-                  // Handle form submission logic here
-                  // Then navigate to coming-soon page
-                  navigate("/coming-soon");
-                }}
-                className="w-full bg-mint hover:bg-mint-dark text-white gap-2"
-              >
+              <Button type="submit" className="w-full bg-mint hover:bg-mint-dark text-white gap-2">
                 Submit Inquiry
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -221,7 +198,7 @@ const BulkOrders = () => {
           </div>
         </div>
 
-        {/* Contact CTA */}
+        {/* Contact CTA - Unchanged */}
         <div className="mt-16 rounded-2xl bg-honey-light p-8 text-center md:p-12">
           <Phone className="mx-auto mb-4 h-12 w-12 text-honey" />
           <h2 className="mb-2 font-display text-2xl font-bold text-foreground">

@@ -14,7 +14,6 @@ const contactInfo = [
 
 const subjectOptions = [
   { value: "general", label: "General Inquiry" },
-  { value: "products", label: "Product Information" },
   { value: "bulk", label: "Bulk Orders" },
   { value: "partnership", label: "Partnership Opportunity" },
   { value: "support", label: "Customer Support" },

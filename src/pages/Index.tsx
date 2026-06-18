@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Heart, Shield, Leaf, Users, Award, TrendingUp, CheckCircle2, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProductCard } from "@/components/products/ProductCard";
-import { getFeaturedProducts } from "@/lib/products";
+import { motion, useInView } from "framer-motion";
+import { Newsletter } from "@/components/Newsletter";
+import { AsFeaturedOn } from "@/components/AsFeaturedOn";
+import { LinkedInFeed } from "@/components/LinkedInFeed";
+import { useEffect, useState, useRef, useCallback, memo } from "react";
+
+// Image imports
 import productLineup from "@/assets/product-lineup.jpg";
 import teamPhoto from "@/assets/ceo_co_hr_coo.webp";
 import facilityInside from "@/assets/facility-aerial.jpg";
@@ -13,12 +18,7 @@ import mnHImage from "@/assets/MnH_1.webp";
 import facilityImage from "@/assets/facility_outdoor_2.webp";
 import hrImage from "@/assets/Hr_ceo_coo.webp";
 import storedImage from "@/assets/stored.webp";
-import { useEffect, useState, useRef, useCallback, memo } from "react";
-import { motion, useInView } from "framer-motion";
 import facility_outside_location from "@/assets/facility_outside_location.webp";
-import { Newsletter } from "@/components/Newsletter";
-import { AsFeaturedOn } from "@/components/AsFeaturedOn";
-import { LinkedInFeed } from "@/components/LinkedInFeed";
 
 // Additional hero images
 import prod3 from "@/assets/prod_3.webp";
@@ -246,14 +246,14 @@ const HeroSlideshow = memo(() => {
           </motion.div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <Button variant="mint" size="xl" className="shadow-lg hover:shadow-xl transition-all duration-300" asChild>
-              <Link to="/shop">
-                Explore Products
+            <Button variant="honey" size="xl" className="shadow-lg hover:shadow-xl transition-all duration-300" asChild>
+              <Link to="/bulk-orders">
+                Bulk & Institutional Orders
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button variant="outline" size="xl" className="border-white/30 text-black hover:bg-white/10 hover:text-white backdrop-blur-sm" asChild>
-              <Link to="/bulk-orders">Bulk &amp; Institutional Orders</Link>
+              <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
 
@@ -300,11 +300,9 @@ const HeroSlideshow = memo(() => {
 HeroSlideshow.displayName = "HeroSlideshow";
 
 const Index = () => {
-  const featuredProducts = getFeaturedProducts();
-  
   return (
     <div className="flex flex-col">
-      {/* Hero Slideshow Section - Now with 10 slides */}
+      {/* Hero Slideshow Section */}
       <HeroSlideshow />
 
       {/* Stats Banner */}
@@ -331,7 +329,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* About / Who We Are - WordPress-style content block */}
+      {/* About / Who We Are */}
       <section className="bg-background py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-16 lg:grid-cols-2">
@@ -408,60 +406,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="bg-muted py-20 md:py-32">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="mb-16 text-center"
-          >
-            <span className="wp-badge mb-4 bg-honey-light text-honey-dark">
-              Our Products
-            </span>
-            <h2 className="mb-4 font-display text-foreground section-divider">
-              Featured Nutritious Products
-            </h2>
-            <p className="mx-auto mt-8 max-w-2xl text-lg text-muted-foreground">
-              Discover our range of fortified cereals, porridges, and grain-based products 
-              designed to combat malnutrition and support community health.
-            </p>
-          </motion.div>
+      {/* ❌ REMOVED: Featured Products Section */}
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {featuredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <ProductCard product={product} />
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
-            <Button variant="mint" size="lg" asChild>
-              <Link to="/shop">
-                View All Products
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Atlantis Facility - Full-width WordPress block */}
+      {/* Atlantis Facility - Full-width */}
       <section className="relative bg-foreground py-20 md:py-32">
         <div className="absolute inset-0">
           <img
@@ -575,7 +522,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Partners - WordPress-style logo bar */}
+      {/* Partners */}
       <section className="border-y border-border bg-muted py-16">
         <div className="container mx-auto px-4">
           <motion.p 
@@ -727,7 +674,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section - Full-width WordPress block */}
+      {/* CTA Section - Updated */}
       <section className="bg-mint py-20 md:py-28">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -751,7 +698,7 @@ const Index = () => {
             <Button
               variant="outline"
               size="xl"
-              className="border-primary-foreground/30 text-black-foreground hover:bg-primary-foreground/10 hover:text-white"
+              className="border-primary-foreground/30 text-secondary-foreground hover:bg-primary-foreground/10 hover:text-white"
               asChild
             >
               <Link to="/bulk-orders">Bulk Orders</Link>
@@ -760,7 +707,7 @@ const Index = () => {
         </motion.div>
       </section>
 
-      {/* As Featured On - ASEZ Green Energy */}
+      {/* As Featured On */}
       <AsFeaturedOn />
 
       {/* LinkedIn Feed Section */}

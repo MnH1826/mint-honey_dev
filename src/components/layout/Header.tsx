@@ -1,8 +1,7 @@
 import { useState, useCallback, memo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ShoppingCart, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
 
@@ -10,17 +9,14 @@ const navLinks = [
   { path: "/", label: "Home" },
   { path: "/about", label: "About Us" },
   { path: "/impact", label: "Our Impact" },
-  { path: "/shop", label: "Shop" },
   { path: "/bulk-orders", label: "Bulk Orders" },
   { path: "/contact", label: "Contact" },
 ];
 
 export const Header = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { getCartCount, setIsCartOpen } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
-  const cartCount = getCartCount();
 
   const handleNavClick = useCallback((path: string) => {
     if (location.pathname === path) {
@@ -73,23 +69,8 @@ export const Header = memo(() => {
             ))}
           </nav>
 
-          {/* Actions */}
+          {/* Mobile Menu Toggle - No Cart */}
           <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative"
-              onClick={() => setIsCartOpen(true)}
-              aria-label={`Shopping cart${cartCount > 0 ? `, ${cartCount} items` : ""}`}
-            >
-              <ShoppingCart className="h-5 w-5" />
-              {cartCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-honey text-xs font-medium text-secondary-foreground">
-                  {cartCount}
-                </span>
-              )}
-            </Button>
-
             <Button
               variant="ghost"
               size="icon"
