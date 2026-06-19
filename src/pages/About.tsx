@@ -14,8 +14,7 @@ import boardroomMeeting from "@/assets/boardroom-meeting.jpg";
 import reception from "@/assets/reception.webp";
 import facility_outdoor from "@/assets/facility_outdoor.webp";
 import facility_outside_location from "@/assets/facility_outside_location.webp";
-import productLineup from "@/assets/product-lineup.jpg";
-import MnH_products from "@/assets/MnH_products.webp";
+import MnH_products from "@/assets/mnh_vuma_and_soya.jpeg";
 import reganPaulusCeo from "@/assets/regan_paulus_ceo.webp";
 import leadershipTeamImage from "@/assets/ceo_co_hr_coo.webp";
 // ── Facility slideshow images ────────────────────────────────

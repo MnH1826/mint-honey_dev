@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Heart, Users, School, Home, TrendingUp, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import impactImage from "@/assets/impact-children.jpg";
+import impactImage from "@/assets/impact-children.webp";
 import communityImage from "@/assets/community-kitchen.jpg";
 import { motion } from "framer-motion";
 

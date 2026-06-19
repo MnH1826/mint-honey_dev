@@ -8,18 +8,16 @@ import { LinkedInFeed } from "@/components/LinkedInFeed";
 import { useEffect, useState, useRef, useCallback, memo } from "react";
 
 // Image imports
-import productLineup from "@/assets/product-lineup.jpg";
 import teamPhoto from "@/assets/ceo_co_hr_coo.webp";
 import facilityInside from "@/assets/facility-aerial.jpg";
 import Reception from "@/assets/reception.webp";
-import proudlySALogo from "@/assets/proudly-sa-logo.png";
 import ceoImage from "@/assets/ceo_co_hr_coo.webp";
 import mnHImage from "@/assets/MnH_1.webp";
 import facilityImage from "@/assets/facility_outdoor_2.webp";
 import hrImage from "@/assets/Hr_ceo_coo.webp";
 import storedImage from "@/assets/stored.webp";
 import facility_outside_location from "@/assets/facility_outside_location.webp";
-
+import mnh_front from "@/assets/mnh_front.webp"; 
 // Additional hero images
 import prod3 from "@/assets/prod_3.webp";
 import outside1 from "@/assets/outside_1.webp";
@@ -85,8 +83,15 @@ const heroSlides = [
   {
     image: mnHImage,
     title: "Quality Fortified Products",
-    subtitle: "Non-GMO fortified grain products for Africa",
+    subtitle: "Pioneers in the Western Cape's Agro-Processing Sector",
     alt: "Mint & Honey nutritious products display"
+  },
+
+  {
+    image: mnh_front,
+    title: "Innovative Solutions",
+    subtitle: "Transforming the future of African nutrition",
+    alt: "Mint & Honey innovative products"
   },
   {
     image: facilityImage,
@@ -103,13 +108,13 @@ const heroSlides = [
   {
     image: storedImage,
     title: "Bulk Storage & Distribution",
-    subtitle: "Ready to serve communities across South Africa",
+    subtitle: "Ready to serve communities across Africa",
     alt: "Mint & Honey stored products warehouse"
   },
   {
     image: facility_outside_location,
     title: "Strategic Location",
-    subtitle: "Mint & Honey facility in Atlantis Industrial",
+    subtitle: "Located in the Atlantis Special Economic Zone",
     alt: "Mint & Honey facility outside location"
   },
   {
@@ -117,12 +122,6 @@ const heroSlides = [
     title: "Full-Scale Production",
     subtitle: "State-of-the-art manufacturing floor",
     alt: "Mint & Honey full-scale production floor"
-  },
-  {
-    image: outside1,
-    title: "Aerial Excellence",
-    subtitle: "Bird's eye view of our Atlantis campus",
-    alt: "Aerial view of Mint & Honey Atlantis facility"
   },
   {
     image: djiLatest,
@@ -133,7 +132,7 @@ const heroSlides = [
   {
     image: facility_outdoor_3,
     title: "Industrial Strength",
-    subtitle: "Purpose-built for African nutrition needs",
+    subtitle: "Purpose-built for African Food Security",
     alt: "Mint & Honey industrial facility exterior"
   }
 ];
@@ -259,7 +258,7 @@ const HeroSlideshow = memo(() => {
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-white/60">
-            {["Non-GMO Certified", "HACCP Certified", "Chemical Free", "Proudly South African"].map((label) => (
+            {["R368 Compliant","Non-GMO", "FSSC 22000", "Halaal Certified", "Proudly South African"].map((label) => (
               <div key={label} className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-mint" />
                 {label}
@@ -359,7 +358,7 @@ const Index = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Shield, label: "HACCP Certified" },
+                  { icon: Shield, label: "FSSC 22000 Certified" },
                   { icon: Leaf, label: "Non-GMO Products" },
                   { icon: Award, label: "Quality Assured" },
                   { icon: Heart, label: "Community Impact" }
@@ -439,9 +438,9 @@ const Index = () => {
               </p>
               <div className="grid gap-3 sm:grid-cols-2">
                 {[
-                  "Grain to nutrition processing",
+                  "Farm to food approach",
                   "Maize & soya storage silos",
-                  "Milling, extrusion & blending",
+                  "Milling, Extrusion & blending",
                   "Quality control laboratory",
                   "Export-ready infrastructure",
                   "Dedicated dispatch logistics"
@@ -697,7 +696,7 @@ const Index = () => {
               <Link to="/contact">Get In Touch</Link>
             </Button>
             <Button
-              variant="outline"
+              variant="honey"
               size="xl"
               className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-white"
               asChild

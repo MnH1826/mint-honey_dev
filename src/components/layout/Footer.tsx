@@ -66,7 +66,7 @@ export const Footer = () => {
                 <Instagram className="h-4 w-4" />
               </a>
               <a
-                href="https://www.linkedin.com/company/mint-and-honey"
+                href="https://www.linkedin.com/company/mint-honey/posts/?feedView=all"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow Mint & Honey on LinkedIn"
@@ -137,7 +137,7 @@ export const Footer = () => {
                 <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-mint" />
                 <span>
                   30 Charles Matthews Street, Atlantis Industrial,
-                  Western Cape, South Africa
+                  Western Cape, South Africa, 7349
                 </span>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
