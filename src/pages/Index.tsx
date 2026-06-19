@@ -399,7 +399,7 @@ const Index = () => {
                 className="absolute -bottom-6 -left-6 rounded-xl bg-honey p-5 shadow-card"
               >
                 <div className="font-display text-3xl font-bold text-secondary-foreground">30+</div>
-                <div className="text-sm font-medium text-secondary-foreground/80">Years of<br />Excellence</div>
+                <div className="text-sm font-medium text-secondary-foreground/80">Years of<br />Experience</div>
               </motion.div>
             </motion.div>
           </div>
