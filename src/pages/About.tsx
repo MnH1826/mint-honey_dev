@@ -35,6 +35,10 @@ import outside7 from "@/assets/outside_7.webp";
 import outside8 from "@/assets/outside_8.webp";
 import djiLatest from "@/assets/DJI_20260506155948_0139_D.webp";
 
+// ── Lab images ────────────────────────────────────────────────
+import labWebp from "@/assets/lab.webp";
+import lab2Webp from "@/assets/lab_2.webp";
+
 // ── Product images for collage ────────────────────────────────
 import pVuma from "@/assets/mnh_vuma_instant_porrige.webp";
 import pCornSoya from "@/assets/mnh_corn_soya.webp";
@@ -86,10 +90,10 @@ const values = [
 ];
 
 const facilityHighlights = [
-  { icon: Factory, title: "Integrated Processing", description: "Grain to nutrition processing facility with milling, extrusion, blending, and packing using advanced extrusion technology with vitamin & mineral fortification processes." },
-  { icon: Wheat, title: "Grain Silos", description: "Dedicated maize and soya storage silos for consistent supply, sourcing from local farmers and regional agricultural suppliers." },
-  { icon: FlaskConical, title: "Quality Lab", description: "On-site quality control laboratory ensuring product excellence and HACCP/ISO standards." },
-  { icon: Truck, title: "Export-Ready", description: "Dedicated loading, dispatch logistics zones, and export infrastructure for expansion into African export markets." },
+  { icon: Factory, title: "Integrated Processing", description: "Grain to nutrition processing facility with milling, extrusion, blending, and packing using advanced extrusion technology with vitamin & mineral fortification processes.", image: prod3 },
+  { icon: Wheat, title: "Grain Silos", description: "Dedicated maize and soya storage silos for consistent supply, sourcing from local farmers and regional agricultural suppliers.", image: outside7 },
+  { icon: FlaskConical, title: "Quality Lab", description: "On-site quality control laboratory ensuring product excellence and HACCP/ISO standards.", image: labWebp },
+  { icon: Truck, title: "Export-Ready", description: "Dedicated loading, dispatch logistics zones, and export infrastructure for expansion into African export markets.", image: outside3 },
 ];
 
 const timeline = [
@@ -394,7 +398,7 @@ const About = () => {
       {/* Atlantis Facility Slideshow */}
       <FacilitySlideshow />
 
-      {/* Facility Highlights */}
+      {/* Facility Highlights - Updated with Lab Images */}
       <section className="bg-foreground py-10 md:py-14">
         <div className="container mx-auto px-4">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -405,12 +409,50 @@ const About = () => {
                 </div>
                 <h3 className="mb-2 font-display text-base font-semibold text-primary-foreground">{item.title}</h3>
                 <p className="text-xs text-primary-foreground/70">{item.description}</p>
+                {item.image && (
+                  <div className="mt-3 rounded-lg overflow-hidden">
+                    <img src={item.image} alt={item.title} className="w-full h-24 object-cover rounded-lg" loading="lazy" />
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mt-10 rounded-xl bg-primary-foreground/10 p-5 text-center backdrop-blur-sm">
             <p className="text-sm text-primary-foreground/90"><strong>Designed for Impact:</strong> Producing fortified nutrition products for food manufacturers, feeding programs, ECD initiatives, humanitarian support, and export markets across Africa.<br /><span className="mt-2 block text-xs">🌾 Sourcing maize and soya from local farmers and regional agricultural suppliers</span></p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Quality Lab Section - New with lab_2.webp */}
+      <section className="bg-background py-12 md:py-20">
+        <div className="container mx-auto px-4">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
+              <span className="wp-badge mb-4 bg-mint-light text-mint-dark">Quality Assurance</span>
+              <h2 className="mb-4 font-display text-2xl text-foreground">State-of-the-Art Quality Control Laboratory</h2>
+              <p className="mb-6 text-base text-muted-foreground">
+                Our on-site quality control laboratory is equipped with advanced testing equipment to ensure every batch meets the highest food safety and nutritional standards. From raw material testing to final product analysis, we maintain rigorous quality assurance protocols.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Raw material quality testing",
+                  "Nutritional analysis and fortification verification",
+                  "Microbiological safety testing",
+                  "Shelf-life stability studies",
+                  "HACCP and ISO compliance monitoring",
+                  "Continuous improvement through data-driven insights"
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-mint" />
+                    <span className="text-sm text-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+            <motion.div variants={fadeRight} initial="hidden" whileInView="show" viewport={{ once: true }} className="wp-image aspect-video rounded-2xl overflow-hidden shadow-elevated">
+              <img src={lab2Webp} alt="Mint & Honey quality control laboratory" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -500,7 +542,7 @@ const About = () => {
                 ))}
               </div>
               <Button variant="mint" className="mt-6" size="default" asChild>
-                <Link to="/shop">View All Products <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                <Link to="/products">View All Products <ArrowRight className="ml-2 h-4 w-4" /></Link>
               </Button>
             </motion.div>
           </div>
@@ -558,7 +600,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Quality Standards */}
+      {/* Quality Standards - Updated with Lab Image */}
       <section className="bg-muted py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -576,14 +618,14 @@ const About = () => {
               </ul>
             </motion.div>
             <motion.div variants={fadeRight} initial="hidden" whileInView="show" viewport={{ once: true }} className="space-y-4">
-              <div className="wp-image aspect-video">
-                <img src={facility_outside_location} alt="Mint & Honey facility outside location" loading="lazy" decoding="async" />
+              <div className="wp-image aspect-video rounded-2xl overflow-hidden shadow-elevated">
+                <img src={labWebp} alt="Mint & Honey quality control laboratory" loading="lazy" decoding="async" className="h-full w-full object-cover" />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="wp-image aspect-square">
+                <div className="wp-image aspect-square rounded-xl overflow-hidden">
                   <img src={productDisplay} alt="Mint & Honey product display" loading="lazy" decoding="async" />
                 </div>
-                <div className="wp-image aspect-square">
+                <div className="wp-image aspect-square rounded-xl overflow-hidden">
                   <img src={teamBanner} alt="Team with company banner" loading="lazy" decoding="async" />
                 </div>
               </div>

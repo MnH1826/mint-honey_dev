@@ -1,28 +1,26 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Heart, Shield, Leaf, Users, Award, TrendingUp, CheckCircle2, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import {
+  ArrowRight,
+  Heart,
+  Shield,
+  Leaf,
+  Users,
+  Award,
+  TrendingUp,
+  CheckCircle2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import { Newsletter } from "@/components/Newsletter";
 import { AsFeaturedOn } from "@/components/AsFeaturedOn";
 import { LinkedInFeed } from "@/components/LinkedInFeed";
 import { useEffect, useState, useRef, useCallback, memo } from "react";
+import { Hero } from "@/components/Hero";
 
 // Image imports
 import teamPhoto from "@/assets/ceo_co_hr_coo.webp";
 import facilityInside from "@/assets/facility-aerial.jpg";
 import Reception from "@/assets/reception.webp";
-import ceoImage from "@/assets/ceo_co_hr_coo.webp";
-import mnHImage from "@/assets/MnH_1.webp";
-import facilityImage from "@/assets/facility_outdoor_2.webp";
-import hrImage from "@/assets/Hr_ceo_coo.webp";
-import storedImage from "@/assets/stored.webp";
-import facility_outside_location from "@/assets/facility_outside_location.webp";
-import mnh_front from "@/assets/mnh_front.webp"; 
-// Additional hero images
-import prod3 from "@/assets/prod_3.webp";
-import outside1 from "@/assets/outside_1.webp";
-import djiLatest from "@/assets/DJI_20260506155948_0139_D.webp";
-import facility_outdoor_3 from "@/assets/facility_outdoor_3.webp";
 
 // Trusted partners logos
 import atlantisLogo from "@/assets/atlantis.webp";
@@ -35,7 +33,28 @@ import NEF_FUNDING_Logo from "@/assets/NEF_FUNDING_Logo.webp";
 import AgriFood_logo from "@/assets/AgriFood_logo.webp";
 import cput_logo from "@/assets/cput_logo.webp";
 
-const trustedPartners = [
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface TrustedPartner {
+  name: string;
+  logo: string;
+}
+
+interface StatItem {
+  value: string;
+  label: string;
+  icon: React.ElementType;
+}
+
+interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+}
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+const trustedPartners: TrustedPartner[] = [
   { name: "ASEZ", logo: atlantisLogo },
   { name: "DTI", logo: dtiLogo },
   { name: "SADCC", logo: sadccLogo },
@@ -44,122 +63,68 @@ const trustedPartners = [
   { name: "WC Dept", logo: WCdeptlogo },
   { name: "NEF Funding", logo: NEF_FUNDING_Logo },
   { name: "AgriFood", logo: AgriFood_logo },
-  { name: "CPUT", logo: cput_logo }
+  { name: "CPUT", logo: cput_logo },
 ];
 
-const stats = [
+const stats: StatItem[] = [
   { value: "98K+", label: "Kids Fed Every Week Day", icon: Heart },
   { value: "217+", label: "Partner Schools", icon: Users },
   { value: "30+", label: "Years Experience", icon: Award },
-  { value: "6", label: "SDGs Supported", icon: TrendingUp }
+  { value: "6", label: "SDGs Supported", icon: TrendingUp },
 ];
 
-const testimonials = [
+const testimonials: Testimonial[] = [
   {
-    quote: "Mint & Honey has been instrumental in our school feeding program. The quality and nutritional value of their products is exceptional.",
+    quote:
+      "Mint & Honey has been instrumental in our school feeding program. The quality and nutritional value of their products is exceptional.",
     author: "Sarah Moloi",
-    role: "Program Director, Ubuntu Feeding Initiative"
+    role: "Program Director, Ubuntu Feeding Initiative",
   },
   {
-    quote: "Their commitment to child nutrition aligns perfectly with our organization's mission. A trusted partner in combating malnutrition.",
+    quote:
+      "Their commitment to child nutrition aligns perfectly with our organization's mission. A trusted partner in combating malnutrition.",
     author: "Dr. James Ndlovu",
-    role: "Health Officer, Community Health Network"
+    role: "Health Officer, Community Health Network",
   },
   {
-    quote: "Affordable, nutritious, and consistently high quality. Mint & Honey products have become a staple in our community kitchens.",
+    quote:
+      "Affordable, nutritious, and consistently high quality. Mint & Honey products have become a staple in our community kitchens.",
     author: "Thembi Zulu",
-    role: "Volunteer Coordinator, Hope Kitchen"
-  }
+    role: "Volunteer Coordinator, Hope Kitchen",
+  },
 ];
 
-// Expanded hero slides with 10 images
-const heroSlides = [
-  {
-    image: ceoImage,
-    title: "Leadership in Nutrition",
-    subtitle: "Meet the team behind Mint & Honey",
-    alt: "Mint & Honey CEO and leadership team"
-  },
-  {
-    image: mnHImage,
-    title: "Quality Fortified Products",
-    subtitle: "Pioneers in the Western Cape's Agro-Processing Sector",
-    alt: "Mint & Honey nutritious products display"
-  },
+// ─── AnimatedCounter ───────────────────────────────────────────────────────────
 
-  {
-    image: mnh_front,
-    title: "Innovative Solutions",
-    subtitle: "Transforming the future of African nutrition",
-    alt: "Mint & Honey innovative products"
-  },
-  {
-    image: facilityImage,
-    title: "State-of-the-Art Facility",
-    subtitle: "Modern manufacturing in Atlantis Industrial",
-    alt: "Mint & Honey outdoor facility"
-  },
-  {
-    image: hrImage,
-    title: "Dedicated Team",
-    subtitle: "Committed to fighting malnutrition across Africa",
-    alt: "Mint & Honey HR, CEO, and COO team"
-  },
-  {
-    image: storedImage,
-    title: "Bulk Storage & Distribution",
-    subtitle: "Ready to serve communities across Africa",
-    alt: "Mint & Honey stored products warehouse"
-  },
-  {
-    image: facility_outside_location,
-    title: "Strategic Location",
-    subtitle: "Located in the Atlantis Special Economic Zone",
-    alt: "Mint & Honey facility outside location"
-  },
-  {
-    image: prod3,
-    title: "Full-Scale Production",
-    subtitle: "State-of-the-art manufacturing floor",
-    alt: "Mint & Honey full-scale production floor"
-  },
-  {
-    image: djiLatest,
-    title: "Growing Footprint",
-    subtitle: "Expanding our impact across Africa",
-    alt: "Mint & Honey facility expansion aerial view"
-  },
-  {
-    image: facility_outdoor_3,
-    title: "Industrial Strength",
-    subtitle: "Purpose-built for African Food Security",
-    alt: "Mint & Honey industrial facility exterior"
-  }
-];
-
-// Animated Counter Component
 const AnimatedCounter = memo(({ target }: { target: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
   const numericValue = parseInt(target.replace(/[^0-9]/g, "")) || 0;
 
   useEffect(() => {
     if (!isInView) return;
+
     const duration = 2000;
     const startTime = performance.now();
     let rafId: number;
+
     const tick = (now: number) => {
       const progress = Math.min((now - startTime) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.floor(eased * numericValue));
       if (progress < 1) rafId = requestAnimationFrame(tick);
     };
+
     rafId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafId);
   }, [isInView, numericValue]);
 
-  const display = target.includes("K") ? `${count}K+` : target.includes("+") ? `${count}+` : count.toString();
+  const display = target.includes("K")
+    ? `${count}K+`
+    : target.includes("+")
+    ? `${count}+`
+    : count.toString();
 
   return (
     <div ref={ref} className="font-display text-3xl font-bold text-foreground md:text-4xl">
@@ -167,143 +132,16 @@ const AnimatedCounter = memo(({ target }: { target: string }) => {
     </div>
   );
 });
+
 AnimatedCounter.displayName = "AnimatedCounter";
 
-// Hero Slideshow Component
-const HeroSlideshow = memo(() => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const resumeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const pauseAndResume = useCallback(() => {
-    setIsAutoPlaying(false);
-    if (resumeRef.current) clearTimeout(resumeRef.current);
-    resumeRef.current = setTimeout(() => setIsAutoPlaying(true), 10000);
-  }, []);
-
-  useEffect(() => {
-    return () => { if (resumeRef.current) clearTimeout(resumeRef.current); };
-  }, []);
-
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying]);
-
-  const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    pauseAndResume();
-  }, [pauseAndResume]);
-
-  const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-    pauseAndResume();
-  }, [pauseAndResume]);
-
-  const goToSlide = useCallback((index: number) => {
-    setCurrentSlide(index);
-    pauseAndResume();
-  }, [pauseAndResume]);
-
-  return (
-    <section className="relative min-h-[100vh] overflow-hidden">
-      {heroSlides.map((slide, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
-          }`}
-          aria-hidden={index !== currentSlide}
-        >
-          <img
-            src={slide.image}
-            alt={slide.alt}
-            className="h-full w-full object-cover"
-            loading={index === 0 ? "eager" : "lazy"}
-            decoding="async"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/20" />
-        </div>
-      ))}
-
-      <div className="container relative z-20 mx-auto flex min-h-[100vh] flex-col items-center justify-center px-4 py-32 text-center">
-        <div className="max-w-4xl">
-          <motion.div key={currentSlide} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <span className="wp-badge mb-6 border border-white/20 bg-white/10 text-white/90 backdrop-blur-sm">
-              <Leaf className="h-4 w-4" />
-              Proudly South African · Enriching Lives Since 2018
-             </span>
-            <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-white md:text-6xl lg:text-7xl">
-              {heroSlides[currentSlide].title}
-            </h1>
-            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/80 md:text-xl">
-              {heroSlides[currentSlide].subtitle}
-            </p>
-          </motion.div>
-
-          {/* UPDATED BUTTONS - Products + Bulk Orders */}
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button variant="mint" size="xl" className="shadow-lg hover:shadow-xl transition-all duration-300" asChild>
-              <Link to="/products">
-                Explore Our Products
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="xl" className="border-white/30 text-black hover:bg-white/10 hover:text-white backdrop-blur-sm" asChild>
-              <Link to="/bulk-orders">Bulk & Institutional Orders</Link>
-            </Button>
-          </div>
-
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-white/60">
-            {["R368 Compliant","Non-GMO", "FSSC 22000", "Halaal Certified", "Proudly South African"].map((label) => (
-              <div key={label} className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-mint" />
-                {label}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Navigation Arrows */}
-      <button onClick={prevSlide} className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-3 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:left-8 md:p-4" aria-label="Previous slide">
-        <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
-      </button>
-      <button onClick={nextSlide} className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-3 text-white transition-all duration-300 hover:bg-black/70 hover:scale-110 md:right-8 md:p-4" aria-label="Next slide">
-        <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
-      </button>
-
-      {/* Play/Pause Button */}
-      <button onClick={() => setIsAutoPlaying((p) => !p)} className="absolute bottom-24 right-4 z-20 rounded-full bg-black/50 p-2 text-white transition-all duration-300 hover:bg-black/70 md:bottom-32 md:right-8 md:p-2.5" aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}>
-        {isAutoPlaying ? <Pause className="h-4 w-4 md:h-5 md:w-5" /> : <Play className="h-4 w-4 md:h-5 md:w-5" />}
-      </button>
-
-      {/* Dots Indicator */}
-      <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-        {heroSlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              index === currentSlide ? "w-8 bg-mint" : "w-2 bg-white/50 hover:bg-white/75"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-    </section>
-  );
-});
-HeroSlideshow.displayName = "HeroSlideshow";
+// ─── Page ──────────────────────────────────────────────────────────────────────
 
 const Index = () => {
   return (
     <div className="flex flex-col">
-      {/* Hero Slideshow Section */}
-      <HeroSlideshow />
+      {/* Hero Section */}
+      <Hero />
 
       {/* Stats Banner */}
       <section className="bg-mint py-12 md:py-16">
@@ -333,7 +171,7 @@ const Index = () => {
       <section className="bg-background py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-16 lg:grid-cols-2">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -346,30 +184,35 @@ const Index = () => {
                 Manufacturer of High-Quality Cereals &amp; Processed Grains
               </h2>
               <p className="mb-6 text-lg text-muted-foreground">
-                Mint &amp; Honey is a Proudly South African food manufacturing company 
-                specialising in non-GMO fortified cereals, corn &amp; soya products as 
-                ingredients for food manufacturers, NGOs, and government feeding programs.
+                Mint &amp; Honey is a Proudly South African food manufacturing
+                company specialising in non-GMO fortified cereals, corn &amp;
+                soya products as ingredients for food manufacturers, NGOs, and
+                government feeding programs.
               </p>
               <p className="mb-8 text-muted-foreground">
-                What makes us unique is our focus on manufacturing non-GMO cereals 
-                and corn &amp; soya products as ingredients, serving clients from humanitarian 
-                organisations to local food manufacturers across Africa.
+                What makes us unique is our focus on manufacturing non-GMO
+                cereals and corn &amp; soya products as ingredients, serving
+                clients from humanitarian organisations to local food
+                manufacturers across Africa.
               </p>
-
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { icon: Shield, label: "FSSC 22000 Certified" },
                   { icon: Leaf, label: "Non-GMO Products" },
                   { icon: Award, label: "Quality Assured" },
-                  { icon: Heart, label: "Community Impact" }
+                  { icon: Heart, label: "Community Impact" },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 rounded-lg bg-muted p-3">
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 rounded-lg bg-muted p-3"
+                  >
                     <item.icon className="h-5 w-5 flex-shrink-0 text-mint" />
-                    <span className="text-sm font-medium text-foreground">{item.label}</span>
+                    <span className="text-sm font-medium text-foreground">
+                      {item.label}
+                    </span>
                   </div>
                 ))}
               </div>
-
               <Button variant="mint" className="mt-8" size="lg" asChild>
                 <Link to="/about">
                   Learn Our Story
@@ -377,8 +220,8 @@ const Index = () => {
                 </Link>
               </Button>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -391,24 +234,28 @@ const Index = () => {
                   alt="Mint & Honey office reception with company branding"
                 />
               </div>
-              <motion.div 
+              <motion.div
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.4, type: "spring" }}
                 viewport={{ once: true }}
                 className="absolute -bottom-6 -left-6 rounded-xl bg-honey p-5 shadow-card"
               >
-                <div className="font-display text-3xl font-bold text-secondary-foreground">30+</div>
-                <div className="text-sm font-medium text-secondary-foreground/80">Years of<br />Experience</div>
+                <div className="font-display text-3xl font-bold text-secondary-foreground">
+                  30+
+                </div>
+                <div className="text-sm font-medium text-secondary-foreground/80">
+                  Years of
+                  <br />
+                  Experience
+                </div>
               </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ❌ REMOVED: Featured Products Section */}
-
-      {/* Atlantis Facility - Full-width */}
+      {/* Atlantis Facility */}
       <section className="relative bg-foreground py-20 md:py-32">
         <div className="absolute inset-0">
           <img
@@ -432,9 +279,10 @@ const Index = () => {
                 Our Atlantis Facility is Taking Shape
               </h2>
               <p className="mb-8 text-lg text-primary-foreground/70">
-                The Mint &amp; Honey Agro-Processing Facility in Atlantis Industrial, Western Cape 
-                represents our commitment to strengthening food security, supporting local 
-                agriculture, and creating sustainable employment.
+                The Mint &amp; Honey Agro-Processing Facility in Atlantis
+                Industrial, Western Cape represents our commitment to
+                strengthening food security, supporting local agriculture, and
+                creating sustainable employment.
               </p>
               <div className="grid gap-3 sm:grid-cols-2">
                 {[
@@ -443,9 +291,12 @@ const Index = () => {
                   "Milling, Extrusion & blending",
                   "Quality control laboratory",
                   "Export-ready infrastructure",
-                  "Dedicated dispatch logistics"
+                  "Dedicated dispatch logistics",
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 text-primary-foreground/80">
+                  <div
+                    key={i}
+                    className="flex items-center gap-2 text-primary-foreground/80"
+                  >
                     <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-mint" />
                     <span className="text-sm">{item}</span>
                   </div>
@@ -478,7 +329,7 @@ const Index = () => {
       {/* Testimonials */}
       <section className="bg-background py-20 md:py-32">
         <div className="container mx-auto px-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -503,8 +354,10 @@ const Index = () => {
                 viewport={{ once: true }}
                 className="rounded-2xl border border-border bg-card p-8 shadow-soft transition-all hover:shadow-card"
               >
-                <div className="mb-4 font-display text-5xl leading-none text-mint/30">"</div>
-                <p className="mb-6 text-muted-foreground leading-relaxed">
+                <div className="mb-4 font-display text-5xl leading-none text-mint/30">
+                  "
+                </div>
+                <p className="mb-6 leading-relaxed text-muted-foreground">
                   {testimonial.quote}
                 </p>
                 <div className="flex items-center gap-3 border-t border-border pt-4">
@@ -512,8 +365,12 @@ const Index = () => {
                     {testimonial.author.charAt(0)}
                   </div>
                   <div>
-                    <div className="font-medium text-foreground">{testimonial.author}</div>
-                    <div className="text-xs text-muted-foreground">{testimonial.role}</div>
+                    <div className="font-medium text-foreground">
+                      {testimonial.author}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {testimonial.role}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -525,7 +382,7 @@ const Index = () => {
       {/* Partners */}
       <section className="border-y border-border bg-muted py-16">
         <div className="container mx-auto px-4">
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
@@ -534,7 +391,8 @@ const Index = () => {
           >
             Trusted by leading organizations across Africa
           </motion.p>
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1 }}
@@ -546,7 +404,7 @@ const Index = () => {
               { name: "Gift of the Givers", url: "https://giftofthegivers.org/" },
               { name: "Government Feeding Schemes", url: null },
               { name: "Food Manufacturers", url: null },
-              { name: "ECD Centres", url: null }
+              { name: "ECD Centres", url: null },
             ].map((partner, index) => (
               <motion.div
                 key={index}
@@ -575,8 +433,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Trusted by leading companies - Infinite Scrolling Marquee */}
-      <section className="bg-background py-16 md:py-24 overflow-hidden">
+      {/* Trusted Partners — Infinite Marquee */}
+      <section className="overflow-hidden bg-background py-16 md:py-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -597,18 +455,17 @@ const Index = () => {
           </motion.div>
         </div>
 
-        {/* Infinite Scrolling Marquee */}
         <div className="relative w-full overflow-hidden">
-          <div className="absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-background to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-background to-transparent pointer-events-none" />
-          
-          <div className="flex animate-scroll-right gap-8 py-4">
+          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-background to-transparent" />
+          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-background to-transparent" />
+
+          <div className="motion-safe:animate-scroll-right flex gap-8 py-4 [will-change:transform]">
             {[...trustedPartners, ...trustedPartners].map((partner, index) => (
               <div
                 key={`${partner.name}-${index}`}
-                className="group flex-shrink-0 w-32 md:w-40"
+                className="group w-32 flex-shrink-0 md:w-40"
               >
-                <div className="flex items-center justify-center rounded-xl bg-white p-4 shadow-soft transition-all duration-300 hover:shadow-elevated hover:-translate-y-1">
+                <div className="flex items-center justify-center rounded-xl bg-white p-4 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated">
                   <img
                     src={partner.logo}
                     alt={`${partner.name} logo`}
@@ -629,7 +486,7 @@ const Index = () => {
       <section className="bg-background py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-16 lg:grid-cols-2">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
@@ -641,8 +498,8 @@ const Index = () => {
                 alt="The Mint & Honey team at company headquarters"
               />
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -655,13 +512,14 @@ const Index = () => {
                 A Team Dedicated to Enriching Lives
               </h2>
               <p className="mb-6 text-lg text-muted-foreground">
-                Our diverse and passionate team brings together expertise in food science, 
-                manufacturing, nutrition, and community development to deliver products 
-                that make a real difference.
+                Our diverse and passionate team brings together expertise in food
+                science, manufacturing, nutrition, and community development to
+                deliver products that make a real difference.
               </p>
               <p className="mb-8 text-muted-foreground">
-                From our Atlantis facility to communities across Africa, we're committed to 
-                sustainable quality for the wellbeing of future generations.
+                From our Atlantis facility to communities across Africa, we're
+                committed to sustainable quality for the wellbeing of future
+                generations.
               </p>
               <Button variant="mint-outline" size="lg" asChild>
                 <Link to="/about">
@@ -676,7 +534,7 @@ const Index = () => {
 
       {/* CTA Section */}
       <section className="bg-mint py-20 md:py-28">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -687,9 +545,9 @@ const Index = () => {
             Ready to Partner With Us?
           </h2>
           <p className="mx-auto mb-10 max-w-2xl text-lg text-primary-foreground/80">
-            Whether you're a food manufacturer, NGO, government department, or running 
-            feeding programs — we'd love to discuss how our non-GMO fortified products 
-            can support your nutritional needs.
+            Whether you're a food manufacturer, NGO, government department, or
+            running feeding programs — we'd love to discuss how our non-GMO
+            fortified products can support your nutritional needs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button variant="honey" size="xl" asChild>
@@ -710,10 +568,10 @@ const Index = () => {
       {/* As Featured On */}
       <AsFeaturedOn />
 
-      {/* LinkedIn Feed Section */}
+      {/* LinkedIn Feed */}
       <LinkedInFeed />
 
-      {/* Newsletter Signup */}
+      {/* Newsletter */}
       <Newsletter />
     </div>
   );
