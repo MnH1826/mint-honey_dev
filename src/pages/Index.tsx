@@ -276,7 +276,7 @@ const Index = () => {
                 Major Milestone
               </span>
               <h2 className="mb-6 font-display text-primary-foreground">
-                Our Atlantis Facility is Taking Shape
+                Our Atlantis Facility is Taking Shape 
               </h2>
               <p className="mb-8 text-lg text-primary-foreground/70">
                 The Mint &amp; Honey Agro-Processing Facility in Atlantis

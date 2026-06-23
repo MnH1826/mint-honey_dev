@@ -46,7 +46,7 @@ const heroSlides: HeroSlide[] = [
     image: mnHImage,
     title: "Quality Fortified Products",
     subtitle: "Pioneers in the Western Cape's Agro-Processing Sector",
-    alt: "Mint & Honey nutritious products display",
+    alt: "Mint & Honey nutritious products display ",
   },
   {
     image: mnh_front,

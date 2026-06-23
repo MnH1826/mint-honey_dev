@@ -639,7 +639,7 @@ const About = () => {
         <div className="container mx-auto px-4 text-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <h2 className="mb-3 font-display text-2xl text-secondary-foreground">Partner With Us</h2>
-            <p className="mx-auto mb-6 max-w-2xl text-base text-secondary-foreground/80">Whether you're a food manufacturer needing non-GMO ingredients, an NGO running feeding programmes, or a government department — we'd love to discuss how we can support your nutritional needs.</p>
+            <p className="mx-auto mb-6 max-w-2xl text-base text-secondary-foreground/80">Whether you're a food manufacturer needing non-GMO ingredients, an NGO running feeding programmes, or a government department — we'd love to discuss how we can support your nutritional needs. </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button variant="mint" size="default" asChild>
                 <Link to="/contact">Get In Touch <ArrowRight className="ml-2 h-4 w-4" /></Link>
@@ -656,4 +656,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default About; 
