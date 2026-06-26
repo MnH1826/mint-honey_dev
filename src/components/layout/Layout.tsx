@@ -20,12 +20,43 @@ const pageTitles: Record<string, string> = {
   '/terms-conditions': 'Terms & Conditions | Mint & Honey',
 };
 
-// Separate component so it doesn't cause Layout to re-render
+// ─── Google Analytics ────────────────────────────────────────
+
+const GA_MEASUREMENT_ID = "G-XXXXXXXXXX"; // REPLACE WITH YOUR ID
+
+// Google Analytics Script Component
+const GoogleAnalytics = memo(() => {
+  useEffect(() => {
+    // Load the GA script
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    document.head.appendChild(script);
+
+    // Initialize GA
+    window.dataLayer = window.dataLayer || [];
+    function gtag(...args: any[]) {
+      window.dataLayer.push(args);
+    }
+    gtag("js", new Date());
+    gtag("config", GA_MEASUREMENT_ID);
+
+    return () => {
+      // Clean up
+      document.head.removeChild(script);
+    };
+  }, []);
+
+  return null;
+});
+GoogleAnalytics.displayName = "GoogleAnalytics";
+
+// ─── Existing Components ────────────────────────────────────
+
 const ScrollToTop = memo(() => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // instant on route change — smooth feels laggy on navigation
     window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
   }, [pathname]);
 
@@ -33,7 +64,6 @@ const ScrollToTop = memo(() => {
 });
 ScrollToTop.displayName = "ScrollToTop";
 
-// Update page title on route change
 const PageTitleUpdater = memo(() => {
   const { pathname } = useLocation();
 
@@ -46,16 +76,27 @@ const PageTitleUpdater = memo(() => {
 });
 PageTitleUpdater.displayName = "PageTitleUpdater";
 
+// ─── TypeScript Declaration ─────────────────────────────────
+
+declare global {
+  interface Window {
+    dataLayer: any[];
+    gtag: (...args: any[]) => void;
+  }
+}
+
+// ─── Layout ──────────────────────────────────────────────────
+
 export const Layout = memo(({ children }: LayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col">
+      <GoogleAnalytics />
       <ScrollToTop />
       <PageTitleUpdater />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
       <ScrollToTopButton />
-      {/* ❌ REMOVED: CartDrawer */}
     </div>
   );
 });
