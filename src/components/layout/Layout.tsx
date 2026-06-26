@@ -11,6 +11,7 @@ interface LayoutProps {
 // Page titles configuration
 const pageTitles: Record<string, string> = {
   '/': 'Mint & Honey | Non-GMO Fortified Food Manufacturer | South Africa',
+  '/products': 'Products | Mint & Honey - Fortified Cereals & Nutrition Products', 
   '/bulk-orders': 'Bulk Orders | Mint & Honey - Institutional & Wholesale Pricing',
   '/about': 'About Us | Mint & Honey - Our Story & Mission',
   '/impact': 'Our Impact | Mint & Honey - Fighting Malnutrition in Africa',
