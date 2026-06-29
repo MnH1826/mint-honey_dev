@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
 import halaalLogo from "@/assets/icsa_logo.webp";
+import fsscLogo from "@/assets/FSSC-logo.webp"; // ✅ ADDED
 
 const quickLinks = [
   { path: "/", label: "Home" },
@@ -77,7 +78,7 @@ export const Footer = () => {
             </div>
 
             {/* Certification logos */}
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <img
                 src={proudlySALogo}
                 alt="Proudly South African Member"
@@ -86,7 +87,12 @@ export const Footer = () => {
               <img
                 src={halaalLogo}
                 alt="Halaal Certified — HT 2076"
-                className="h-24 w-auto object-contain"
+                className="h-20 w-auto object-contain"
+              />
+              <img
+                src={fsscLogo}
+                alt="FSSC 22000 Certified"
+                className="h-16 w-auto object-contain"
               />
             </div>
           </div>

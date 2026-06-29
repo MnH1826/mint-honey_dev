@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 const contactInfo = [
   { icon: Phone, title: "Phone", details: ["+27 21 879 0592"] },
   { icon: Mail, title: "Email", details: ["info@mintandhoney.co.za", "reception@mintandhoney.co.za"] },
-  { icon: MapPin, title: "Address", details: ["Mint And Honey (Pty) Ltd", "30 Charles Matthews Street, Atlantis Industrial, WC, SA, 7394", "South Africa"] },
+  { icon: MapPin, title: "Address", details: ["Mint And Honey (Pty) Ltd", "30 Charles Matthews Street, Atlantis Industrial, WC, SA, 7349", "South Africa"] },
   { icon: Clock, title: "Business Hours", details: ["Monday - Friday: 8am - 4pm", "Saturday: Closed", "Sunday: Closed"] },
 ];
 

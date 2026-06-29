@@ -10,7 +10,6 @@ const navLinks = [
   { path: "/about", label: "About Us" },
   { path: "/impact", label: "Our Impact" },
     { path: "/products", label: "Products" },
-
   { path: "/bulk-orders", label: "Bulk Orders" },
   { path: "/contact", label: "Contact" },
 ];
