@@ -104,6 +104,7 @@ const PrivacyPolicy = () => {
                   >
                     Click here
                   </a>
+                  <a> to complete the Request for Access to Record form (Form 02), and Submit to <a href="mailto:info@mintandhoney.co.za"  className="transition-colors hover:text-mint" > info@mintandhoney.co.za </a>.</a>
                 </li>
                 <li>Request correction or deletion of inaccurate or outdated information.</li>
                 <li>Object to the processing of your personal information.</li>
