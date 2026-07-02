@@ -94,7 +94,17 @@ const PrivacyPolicy = () => {
               <h2 className="mb-4 font-display text-2xl text-foreground">6. Your Rights</h2>
               <p className="mb-3 text-muted-foreground">Under POPIA, you have the right to:</p>
               <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
-                <li>Access the personal information we hold about you.</li>
+                <li>
+                  Access the personal information we hold about you.{" "}
+                  <a 
+                    href="/docs/Form%2002%20-%20Request%20for%20Access%20to%20Record%20(003).pdf" 
+                    className="text-mint hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Click here
+                  </a>
+                </li>
                 <li>Request correction or deletion of inaccurate or outdated information.</li>
                 <li>Object to the processing of your personal information.</li>
                 <li>Withdraw your consent at any time.</li>
