@@ -24,12 +24,7 @@ const PrivacyPolicy = () => {
           </div>
           <h1 className="mb-3 font-display text-foreground">Privacy Policy</h1>
           <p className="text-muted-foreground">
-            Last updated:{" "}
-            {new Date().toLocaleDateString("en-ZA", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            Last updated: {new Date().toLocaleDateString("en-ZA", { year: "numeric", month: "long", day: "numeric" })}
           </p>
         </div>
       </section>
@@ -40,280 +35,379 @@ const PrivacyPolicy = () => {
           <div className="prose prose-lg max-w-none space-y-10 text-foreground">
             <div>
               <p className="text-lg text-muted-foreground">
-                Mint &amp; Honey (Pty) Ltd ("we", "us", "our") is committed to
-                protecting your privacy. This Privacy Policy explains how we
-                collect, use, disclose, and safeguard your information when you
-                visit our website or submit an enquiry, in compliance with the
-                Protection of Personal Information Act, 2013 (POPIA).
+                Mint &amp; Honey (Pty) Ltd ("Mint &amp; Honey", "we", "us", or "our") is committed to protecting and respecting your privacy. This Privacy Policy explains how we collect, use, disclose, store and protect your personal information when you visit our website, submit an enquiry, request a quotation, purchase our products or otherwise interact with us.
+              </p>
+              <p className="mt-4 text-muted-foreground">
+                As the <strong>Responsible Party</strong> for the personal information processed through this Website, Mint &amp; Honey complies with the <strong>Protection of Personal Information Act, 2013 (POPIA)</strong> and other applicable South African laws governing the protection of personal information.
               </p>
             </div>
 
-            {/* 1. Information We Collect */}
             <section>
-              <h2 className="mb-4 font-display text-2xl text-foreground">
-                1. Information We Collect
-              </h2>
-              <p className="mb-3 text-muted-foreground">
-                We may collect the following types of information:
-              </p>
-              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
-                <li>
-                  <strong className="text-foreground">
-                    Contact Information:
-                  </strong>{" "}
-                  Name, email address, and phone number submitted via our
-                  contact or enquiry forms.
-                </li>
-                <li>
-                  <strong className="text-foreground">
-                    Organisation Details:
-                  </strong>{" "}
-                  Company or organisation name, organisation type, and VAT
-                  number where provided for bulk order enquiries.
-                </li>
-                <li>
-                  <strong className="text-foreground">
-                    Enquiry Information:
-                  </strong>{" "}
-                  Products of interest, estimated quantities, delivery
-                  requirements, and any additional details you include in your
-                  message.
-                </li>
-                <li>
-                  <strong className="text-foreground">
-                    Technical Information:
-                  </strong>{" "}
-                  IP address, browser type, device information, and pages
-                  visited, collected automatically via analytics tools.
-                </li>
-              </ul>
-            </section>
-
-            {/* 2. How We Use Your Information */}
-            <section>
-              <h2 className="mb-4 font-display text-2xl text-foreground">
-                2. How We Use Your Information
-              </h2>
-              <p className="mb-3 text-muted-foreground">
-                We use the information we collect to:
-              </p>
-              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
-                <li>Respond to and process your product and bulk order enquiries.</li>
-                <li>
-                  Communicate with you about our products and services.
-                </li>
-                <li>
-                  Send newsletters and marketing communications (only with your
-                  explicit consent).
-                </li>
-                <li>
-                  Improve our website, products, and customer experience.
-                </li>
-                <li>
-                  Comply with legal obligations and prevent fraudulent
-                  activities.
-                </li>
-              </ul>
-            </section>
-
-            {/* 3. Cookies and Tracking */}
-            <section>
-              <h2 className="mb-4 font-display text-2xl text-foreground">
-                3. Cookies and Tracking
-              </h2>
+              <h2 className="mb-4 font-display text-2xl text-foreground">1. Scope of This Policy</h2>
               <p className="text-muted-foreground">
-                Our website uses cookies and similar tracking technologies to
-                analyse site traffic and improve your browsing experience. This
-                includes Google Analytics, which collects anonymised usage data
-                to help us understand how visitors interact with our site. You
-                can control or disable cookies through your browser settings,
-                although doing so may affect site functionality.
+                This Privacy Policy applies to all personal information collected through:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>our Website;</li>
+                <li>contact and enquiry forms;</li>
+                <li>email correspondence;</li>
+                <li>telephone communications;</li>
+                <li>quotations and supply enquiries; and</li>
+                <li>any other interactions with Mint &amp; Honey relating to our products and services.</li>
+              </ul>
+              <p className="mt-3 text-muted-foreground">
+                By using our Website or providing your personal information, you acknowledge that you have read and understood this Privacy Policy.
               </p>
             </section>
 
-            {/* 4. Data Security */}
             <section>
-              <h2 className="mb-4 font-display text-2xl text-foreground">
-                4. Data Security
-              </h2>
+              <h2 className="mb-4 font-display text-2xl text-foreground">2. Information We Collect</h2>
+              <p className="mb-3 text-muted-foreground">
+                Depending on how you interact with us, we may collect the following categories of personal information:
+              </p>
+
+              <h3 className="mt-4 font-display text-xl font-semibold text-foreground">Identity Information</h3>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>Full name</li>
+                <li>Job title (where applicable)</li>
+              </ul>
+
+              <h3 className="mt-4 font-display text-xl font-semibold text-foreground">Contact Information</h3>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>Email address</li>
+                <li>Telephone number</li>
+                <li>Physical or delivery address (where provided)</li>
+              </ul>
+
+              <h3 className="mt-4 font-display text-xl font-semibold text-foreground">Business Information</h3>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>Company or organisation name</li>
+                <li>Organisation type</li>
+                <li>VAT registration number (where applicable)</li>
+                <li>Delivery and billing information</li>
+              </ul>
+
+              <h3 className="mt-4 font-display text-xl font-semibold text-foreground">Enquiry and Transaction Information</h3>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>Products of interest</li>
+                <li>Estimated order quantities</li>
+                <li>Delivery requirements</li>
+                <li>Purchase enquiries</li>
+                <li>Correspondence with us</li>
+              </ul>
+
+              <h3 className="mt-4 font-display text-xl font-semibold text-foreground">Technical Information</h3>
+              <p className="text-muted-foreground">When you visit our Website, we may automatically collect:</p>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>IP address</li>
+                <li>Browser type and version</li>
+                <li>Device information</li>
+                <li>Operating system</li>
+                <li>Pages viewed</li>
+                <li>Date and time of visits</li>
+                <li>Referring website</li>
+                <li>General website usage statistics</li>
+              </ul>
+
+              <h3 className="mt-4 font-display text-xl font-semibold text-foreground">Marketing Preferences</h3>
               <p className="text-muted-foreground">
-                We implement appropriate technical and organisational measures
-                to protect your personal information against unauthorised
-                access, alteration, disclosure, or destruction. These include
-                SSL encryption, secure servers, and limited access to personal
-                data on a need-to-know basis. However, no method of
-                transmission over the internet is 100% secure.
+                Where applicable, we record your preferences regarding receiving newsletters, promotional material and other marketing communications.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                We do not knowingly collect personal information from children under the age of 18.
               </p>
             </section>
 
-            {/* 5. POPIA Compliance */}
             <section>
-              <h2 className="mb-4 font-display text-2xl text-foreground">
-                5. POPIA Compliance
-              </h2>
-              <p className="mb-3 text-muted-foreground">
-                As a South African company, we comply with the Protection of
-                Personal Information Act, 2013 (POPIA). This means we:
+              <h2 className="mb-4 font-display text-2xl text-foreground">3. How We Collect Information</h2>
+              <p className="text-muted-foreground">
+                We collect personal information:
               </p>
               <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
-                <li>
-                  Collect personal information lawfully and for specific,
-                  defined purposes.
-                </li>
-                <li>
-                  Process information only with your consent or where legally
-                  permitted.
-                </li>
-                <li>
-                  Keep your information accurate, complete, and up to date.
-                </li>
-                <li>
-                  Retain enquiry and correspondence records for a period of{" "}
-                  <strong className="text-foreground">5 years</strong> from the
-                  date of last interaction, after which personal information is
-                  securely deleted or anonymised.
-                </li>
-                <li>
-                  Do not share your personal information with third parties
-                  without consent, except where required by law.
-                </li>
+                <li>directly from you when you contact us;</li>
+                <li>when you complete forms on our Website;</li>
+                <li>when you request quotations;</li>
+                <li>through cookies and website analytics;</li>
+                <li>through email or telephone communications;</li>
+                <li>from publicly available business information where appropriate; and</li>
+                <li>where otherwise permitted by law.</li>
+              </ul>
+              <p className="mt-3 text-muted-foreground">
+                Certain information is required to respond to enquiries or provide quotations. Failure to provide required information may prevent us from processing your request.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">4. Lawful Basis for Processing</h2>
+              <p className="text-muted-foreground">
+                In accordance with POPIA, we process personal information only where there is a lawful basis to do so, including where:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>you have provided your consent;</li>
+                <li>processing is necessary to provide quotations or fulfil contractual obligations;</li>
+                <li>processing is required by law;</li>
+                <li>processing protects your legitimate interests; or</li>
+                <li>processing is necessary for Mint &amp; Honey's legitimate business interests, provided your rights are not overridden.</li>
               </ul>
             </section>
 
-            {/* 6. Your Rights */}
             <section>
-              <h2 className="mb-4 font-display text-2xl text-foreground">
-                6. Your Rights
-              </h2>
-              <p className="mb-3 text-muted-foreground">
-                Under POPIA, you have the right to:
+              <h2 className="mb-4 font-display text-2xl text-foreground">5. How We Use Your Information</h2>
+              <p className="text-muted-foreground">
+                We use personal information to:
               </p>
               <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
-                <li>
-                  Access the personal information we hold about you.{" "}
-                  <a
-                    href="/docs/Form%2002%20-%20Request%20for%20Access%20to%20Record%20(003).pdf"
-                    className="text-mint hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Download Form 02
-                  </a>{" "}
-                  (Request for Access to Record) and submit it to{" "}
-                  <a
-                    href="mailto:info@mintandhoney.co.za"
-                    className="transition-colors hover:text-mint"
-                  >
-                    info@mintandhoney.co.za
-                  </a>
-                  .
-                </li>
-                <li>
-                  Request correction or deletion of inaccurate or outdated
-                  information.
-                </li>
-                <li>Object to the processing of your personal information.</li>
-                <li>Withdraw your consent at any time.</li>
-                <li>
-                  Lodge a complaint with the Information Regulator of South
-                  Africa.
-                </li>
+                <li>respond to enquiries and quotation requests;</li>
+                <li>process and manage customer orders;</li>
+                <li>communicate regarding products and services;</li>
+                <li>deliver products;</li>
+                <li>provide customer support;</li>
+                <li>improve our Website and services;</li>
+                <li>maintain business records;</li>
+                <li>comply with legal and regulatory obligations;</li>
+                <li>prevent fraud and unlawful activities; and</li>
+                <li>send marketing communications where you have consented to receive them.</li>
               </ul>
-              <p className="mt-4 text-muted-foreground">
-                To exercise any of these rights, contact us at{" "}
-                <a
-                  href="mailto:info@mintandhoney.co.za"
+              <p className="mt-3 text-muted-foreground">
+                You may unsubscribe from marketing communications at any time by following the unsubscribe instructions in our emails or by contacting us directly.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                We do not use automated decision-making or profiling that produces legal or similarly significant effects.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">6. Cookies and Website Analytics</h2>
+              <p className="text-muted-foreground">
+                Our Website uses cookies and similar technologies to improve functionality, analyse Website usage and enhance your browsing experience.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                Cookies may include:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>Essential cookies required for Website operation;</li>
+                <li>Functional cookies that remember preferences;</li>
+                <li>Analytics cookies that help us understand Website performance; and</li>
+                <li>Marketing cookies (where applicable).</li>
+              </ul>
+              <p className="mt-3 text-muted-foreground">
+                We use services such as Google Analytics to collect anonymised usage information about Website visitors.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                You may manage or disable cookies through your browser settings. Disabling certain cookies may affect Website functionality.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                Where required by law, we will obtain your consent before placing non-essential cookies on your device.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">7. Sharing Your Information</h2>
+              <p className="text-muted-foreground">
+                We do not sell your personal information.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                We may disclose personal information only where necessary to:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>website hosting providers;</li>
+                <li>cloud service providers;</li>
+                <li>website analytics providers;</li>
+                <li>email service providers;</li>
+                <li>logistics and delivery partners;</li>
+                <li>payment service providers (where applicable);</li>
+                <li>professional advisers including auditors and legal advisers;</li>
+                <li>regulatory authorities; or</li>
+                <li>other parties where disclosure is required by law.</li>
+              </ul>
+              <p className="mt-3 text-muted-foreground">
+                All third-party service providers are required to maintain appropriate safeguards to protect your personal information.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">8. International Transfers</h2>
+              <p className="text-muted-foreground">
+                Some of our service providers may process personal information outside South Africa.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                Where personal information is transferred internationally, we will ensure that:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>the recipient provides an adequate level of protection consistent with POPIA;</li>
+                <li>appropriate contractual safeguards are in place; or</li>
+                <li>the transfer is otherwise permitted under applicable law.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">9. Data Security</h2>
+              <p className="text-muted-foreground">
+                We implement appropriate technical and organisational measures to protect personal information against loss, misuse, unauthorised access, disclosure, alteration or destruction.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                These measures may include:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>secure hosting environments;</li>
+                <li>encryption where appropriate;</li>
+                <li>access controls;</li>
+                <li>password protection;</li>
+                <li>regular software updates; and</li>
+                <li>restricted access to personal information on a need-to-know basis.</li>
+              </ul>
+              <p className="mt-3 text-muted-foreground">
+                While we take reasonable precautions, no method of electronic transmission or storage can be guaranteed to be completely secure.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">10. Data Retention</h2>
+              <p className="text-muted-foreground">
+                We retain personal information only for as long as reasonably necessary to fulfil the purposes for which it was collected or to comply with legal, regulatory, accounting or contractual obligations.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                The retention period may vary depending on the nature of the information and the applicable legal requirements.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                When personal information is no longer required, it will be securely deleted, destroyed or permanently anonymised.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">11. Data Breach Notification</h2>
+              <p className="text-muted-foreground">
+                If a security breach compromises your personal information, Mint &amp; Honey will investigate the incident and, where required by POPIA, notify affected individuals and the Information Regulator as soon as reasonably practicable.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">12. Your Rights</h2>
+              <p className="text-muted-foreground">
+                Subject to POPIA, you have the right to:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
+                <li>request access to your personal information;</li>
+                <li>request correction of inaccurate information;</li>
+                <li>request deletion of information where appropriate;</li>
+                <li>object to certain processing activities;</li>
+                <li>withdraw consent where processing is based on consent;</li>
+                <li>request details regarding how your information has been processed; and</li>
+                <li>lodge a complaint with the Information Regulator.</li>
+              </ul>
+              <p className="mt-3 text-muted-foreground">
+                To exercise your rights, please contact us using the details provided below.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                Where applicable, requests may require completion of the prescribed POPIA forms.{" "}
+                <Link 
+                  to="/docs/Form%2002%20-%20Request%20for%20Access%20to%20Record%20(003).pdf"
                   className="text-mint hover:underline"
-                >
-                  info@mintandhoney.co.za
-                </a>
-                . To escalate a complaint to the Information Regulator of South
-                Africa directly:{" "}
-                <a
-                  href="mailto:inforeg@justice.gov.za"
-                  className="text-mint hover:underline"
-                >
-                  inforeg@justice.gov.za
-                </a>{" "}
-                | 010 023 5207 |{" "}
-                <a
-                  href="https://www.inforegulator.org.za"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-mint hover:underline"
                 >
-                  www.inforegulator.org.za
-                </a>
-                .
+                  Download Form 02
+                </Link>{" "}
+                (Request for Access to Record).
               </p>
             </section>
 
-            {/* 7. Third-Party Services */}
             <section>
-              <h2 className="mb-4 font-display text-2xl text-foreground">
-                7. Third-Party Services
-              </h2>
+              <h2 className="mb-4 font-display text-2xl text-foreground">13. Information Officer</h2>
               <p className="text-muted-foreground">
-                We may share data with trusted third parties (such as website
-                analytics providers and email service providers) strictly to
-                operate our services. These parties are contractually obligated
-                to protect your information. Some services, including website
-                analytics, may process data on servers outside South Africa.
-                Where this occurs, we ensure the recipient maintains a level of
-                data protection consistent with POPIA.
+                The Information Officer responsible for POPIA compliance is:
               </p>
-            </section>
-
-            {/* 8. Changes to This Policy */}
-            <section>
-              <h2 className="mb-4 font-display text-2xl text-foreground">
-                8. Changes to This Policy
-              </h2>
-              <p className="text-muted-foreground">
-                We may update this Privacy Policy from time to time. Any
-                changes will be posted on this page with a revised "Last
-                updated" date. We encourage you to review this policy
-                periodically.
-              </p>
-            </section>
-
-            {/* 9. Contact Information */}
-            <section>
-              <h2 className="mb-4 font-display text-2xl text-foreground">
-                9. Contact Information
-              </h2>
-              <p className="mb-4 text-muted-foreground">
-                If you have any questions, requests, or concerns about this
-                Privacy Policy or how we handle your data, please contact us:
-              </p>
-              <div className="rounded-xl bg-beige p-6">
-                <p className="mb-3 font-semibold text-foreground">
-                  Mint &amp; Honey (Pty) Ltd
+              <div className="mt-3 rounded-xl bg-beige p-6">
+                <p className="font-semibold text-foreground">Information Officer: : Vhugala Isabella Nedouvhada</p>
+                <p className="text-muted-foreground">Mint &amp; Honey (Pty) Ltd</p>
+                <p className="text-muted-foreground">
+                  Email:{" "}
+                  <a href="mailto:isabella@mintandhoney.co.za" className="text-mint hover:underline">
+                    isabella@mintandhoney.co.za
+                  </a>
                 </p>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-mint" />
-                    <span>
-                      30 Charles Matthews Street, Atlantis Industrial, Western
-                      Cape, South Africa, 7349
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-mint" />
-                    <a href="tel:+27218790592" className="hover:text-mint">
-                      +27 21 879 0592
-                    </a>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-mint" />
-                    <a
-                      href="mailto:info@mintandhoney.co.za"
-                      className="hover:text-mint"
-                    >
-                      info@mintandhoney.co.za
-                    </a>
-                  </li>
-                </ul>
+                <p className="text-muted-foreground">
+                  Telephone:{" "}
+                  <a href="tel:+27218790592" className="text-mint hover:underline">
+                    +27 21 879 0592
+                  </a>
+                </p>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">14. Information Regulator</h2>
+              <p className="text-muted-foreground">
+                If you believe your personal information has been processed unlawfully, you may lodge a complaint with:
+              </p>
+              <div className="mt-3 rounded-xl bg-beige p-6">
+                <p className="font-semibold text-foreground">Information Regulator (South Africa)</p>
+                <p className="text-muted-foreground">
+                  Email:{" "}
+                  <a href="mailto:inforeg@justice.gov.za" className="text-mint hover:underline">
+                    inforeg@justice.gov.za
+                  </a>
+                </p>
+                <p className="text-muted-foreground">Telephone: 010 023 5207</p>
+                <p className="text-muted-foreground">
+                  Website:{" "}
+                  <a 
+                    href="https://www.justice.gov.za/inforeg/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-mint hover:underline"
+                  >
+                    www.justice.gov.za/inforeg/
+                  </a>
+                </p>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">15. Third-Party Websites</h2>
+              <p className="text-muted-foreground">
+                Our Website may contain links to third-party websites for your convenience.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                Mint &amp; Honey is not responsible for the privacy practices or content of those websites. We encourage you to review their privacy policies before providing personal information.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">16. Changes to This Privacy Policy</h2>
+              <p className="text-muted-foreground">
+                We may update this Privacy Policy from time to time to reflect changes in our business practices, legal requirements or Website functionality.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                The latest version will always be available on this page together with the revised "Last Updated" date.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                Your continued use of our Website after any updates constitutes acknowledgment of the revised Privacy Policy.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-display text-2xl text-foreground">17. Contact Us</h2>
+              <p className="text-muted-foreground">
+                If you have any questions, requests or concerns regarding this Privacy Policy or the way we process your personal information, please contact us:
+              </p>
+              <div className="mt-3 rounded-xl bg-beige p-6">
+                <p className="font-semibold text-foreground">Mint &amp; Honey (Pty) Ltd</p>
+                <p className="text-muted-foreground">
+                  Email:{" "}
+                  <a href="mailto:info@mintandhoney.co.za" className="text-mint hover:underline">
+                    info@mintandhoney.co.za
+                  </a>
+                </p>
+                <p className="text-muted-foreground">
+                  Telephone:{" "}
+                  <a href="tel:+27218790592" className="text-mint hover:underline">
+                    +27 21 879 0592
+                  </a>
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  <strong>Compliance Officer:</strong> Vhugala Isabella Nedouvhada
+                </p>
               </div>
             </section>
           </div>
