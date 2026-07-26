@@ -9,7 +9,7 @@ import { lazy, Suspense } from "react";
 // Lazy load all pages
 const Index = lazy(() => import("./pages/Index"));
 const Products = lazy(() => import("./pages/Products"));
-const ProductDetail = lazy(() => import("./pages/ProductDetail")); // ✅ ADD THIS
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const BulkOrders = lazy(() => import("./pages/BulkOrders"));
 const About = lazy(() => import("./pages/About"));
 const Impact = lazy(() => import("./pages/Impact"));
@@ -17,6 +17,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsConditions = lazy(() => import("./pages/TermsConditions"));
+const Brochure = lazy(() => import("./pages/brochure"));
 const ComingSoon = lazy(() =>
   import("./components/ComingSoon").then((m) => ({ default: m.ComingSoon }))
 );
@@ -43,23 +44,102 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Layout>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/products/:id" element={<ProductDetail />} /> {/* ✅ ADD THIS */}
-              <Route path="/bulk-orders" element={<BulkOrders />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/impact" element={<Impact />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-conditions" element={<TermsConditions />} />
-              <Route path="/coming-soon" element={<ComingSoon />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </Layout>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            {/* ✅ Fullscreen brochure route — NO Layout */}
+            <Route path="/brochure" element={<Brochure />} />
+
+            {/* ✅ All other routes wrapped in Layout */}
+            <Route
+              path="/"
+              element={
+                <Layout>
+                  <Index />
+                </Layout>
+              }
+            />
+            <Route
+              path="/products"
+              element={
+                <Layout>
+                  <Products />
+                </Layout>
+              }
+            />
+            <Route
+              path="/products/:id"
+              element={
+                <Layout>
+                  <ProductDetail />
+                </Layout>
+              }
+            />
+            <Route
+              path="/bulk-orders"
+              element={
+                <Layout>
+                  <BulkOrders />
+                </Layout>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <Layout>
+                  <About />
+                </Layout>
+              }
+            />
+            <Route
+              path="/impact"
+              element={
+                <Layout>
+                  <Impact />
+                </Layout>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <Layout>
+                  <Contact />
+                </Layout>
+              }
+            />
+            <Route
+              path="/privacy-policy"
+              element={
+                <Layout>
+                  <PrivacyPolicy />
+                </Layout>
+              }
+            />
+            <Route
+              path="/terms-conditions"
+              element={
+                <Layout>
+                  <TermsConditions />
+                </Layout>
+              }
+            />
+            <Route
+              path="/coming-soon"
+              element={
+                <Layout>
+                  <ComingSoon />
+                </Layout>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Layout>
+                  <NotFound />
+                </Layout>
+              }
+            />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
