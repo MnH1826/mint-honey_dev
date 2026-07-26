@@ -1,9 +1,10 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useState, useRef } from "react";
 import { Mail, Phone, MapPin, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import emailjs from "@emailjs/browser";
 
 const contactInfo = [
   { icon: Phone, title: "Phone", details: ["+27 21 879 0592"] },
@@ -22,11 +23,57 @@ const subjectOptions = [
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic goes here
-    setSubmitted(true);
+    
+    if (!formRef.current) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      const formData = new FormData(formRef.current);
+      
+      const data = {
+        firstName: formData.get("firstName") as string,
+        lastName: formData.get("lastName") as string,
+        email: formData.get("email") as string,
+        phone: formData.get("phone") as string,
+        subject: formData.get("subject") as string,
+        message: formData.get("message") as string,
+        date: new Date().toLocaleDateString("en-ZA", { 
+          year: "numeric", 
+          month: "long", 
+          day: "numeric" 
+        }),
+        time: new Date().toLocaleTimeString("en-ZA", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        }),
+      };
+
+      const result = await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_CONTACT_TEAM_TEMPLATE,
+        data,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
+      if (result.status === 200) {
+        setSubmitted(true);
+        formRef.current.reset();
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Email error:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }, []);
 
   return (
@@ -66,50 +113,51 @@ const Contact = () => {
                 <Button variant="mint" onClick={() => setSubmitted(false)}>Send Another</Button>
               </div>
             ) : (
-              <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+              <form ref={formRef} className="space-y-6" onSubmit={handleSubmit} noValidate>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name *</Label>
-                    <Input id="firstName" placeholder="John" required autoComplete="given-name" />
+                    <Input id="firstName" name="firstName" placeholder="John" required autoComplete="given-name" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName">Last Name *</Label>
-                    <Input id="lastName" placeholder="Doe" required autoComplete="family-name" />
+                    <Input id="lastName" name="lastName" placeholder="Doe" required autoComplete="family-name" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="email">Email *</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" required autoComplete="email" />
+                  <Input id="email" name="email" type="email" placeholder="john@example.com" required autoComplete="email" />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" type="tel" placeholder="+27 21 123 4567" autoComplete="tel" />
+                  <Input id="phone" name="phone" type="tel" placeholder="+27 21 123 4567" autoComplete="tel" />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="subject">Subject *</Label>
                   <select
                     id="subject"
+                    name="subject"
                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     required
                     defaultValue=""
                   >
                     <option value="" disabled>Select a subject...</option>
                     {subjectOptions.map((opt) => (
-                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      <option key={opt.value} value={opt.label}>{opt.label}</option>
                     ))}
                   </select>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="message">Message *</Label>
-                  <Textarea id="message" placeholder="How can we help you?" rows={5} required />
+                  <Textarea id="message" name="message" placeholder="How can we help you?" rows={5} required />
                 </div>
 
-                <Button type="submit" variant="mint" size="lg" className="w-full">
-                  Send Message
+                <Button type="submit" variant="mint" size="lg" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? "Sending..." : "Send Message"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </form>
@@ -132,7 +180,6 @@ const Contact = () => {
               ))}
             </div>
 
-            {/* Map — lazy loaded */}
             <div className="overflow-hidden rounded-xl border border-border">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d392.5395960415705!2d18.487124200989577!3d-33.58860002446017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dccedde87f869bd%3A0xa6fc582a3a52c2c6!2z4oCL4oCL4oCLUmVzb2x1eCBBZnJpY2EgKFB0eSkgTHRk!5e1!3m2!1sen!2sza!4v1770725780273!5m2!1sen!2sza"
@@ -146,7 +193,6 @@ const Contact = () => {
               />
             </div>
 
-            {/* Quick CTA */}
             <div className="rounded-xl bg-honey-light p-6">
               <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
                 Need Immediate Assistance?
