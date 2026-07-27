@@ -2,11 +2,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const PAGES = [
-  { src: "/brochure/panel-1.jpg", w: 900, h: 2368 },
-  { src: "/brochure/panel-2.jpg", w: 900, h: 2368 },
-  { src: "/brochure/panel-3.jpg", w: 900, h: 2368 },
-  { src: "/brochure/panel-4.jpg", w: 900, h: 2365 },
-  { src: "/brochure/page-5.jpg", w: 1600, h: 1148 },
+  { src: "/brochure/br_1.png", w: 1467, h: 965 },
+  { src: "/brochure/br_2.png", w: 2000, h: 1414 },
 ];
 
 export default function Brochure() {
@@ -90,25 +87,14 @@ export default function Brochure() {
     };
   }, []);
 
-  const getPageStyles = (page: typeof PAGES[0]) => {
-    const aspectRatio = page.w / page.h;
-    const isLandscape = aspectRatio > 1;
-
-    if (isLandscape) {
-      return {
-        width: isMobile ? "min(95vw, 1000px)" : "min(85vw, 1000px)",
-        height: "auto",
-        maxWidth: isMobile ? "min(98vw, 1100px)" : "min(92vw, 1100px)",
-        maxHeight: isMobile ? "min(75vh, 700px)" : "min(75vh, 700px)",
-      };
-    } else {
-      return {
-        width: "auto",
-        height: isMobile ? "min(92vh, 850px)" : "min(78vh, 850px)",
-        maxWidth: isMobile ? "min(95vw, 800px)" : "min(85vw, 800px)",
-        maxHeight: isMobile ? "min(95vh, 900px)" : "min(85vh, 900px)",
-      };
-    }
+  const getPageStyles = () => {
+    // Both images are landscape, so use width-based sizing
+    return {
+      width: isMobile ? "min(92vw, 1000px)" : "min(85vw, 1200px)",
+      height: "auto",
+      maxWidth: isMobile ? "min(96vw, 1100px)" : "min(92vw, 1400px)",
+      maxHeight: isMobile ? "min(80vh, 800px)" : "min(85vh, 900px)",
+    };
   };
 
   return (
@@ -146,7 +132,7 @@ export default function Brochure() {
           const isActive = i === current;
           const isPrev = i === current - 1;
           const isNext = i === current + 1;
-          const styles = getPageStyles(page);
+          const styles = getPageStyles();
 
           let transform = "translate(-50%, -50%) scale(0.95)";
           let opacity = 0;
