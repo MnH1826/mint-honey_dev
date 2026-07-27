@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 import proudlySALogo from "@/assets/proudly-sa-logo.png";
 import halaalLogo from "@/assets/icsa_logo.webp";
-import fsscLogo from "@/assets/FSSC-logo.webp"; // ✅ ADDED
+import fsscLogo from "@/assets/FSSC-logo.webp";
 
 const quickLinks = [
   { path: "/", label: "Home" },
@@ -12,6 +12,7 @@ const quickLinks = [
   { path: "/bulk-orders", label: "Bulk Orders" },
   { path: "/about", label: "About Us" },
   { path: "/impact", label: "Our Impact" },
+  { path: "/brochure", label: "Brochure" },  // ✅ ADDED
   { path: "/privacy-policy", label: "Privacy Policy" },
   { path: "/terms-conditions", label: "Terms & Conditions" },
 ];
