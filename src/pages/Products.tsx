@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Filter } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Filter, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { products } from "@/lib/products";
@@ -14,6 +14,7 @@ const categories = [
 ];
 
 const Products = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
 
@@ -29,21 +30,27 @@ const Products = () => {
 
   const clearFilters = useCallback(() => {
     setSelectedCategory("all");
-    // Scroll to top when clearing filters
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // Handle category selection with scroll to top
   const handleCategorySelect = useCallback((categoryId: string) => {
     setSelectedCategory(categoryId);
-    // Scroll to top when category changes
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // Also scroll to top when the component mounts
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
+
+  // Handle "Request a Quote" - navigate to bulk orders with product data
+  const handleRequestQuote = (productId: string, productName: string) => {
+    navigate("/bulk-orders", { 
+      state: { 
+        selectedProduct: productId,
+        productName: productName 
+      } 
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -132,7 +139,11 @@ const Products = () => {
             {filteredProducts.length > 0 ? (
               <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                 {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard 
+                    key={product.id} 
+                    product={product} 
+                    onRequestQuote={handleRequestQuote}
+                  />
                 ))}
               </div>
             ) : (
@@ -156,81 +167,95 @@ const Products = () => {
   );
 };
 
-// ProductCard component (embedded, without prices)
-const ProductCard = ({ product }: { product: any }) => {
+// ProductCard component with "Request a Quote" button
+const ProductCard = ({ product, onRequestQuote }: { product: any; onRequestQuote: (id: string, name: string) => void }) => {
   return (
-    <Link
-      to={`/products/${product.id}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover-lift"
-    >
-      {/* Image container */}
-      <div className="relative flex h-56 items-center justify-center overflow-hidden bg-muted p-4">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="h-full w-auto max-w-full object-contain transition-transform duration-500 group-hover:scale-105 drop-shadow-md"
-          loading="lazy"
-          decoding="async"
-        />
+    <div className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+      {/* Image container - clickable to product detail */}
+      <Link to={`/products/${product.id}`} className="block">
+        <div className="relative flex h-56 items-center justify-center overflow-hidden bg-muted p-4">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="h-full w-auto max-w-full object-contain transition-transform duration-500 group-hover:scale-105 drop-shadow-md"
+            loading="lazy"
+            decoding="async"
+          />
 
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          {/* Gradient overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-        {/* Badges — top-left */}
-        {product.badges && product.badges.length > 0 && (
-          <div className="absolute left-3 top-3 flex flex-col gap-1">
-            {product.badges.map((badge: string) => (
-              <span
-                key={badge}
-                className={cn(
-                  "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide leading-tight",
-                  badge === "Halaal"
-                    ? "bg-green-100 text-green-800"
-                    : badge === "Non-GMO"
-                    ? "bg-mint-light text-mint-dark"
-                    : badge === "Not for Resale"
-                    ? "bg-amber-100 text-amber-800"
-                    : "bg-muted text-muted-foreground"
-                )}
-              >
-                {badge}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
+          {/* Badges — top-left */}
+          {product.badges && product.badges.length > 0 && (
+            <div className="absolute left-3 top-3 flex flex-col gap-1">
+              {product.badges.map((badge: string) => (
+                <span
+                  key={badge}
+                  className={cn(
+                    "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide leading-tight",
+                    badge === "Halaal"
+                      ? "bg-green-100 text-green-800"
+                      : badge === "Non-GMO"
+                      ? "bg-mint-light text-mint-dark"
+                      : badge === "Not for Resale"
+                      ? "bg-amber-100 text-amber-800"
+                      : "bg-muted text-muted-foreground"
+                  )}
+                >
+                  {badge}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </Link>
 
       {/* Info */}
       <div className="flex flex-1 flex-col p-4">
-        <span className="mb-1 text-xs font-medium uppercase tracking-wider text-honey">
-          {product.category === "soya"    ? "Soya Mince"   :
-           product.category === "flour"   ? "Flour & Meal"  :
-           product.category === "cereal"  ? "Cereal"        :
-           product.category === "porridge"? "Porridge"      :
-           product.category}
-        </span>
-
-        <h3 className="mb-2 font-display text-lg font-semibold leading-tight text-foreground transition-colors group-hover:text-mint">
-          {product.shortName}
-        </h3>
-
-        <p className="flex-1 text-sm text-muted-foreground line-clamp-2">
-          {product.shortDescription}
-        </p>
-
-        {/* "Bulk Only" badge */}
-        <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
-          <span className="text-xs font-medium text-mint-dark bg-mint-light px-3 py-1 rounded-full">
-            Bulk Orders Only
+        <Link to={`/products/${product.id}`} className="block">
+          <span className="mb-1 text-xs font-medium uppercase tracking-wider text-honey">
+            {product.category === "soya"    ? "Soya Mince"   :
+             product.category === "flour"   ? "Flour & Meal"  :
+             product.category === "cereal"  ? "Cereal"        :
+             product.category === "porridge"? "Porridge"      :
+             product.category}
           </span>
-          {product.weight && (
-            <span className="text-xs text-muted-foreground">
-              {product.weight}
+
+          <h3 className="mb-2 font-display text-lg font-semibold leading-tight text-foreground transition-colors group-hover:text-mint">
+            {product.shortName}
+          </h3>
+
+          <p className="flex-1 text-sm text-muted-foreground line-clamp-2">
+            {product.shortDescription}
+          </p>
+        </Link>
+
+        {/* "Bulk Only" badge and "Request a Quote" button */}
+        <div className="mt-4 space-y-3">
+          <div className="flex items-center justify-between border-t border-border pt-3">
+            <span className="text-xs font-medium text-mint-dark bg-mint-light px-3 py-1 rounded-full">
+              Bulk Orders Only
             </span>
-          )}
+            {product.weight && (
+              <span className="text-xs text-muted-foreground">
+                {product.weight}
+              </span>
+            )}
+          </div>
+          
+          {/* Request a Quote Button */}
+          <Button 
+            variant="mint" 
+            size="sm" 
+            className="w-full text-sm gap-1"
+            onClick={() => onRequestQuote(product.id, product.shortName)}
+          >
+            Request a Quote
+            <ArrowRight className="h-3 w-3" />
+          </Button>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
