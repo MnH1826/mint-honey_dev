@@ -36,8 +36,8 @@ import outside8 from "@/assets/outside_8.webp";
 import djiLatest from "@/assets/DJI_20260506155948_0139_D.webp";
 
 // ── Lab images ────────────────────────────────────────────────
-import labWebp from "@/assets/lab.webp";
-import lab2Webp from "@/assets/lab_2.webp";
+import labWebp from "@/assets/lab.webp";                    // Quality Standards section
+import laboratoryWebp from "@/assets/laboratory.webp";      // Quality Lab section (1254 × 1254)
 
 // ── Product images for collage ────────────────────────────────
 import pVuma from "@/assets/mnh_vuma_instant_porrige.webp";
@@ -48,7 +48,7 @@ import pMinceBeef from "@/assets/mnh_soya_mince_beef.webp";
 import pMinceChicken from "@/assets/mnh_soya_mince_chicken.webp";
 import pMinceOxtail from "@/assets/mnh_soya_mince_ox_tail.webp";
 
-// Shared animation variants - MUST be defined before any component that uses them
+// Shared animation variants
 const fadeUp = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const fadeLeft = { hidden: { opacity: 0, x: -30 }, show: { opacity: 1, x: 0, transition: { duration: 0.7 } } };
 const fadeRight = { hidden: { opacity: 0, x: 30 }, show: { opacity: 1, x: 0, transition: { duration: 0.7 } } };
@@ -319,7 +319,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Leadership Team - Redesigned Compact Cards */}
+      {/* Leadership Team */}
       <section className="bg-muted py-12 md:py-20">
         <div className="container mx-auto px-4">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-10 text-center">
@@ -328,12 +328,10 @@ const About = () => {
             <p className="mx-auto max-w-2xl text-sm text-muted-foreground">A team of resilient, ambitious, and community-focused leaders committed to impact beyond profit.</p>
           </motion.div>
 
-          {/* Team Photo */}
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-8 overflow-hidden rounded-2xl shadow-elevated max-w-3xl mx-auto">
             <img src={leadershipTeamImage} alt="Mint & Honey Leadership Team" className="w-full h-auto max-h-[280px] object-cover object-top" loading="lazy" />
           </motion.div>
 
-          {/* Compact Leadership Cards - Full description visible */}
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {leadershipTeam.map((member, i) => (
               <motion.div
@@ -345,10 +343,8 @@ const About = () => {
                 transition={{ delay: i * 0.1 }}
                 className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-card to-muted/30 p-4 shadow-soft transition-all duration-500 hover:shadow-elevated hover:-translate-y-1"
               >
-                {/* Decorative accent bar */}
                 <div className="absolute top-0 left-0 h-0.5 w-0 bg-gradient-to-r from-mint to-honey transition-all duration-500 group-hover:w-full" />
                 
-                {/* Icon with animated background - Smaller */}
                 <div className="relative mb-3">
                   <div className="absolute inset-0 rounded-lg bg-mint/10 blur-md transition-all duration-500 group-hover:bg-mint/20" />
                   <div className="relative flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-mint/20 to-mint/5 text-mint transition-all duration-500 group-hover:scale-110">
@@ -356,23 +352,19 @@ const About = () => {
                   </div>
                 </div>
 
-                {/* Name & Role - Compact */}
                 <h3 className="mb-0.5 font-display text-base font-semibold text-foreground truncate">{member.name}</h3>
                 <p className="mb-2 text-xs font-semibold text-mint">{member.role}</p>
                 
-                {/* Description - Full text visible (no truncation) */}
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   {member.description}
                 </p>
                 
-                {/* Quote (if exists) - Compact */}
                 {member.quote && (
                   <div className="mt-2 border-l-2 border-mint pl-2">
                     <p className="text-[11px] italic text-muted-foreground/80">"{member.quote}"</p>
                   </div>
                 )}
                 
-                {/* Hover indicator - Bottom right */}
                 <div className="absolute -bottom-8 right-2 opacity-0 transition-all duration-500 group-hover:bottom-2 group-hover:opacity-100">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-mint/20 text-mint">
                     <ArrowRight className="h-3 w-3" />
@@ -398,7 +390,7 @@ const About = () => {
       {/* Atlantis Facility Slideshow */}
       <FacilitySlideshow />
 
-      {/* Facility Highlights - Updated with Lab Images */}
+      {/* Facility Highlights */}
       <section className="bg-foreground py-10 md:py-14">
         <div className="container mx-auto px-4">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -423,38 +415,54 @@ const About = () => {
         </div>
       </section>
 
-      {/* Quality Lab Section - New with lab_2.webp */}
-      <section className="bg-background py-12 md:py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
-              <span className="wp-badge mb-4 bg-mint-light text-mint-dark">Quality Assurance</span>
-              <h2 className="mb-4 font-display text-2xl text-foreground">State-of-the-Art Quality Control Laboratory</h2>
-              <p className="mb-6 text-base text-muted-foreground">
-                Our on-site quality control laboratory is equipped with advanced testing equipment to ensure every batch meets the highest food safety and nutritional standards. From raw material testing to final product analysis, we maintain rigorous quality assurance protocols.
-              </p>
-              <ul className="space-y-3">
-                {[
-                  "Raw material quality testing",
-                  "Nutritional analysis and fortification verification",
-                  "Microbiological safety testing",
-                  "Shelf-life stability studies",
-                  "HACCP and ISO compliance monitoring",
-                  "Continuous improvement through data-driven insights"
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-mint" />
-                    <span className="text-sm text-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-            <motion.div variants={fadeRight} initial="hidden" whileInView="show" viewport={{ once: true }} className="wp-image aspect-video rounded-2xl overflow-hidden shadow-elevated">
-              <img src={lab2Webp} alt="Mint & Honey quality control laboratory" loading="lazy" decoding="async" className="h-full w-full object-cover" />
-            </motion.div>
+      {/* Quality Lab Section ) */}
+        <section className="bg-background py-12 md:py-20">
+          <div className="container mx-auto px-4">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
+                <span className="wp-badge mb-4 bg-mint-light text-mint-dark">Quality Assurance</span>
+                <h2 className="mb-4 font-display text-2xl text-foreground">State-of-the-Art Quality Control Laboratory</h2>
+                <p className="mb-6 text-base text-muted-foreground">
+                  Our on-site quality control laboratory is equipped with advanced testing equipment to ensure every batch meets the highest food safety and nutritional standards. From raw material testing to final product analysis, we maintain rigorous quality assurance protocols.
+                </p>
+                <ul className="space-y-3">
+                  {[
+                    "Raw material quality testing",
+                    "Nutritional analysis and fortification verification",
+                    "Microbiological safety testing",
+                    "Shelf-life stability studies",
+                    "HACCP and ISO compliance monitoring",
+                    "Continuous improvement through data-driven insights"
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-mint" />
+                      <span className="text-sm text-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+              <motion.div 
+                variants={fadeRight} 
+                initial="hidden" 
+                whileInView="show" 
+                viewport={{ once: true }} 
+                className="rounded-2xl overflow-hidden shadow-elevated flex items-center justify-center"
+                style={{ 
+                  aspectRatio: "4/3",
+                  background: "#f8fafc"
+                }}
+              >
+                <img 
+                  src={laboratoryWebp} 
+                  alt="Mint & Honey quality control laboratory" 
+                  loading="lazy" 
+                  decoding="async" 
+                  className="w-full h-full object-contain" 
+                />
+              </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Mission & Vision */}
       <section className="bg-background py-12 md:py-20">
@@ -600,7 +608,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Quality Standards - Updated with Lab Image */}
+      {/* Quality Standards - Using labWebp */}
       <section className="bg-muted py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -639,7 +647,7 @@ const About = () => {
         <div className="container mx-auto px-4 text-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <h2 className="mb-3 font-display text-2xl text-secondary-foreground">Partner With Us</h2>
-            <p className="mx-auto mb-6 max-w-2xl text-base text-secondary-foreground/80">Whether you're a food manufacturer needing non-GMO ingredients, an NGO running feeding programmes, or a government department — we'd love to discuss how we can support your nutritional needs. </p>
+            <p className="mx-auto mb-6 max-w-2xl text-base text-secondary-foreground/80">Whether you're a food manufacturer needing non-GMO ingredients, an NGO running feeding programmes, or a government department — we'd love to discuss how we can support your nutritional needs.</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button variant="mint" size="default" asChild>
                 <Link to="/contact">Get In Touch <ArrowRight className="ml-2 h-4 w-4" /></Link>
@@ -656,4 +664,4 @@ const About = () => {
   );
 };
 
-export default About; 
+export default About;
