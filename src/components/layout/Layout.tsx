@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
+import { CookieNotice } from "@/components/CookieNotice"; // ✅ ADD THIS
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -22,18 +23,16 @@ const pageTitles: Record<string, string> = {
 
 // ─── Google Analytics ────────────────────────────────────────
 
-const GA_MEASUREMENT_ID = "G-XXXXXXXXXX"; // REPLACE WITH YOUR ID
+const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
 
 // Google Analytics Script Component
 const GoogleAnalytics = memo(() => {
   useEffect(() => {
-    // Load the GA script
     const script = document.createElement("script");
     script.async = true;
     script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
     document.head.appendChild(script);
 
-    // Initialize GA
     window.dataLayer = window.dataLayer || [];
     function gtag(...args: any[]) {
       window.dataLayer.push(args);
@@ -42,7 +41,6 @@ const GoogleAnalytics = memo(() => {
     gtag("config", GA_MEASUREMENT_ID);
 
     return () => {
-      // Clean up
       document.head.removeChild(script);
     };
   }, []);
@@ -97,6 +95,7 @@ export const Layout = memo(({ children }: LayoutProps) => {
       <main className="flex-1">{children}</main>
       <Footer />
       <ScrollToTopButton />
+      <CookieNotice /> {/* ✅ ADD THIS */}
     </div>
   );
 });

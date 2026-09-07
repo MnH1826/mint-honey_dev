@@ -179,7 +179,7 @@ const PrivacyPolicy = () => {
             <section>
               <h2 className="mb-4 font-display text-2xl text-foreground">6. Cookies and Website Analytics</h2>
               <p className="text-muted-foreground">
-                Our Website uses cookies and similar technologies to improve functionality, analyse Website usage and enhance your browsing experience.
+                Our Website uses cookies and similar technologies to improve functionality, analyse Website usage and enhance your browsing experience. By using our Website, you consent to the use of cookies in accordance with this Privacy Policy.
               </p>
               <p className="mt-3 text-muted-foreground">
                 Cookies may include:
@@ -197,7 +197,7 @@ const PrivacyPolicy = () => {
                 You may manage or disable cookies through your browser settings. Disabling certain cookies may affect Website functionality.
               </p>
               <p className="mt-3 text-muted-foreground">
-                Where required by law, we will obtain your consent before placing non-essential cookies on your device.
+                Where required by law, we will obtain your consent before placing non-essential cookies on your device. You can manage your cookie preferences at any time through our Cookie Notice on the website.
               </p>
             </section>
 
@@ -318,7 +318,7 @@ const PrivacyPolicy = () => {
                 The Information Officer responsible for POPIA compliance is:
               </p>
               <div className="mt-3 rounded-xl bg-beige p-6">
-                <p className="font-semibold text-foreground">Information Officer: : Vhugala Isabella Nedouvhada</p>
+                <p className="font-semibold text-foreground">Information Officer: Vhugala Isabella Nedouvhada</p>
                 <p className="text-muted-foreground">Mint &amp; Honey (Pty) Ltd</p>
                 <p className="text-muted-foreground">
                   Email:{" "}
