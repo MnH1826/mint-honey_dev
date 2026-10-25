@@ -8,6 +8,7 @@ const pageTitles: Record<string, string> = {
   '/about': 'About Us | Mint & Honey - Our Story & Mission',
   '/impact': 'Our Impact | Mint & Honey - Fighting Malnutrition in Africa',
   '/contact': 'Contact | Mint & Honey - Get In Touch',
+  '/careers': 'Careers | Mint & Honey - Join Our Team',
   '/privacy-policy': 'Privacy Policy | Mint & Honey',
   '/terms-conditions': 'Terms & Conditions | Mint & Honey',
 };

@@ -11,6 +11,7 @@ const navLinks = [
   { path: "/impact", label: "Our Impact" },
     { path: "/products", label: "Products" },
   { path: "/bulk-orders", label: "Bulk Orders" },
+  { path: "/careers", label: "Careers" },
   { path: "/contact", label: "Contact" },
 ];
 

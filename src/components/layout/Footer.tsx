@@ -12,6 +12,7 @@ const quickLinks = [
   { path: "/bulk-orders", label: "Bulk Orders" },
   { path: "/about", label: "About Us" },
   { path: "/impact", label: "Our Impact" },
+  { path: "/careers", label: "Careers" },
   { path: "/brochure", label: "Brochure" },  // ✅ ADDED
   { path: "/privacy-policy", label: "Privacy Policy" },
   { path: "/terms-conditions", label: "Terms & Conditions" },

@@ -14,6 +14,7 @@ const BulkOrders = lazy(() => import("./pages/BulkOrders"));
 const About = lazy(() => import("./pages/About"));
 const Impact = lazy(() => import("./pages/Impact"));
 const Contact = lazy(() => import("./pages/Contact"));
+const Careers = lazy(() => import("./pages/Careers"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsConditions = lazy(() => import("./pages/TermsConditions"));
@@ -103,6 +104,14 @@ const App = () => (
               element={
                 <Layout>
                   <Contact />
+                </Layout>
+              }
+            />
+            <Route
+              path="/careers"
+              element={
+                <Layout>
+                  <Careers />
                 </Layout>
               }
             />
