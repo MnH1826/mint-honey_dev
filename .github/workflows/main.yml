@@ -1,19 +1,37 @@
 name: Automated Client Sync
 
+# Runs in the client repository (MnH1826/mint-honey_dev) and pulls the
+# latest main branch from the development repository (ScarySuffer/mint-honey-nourish).
+
 on:
   schedule:
-    - cron: '0 * * * *' # This forces GitHub to check for client updates every single hour
-  workflow_dispatch: # This keeps a manual button available just in case
+    - cron: '0 * * * *' # check for updates every hour
+  workflow_dispatch: # manual "Run workflow" button
+
+permissions:
+  contents: write
 
 jobs:
   sync:
+    # Only run in the client repository, not in the development repository itself
+    if: github.repository == 'MnH1826/mint-honey_dev'
     runs-on: ubuntu-latest
     steps:
-      - name: Sync Upstream
-        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+      - name: Check out client repository
+        uses: actions/checkout@v4
         with:
-          target_sync_branch: main
-          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
-          upstream_sync_branch: main
-          upstream_sync_repo: ScarySuffer/mint-honey-nourish # The client's original repo
-          test_mode: false
+          ref: main
+          fetch-depth: 0
+
+      - name: Sync with development repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/ScarySuffer/mint-honey-nourish.git
+          git fetch upstream main
+          if git merge-base --is-ancestor upstream/main HEAD; then
+            echo "Already up to date."
+            exit 0
+          fi
+          git merge --ff-only upstream/main
+          git push origin HEAD:main
