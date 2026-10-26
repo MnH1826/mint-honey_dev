@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import {
   Briefcase,
@@ -17,7 +18,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import teamImage from "@/assets/team-banner.jpg";
-import { jobOpenings, ODOO_CAREERS_URL } from "@/lib/careers";
+import { fallbackJobOpenings, fetchJobOpenings, ODOO_CAREERS_URL } from "@/lib/careers";
 
 const fadeUp = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
@@ -56,6 +57,14 @@ const steps = [
 ];
 
 const Careers = () => {
+  const { data: liveJobs, isLoading } = useQuery({
+    queryKey: ["job-openings"],
+    queryFn: fetchJobOpenings,
+    staleTime: 1000 * 60 * 10,
+    retry: 1,
+  });
+  const jobOpenings = liveJobs ?? (isLoading ? [] : fallbackJobOpenings);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
@@ -136,7 +145,11 @@ const Careers = () => {
             </p>
           </div>
 
-          {jobOpenings.length > 0 ? (
+          {isLoading ? (
+            <div className="flex justify-center py-10" role="status" aria-label="Loading vacancies">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-mint border-t-transparent" />
+            </div>
+          ) : jobOpenings.length > 0 ? (
             <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2 lg:grid-cols-3">
               {jobOpenings.map((job, index) => (
                 <motion.article
@@ -165,7 +178,9 @@ const Careers = () => {
                       </li>
                     )}
                   </ul>
-                  <p className="mb-6 flex-1 text-sm text-muted-foreground">{job.summary}</p>
+                  <p className="mb-6 flex-1 text-sm text-muted-foreground">
+                    {job.summary || "View the full role description and requirements on our careers portal."}
+                  </p>
                   <Button asChild variant="mint" className="w-full">
                     <a href={job.odooUrl} target="_blank" rel="noopener noreferrer">
                       View &amp; Apply <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />

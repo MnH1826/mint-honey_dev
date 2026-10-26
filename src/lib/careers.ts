@@ -1,6 +1,8 @@
 // Careers configuration.
 // Applications are handled in Odoo Recruitment (mintandhoney.odoo.com).
-// When HR publishes or closes a vacancy in Odoo, update the list below to match.
+// The Careers page loads published vacancies live from /api/jobs (see api/jobs.js).
+// The list below is only a fallback, used when the live list cannot be loaded
+// (for example during local development, where /api is not available).
 
 export const ODOO_CAREERS_URL = "https://mintandhoney.odoo.com/jobs";
 
@@ -13,7 +15,18 @@ export interface JobOpening {
   odooUrl: string;
 }
 
-export const jobOpenings: JobOpening[] = [
+export const fetchJobOpenings = async (): Promise<JobOpening[]> => {
+  const response = await fetch("/api/jobs", { headers: { Accept: "application/json" } });
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!response.ok || !contentType.includes("application/json")) {
+    throw new Error(`Could not load vacancies (${response.status})`);
+  }
+  const data: { jobs?: JobOpening[] } = await response.json();
+  if (!Array.isArray(data.jobs)) throw new Error("Unexpected vacancies response");
+  return data.jobs;
+};
+
+export const fallbackJobOpenings: JobOpening[] = [
   {
     title: "Production Manager",
     summary:
